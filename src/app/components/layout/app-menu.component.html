@@ -1,0 +1,8 @@
+<p-menubar [model]="items">
+    <ng-template pTemplate="start">
+        <a [routerLink]="['']"><img src="/assets/favicon.jpg" alt="Keller Organisator" height="40" class="mr-2" /></a>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <input type="text" pInputText placeholder="Search" class="w-full" />
+    </ng-template>
+</p-menubar>
