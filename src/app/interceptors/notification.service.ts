@@ -16,7 +16,7 @@ export class NotificationService {
     // Had an issue with the snackbar being ran outside of angular's zone.
     this.zone.run(() => {
       this.alertService.info(message, {autoClose: true});
-//      this.messageService.add({detail: message, severity: 'info'});
+      this.messageService.add({detail: message, severity: 'info'});
     });
   }
 
@@ -26,7 +26,7 @@ export class NotificationService {
       // In the third, we send in the css class for the snack bar.
       console.log('error occurred - ' + message)
       this.alertService.error(message);
-      //this.messageService.add({detail: message, severity: 'error'});
+      this.messageService.add({key: 'error', summary: 'An error occurred', detail: message, severity: 'error', sticky: true});
     });
   }
 }

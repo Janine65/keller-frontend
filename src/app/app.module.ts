@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CookieModule } from 'ngx-cookie';
 
 import {
   APP_PRIMENG_MODULE,
@@ -36,6 +37,7 @@ import { JwtInterceptor } from '@interceptors/jwt.interceptor';
   ],
   imports: [
     BrowserModule,
+    CookieModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     CommonModule,

@@ -1,41 +1,31 @@
-<div class="card">
-<form (ngSubmit)="onLogin()" [formGroup]="loginForm">
-    <p-panel header="Login Example">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    Login:
-                </div>
-                <div class="ui-grid-col-6">
-                    <input pInputText type="text" formControlName="login" class="form-control" name="login">
-                </div>
-                <div class="ui-grid-col-4">
-                    <div [hidden]="loginForm.controls['login'].valid || !loginForm.controls['login'].dirty" class="alert alert-danger">
-                        Login is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    Password:
-                </div>
-                <div class="ui-grid-col-6">
-                    <input pInputText type="password" formControlName="password" class="form-control" name="password">
-                </div>
-                <div class="ui-grid-col-4">
-                    <div [hidden]="loginForm.controls['password'].valid || !loginForm.controls['password'].dirty" class="alert alert-danger">
-                        Password is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2"></div>
-                <div class="ui-grid-col-6">
-                    <button pButton type="submit" label="Submit" [disabled]="!loginForm.valid"></button>
-                </div>
-                <div class="ui-grid-col-4"></div>
+<div class="card left-2-m" style="margin-left: 50px;">
+    <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
+        <div class="formgrid grid mt-3">
+            <label for="logon" class="p-2 w-2">Login</label>
+            <input type="text" formControlName="login" pInputText
+                class="text-base text-color surface-overlay p-2 appearance-none outline-none w-2">
+            <div [hidden]="loginForm.controls['login'].valid || !loginForm.controls['login'].dirty"
+                class="alert alert-danger">
+                Login is required
             </div>
         </div>
-    </p-panel>
-</form>
+        <div class="formgrid grid mt-3">
+            <label for="password" class="p-2 w-2">Passwort</label>
+            <p-password id="password" formControlName="password" required
+                class="text-base text-color surface-overlay appearance-none outline-none w-2"></p-password>
+            <div [hidden]="loginForm.controls['password'].valid || !loginForm.controls['password'].dirty"
+                class="alert alert-danger">
+                Password is required
+            </div>
+        </div>
+        <div class="formgrid grid mt-3">
+            <button pButton type="submit" [disabled]="loading" class="p-button-primary p-button-outlined p-2 mr-4">
+                Login
+            </button>
+            <button pButton type="reset" [disabled]="loading" class="p-button-secondary p-button-outlined p-2"
+                (click)="onReset()">
+                Reset
+            </button>
+        </div>
+    </form>
 </div>
