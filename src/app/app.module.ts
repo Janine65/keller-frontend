@@ -1,5 +1,12 @@
 import { ErrorHandler, NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy, CommonModule, DecimalPipe, DatePipe, PercentPipe } from '@angular/common';
+import {
+  HashLocationStrategy,
+  LocationStrategy,
+  CommonModule,
+  DecimalPipe,
+  DatePipe,
+  PercentPipe,
+} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -23,6 +30,10 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { GlobalErrorHandler } from '@interceptors/global-error-handler';
 import { ErrorInterceptor } from '@interceptors/error.interceptor';
 import { JwtInterceptor } from '@interceptors/jwt.interceptor';
+import { PlacesListComponent } from './components/places-list/places-list.component';
+import { SubplaceListComponent } from './components/subplace-list/subplace-list.component';
+import { ThingsListComponent } from './components/things-list/things-list.component';
+import { PlaceTypeComponent } from './components/place-type/place-type.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +45,11 @@ import { JwtInterceptor } from '@interceptors/jwt.interceptor';
     UserLoginComponent,
     UserRegisterComponent,
     UserListComponent,
+    PlacesListComponent,
+    SubplaceListComponent,
+    ThingsListComponent,
+    PlaceTypeComponent,
+    PlaceTypeComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +70,7 @@ import { JwtInterceptor } from '@interceptors/jwt.interceptor';
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    APP_PRIMENG_PROVIDERS
+    APP_PRIMENG_PROVIDERS,
   ],
   bootstrap: [AppComponent],
 })

@@ -4,27 +4,35 @@ import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { User } from '@models/user';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject?: BehaviorSubject<User>;
+  private userSubject = new BehaviorSubject<User>(new User());
+  private isLoggedBehavor = new BehaviorSubject(false);
   private apiUrl: string;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
-    const user = localStorage.getItem('login')
-    if (user) {
-      this.userSubject = new BehaviorSubject<User>(JSON.parse(user));
+    const userString = localStorage.getItem('login')
+    if (userString) {
+      const user: User = JSON.parse(userString)
+        this.userSubject.next(user);
+        this.isLoggedBehavor.next(true);
+        this.cookieService.set('Authorization', user.token, { expires: 3600} );
     }
     this.apiUrl = environment.apiUrl
     console.log(this.apiUrl)
 
   }
 
+  public isLoggedIn(): Observable<boolean> {
+    return this.isLoggedBehavor.asObservable()
+  }
+
   public get userValue(): User {
-    return (this.userSubject ? this.userSubject.value : new User());
+    return this.userSubject.getValue();
   }
 
   isLogged(): boolean {
@@ -35,15 +43,16 @@ export class AuthService {
   async login(userData: User) {
     const token = userData.token.split(';');
     userData.token = token[0];
-    this.userSubject = new BehaviorSubject<User>(userData);
+    this.userSubject.next(userData);
+    this.isLoggedBehavor.next(true);
     localStorage.setItem('login', JSON.stringify(userData));
     this.cookieService.set('Authorization', userData.token, { expires: Number(token[2].replace('Max-Age=',''))} );
   }
 
   logout() {
-    this.userSubject = undefined;
+    this.userSubject.next(new User());
     localStorage.removeItem('login');
     this.cookieService.delete('Authorization');
-    
+    this.isLoggedBehavor.next(false);
   }
 }

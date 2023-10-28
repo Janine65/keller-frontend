@@ -3,35 +3,37 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { AuthService } from './auth.service';
+import { ReturnStruct } from '@models/generel';
+import { Place } from '@models/places';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
 
-  private header! : HttpHeaders;
-  private httpConfig : {headers: HttpHeaders, withCredentials: boolean} = {headers: this.header, withCredentials: true}
+  private header!: HttpHeaders;
+  private httpConfig: { headers: HttpHeaders, withCredentials: boolean } = { headers: this.header, withCredentials: true }
 
-  constructor(private http: HttpClient, private authService: AuthService) { 
-    
+  constructor(private http: HttpClient, private authService: AuthService) {
+
     this.header = new HttpHeaders({
       'Access-Control-Allow-Origin': environment.apiUrlSelf,
       'Access-Control-Allow-Methods': "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
       'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Origin, Origin, X-Requested-With, Content-Type, Accept, Authorization'
-      });
-    console.log(this.header);   
+    });
+    console.log(this.header);
 
     this.httpConfig.headers = this.header
   }
 
   getAbout(): Observable<{}> {
     const apiURL = environment.apiUrl + '/about';
-    return this.http.get<{}>(apiURL, {headers: this.header});
+    return this.http.get<{}>(apiURL, { headers: this.header });
   }
 
   doLogin(login: string, password: string): Observable<any> {
     const apiURL = environment.apiUrl + '/login';
-    const retVal = this.http.post<{}>(apiURL, {login: login, password: password}, {headers: this.header});
+    const retVal = this.http.post<{}>(apiURL, { login: login, password: password }, { headers: this.header });
     return retVal
   }
 
@@ -42,9 +44,28 @@ export class BackendService {
 
   }
 
+  getUsers(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/users';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
   getPlaces(): Observable<any> {
     const apiURL = environment.apiUrl + '/places';
     return this.http.get<any>(apiURL, this.httpConfig);
   }
 
+  insertPlace(place: Place): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/places/insert';
+    return this.http.put<ReturnStruct>(apiURL, place, this.httpConfig)
+  }
+
+  updatePlace(place: Place): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/places/update';
+    return this.http.post<ReturnStruct>(apiURL, place, this.httpConfig)
+  }
+
+  deletePlace(place: Place): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/places/delete?id=' + place.id;
+    return this.http.delete<ReturnStruct>(apiURL, this.httpConfig)
+  }
 }

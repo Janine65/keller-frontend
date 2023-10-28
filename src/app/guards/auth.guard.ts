@@ -7,13 +7,13 @@ import { MessageService } from 'primeng/api';
 export class AuthGuard  {
     constructor(
         private router: Router,
-        private authService: AuthService,
-        private messageService: MessageService
+        private authService: AuthService
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const user = this.authService.userValue;
-        if (user) {
+        console.log(user);
+        if (user.token.length > 0) {
             // authorised so return true
             console.log(user, route.data)
             return true;

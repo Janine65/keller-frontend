@@ -15,38 +15,34 @@ export class AppMenuComponent implements OnInit {
   constructor(private backendService: BackendService, private messageService: MessageService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.isLoggedIn().subscribe({
+      next: (loggedIn) => this.setMenu(loggedIn)
+    })
+  }
+
+  setMenu(loggedIn: boolean) {
     this.items = [
       {
-        label: 'Places',
+        label: 'Base Data',
         icon: 'pi pi-fw pi-building',
-        visible: this.isLoggedIn(),
+        visible: loggedIn,
         items: [
           {
-            label: 'Search',
-            icon: 'pi pi-fw pi-search',
-            visible: this.isLoggedIn(),
+            label: 'Places',
+            visible: loggedIn,
+            routerLink: 'basedata/places'
+
           },
           {
-            label: 'New',
-            icon: 'pi pi-fw pi-plus',
-            visible: this.isLoggedIn(),
-          }
-        ]
-      },
-      {
-        label: 'Thing',
-        icon: 'pi pi-fw pi-box',
-        visible: this.isLoggedIn(),
-        items: [
-          {
-            label: 'Search',
-            icon: 'pi pi-fw pi-search',
-            visible: this.isLoggedIn(),
+            label: 'Subplaces',
+            visible: loggedIn,
+            routerLink: 'basedata/subplaces'
+
           },
           {
-            label: 'New',
-            icon: 'pi pi-fw pi-plus',
-            visible: this.isLoggedIn(),
+            label: 'Things',
+            visible: loggedIn,
+            routerLink: 'basedata/things'
           }
         ]
       },
@@ -57,13 +53,13 @@ export class AppMenuComponent implements OnInit {
           {
             label: 'Login',
             icon: 'pi pi-fw pi-lock-open',
-            visible: !this.isLoggedIn(),
+            visible: !loggedIn,
             routerLink: 'user/login'
           },
           {
             label: 'Logout',
             icon: 'pi pi-fw pi-lock',
-            visible: this.isLoggedIn(),
+            visible: loggedIn,
             command: async () => {
               await this.loggoutUser();
             }
@@ -71,13 +67,13 @@ export class AppMenuComponent implements OnInit {
           {
             label: 'Register',
             icon: 'pi pi-fw pi-user-plus',
-            visible: !this.isLoggedIn(),
+            visible: !loggedIn,
             routerLink: 'user/register'
           },
           {
             label: 'Search',
             icon: 'pi pi-fw pi-search',
-            visible: this.isLoggedIn(),
+            visible: loggedIn,
             routerLink: 'user/list'
           }
         ]
@@ -88,21 +84,16 @@ export class AppMenuComponent implements OnInit {
         routerLink: 'about'
       }
     ];
+
   }
 
-  isLoggedIn():boolean {
-    let fOk = false;
-    if (this.authService.isLogged())
-      fOk = true;
-    return fOk;
-  }
+
   async loggoutUser() {
     this.backendService.doLogout().subscribe({
       next: async (retVal) => {
         console.log(retVal);
         this.authService.logout();
         await this.router.navigate(['/']);
-        window.location.reload();
         this.messageService.add({ detail: 'Du bist ausgelogged!', summary: 'Ausgelogged', severity: 'info', closable: true, sticky: false });
       }
     })

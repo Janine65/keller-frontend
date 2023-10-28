@@ -40,7 +40,6 @@ export class UserLoginComponent implements OnInit {
         retValue.data['token'] = retValue.cookie.replace('Authorization=','');
         await this.authService.login(retValue.data);
         await this.router.navigate(['/']);
-        window.location.reload();
       }
     })
 

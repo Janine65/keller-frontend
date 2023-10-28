@@ -1,12 +1,10 @@
 export class User {
-    public id?: number;
+    public id: number | undefined = 0;
     public createdAt?: Date;
     public updatedAt?: Date;
-    public classRow?: string;
+    public login: string = '';
     email!: string;
     password!: string;
     name!: string;
     token!: string;
-    role!: string;
-    last_login!: Date;
 }
