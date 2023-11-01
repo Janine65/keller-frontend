@@ -1,1 +1,68 @@
-<p>place-type works!</p>
+<div class="card">
+    <p-table *ngIf="!isLoading" dataKey="id" editMode="row" [value]="lPlacetypes">
+        <ng-template pTemplate="caption">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="onRowNew()"></button>
+            <button pButton pRipple label="Close" icon="pi pi-sign-out" class="p-button-secondary mr-2"
+                (click)="onClose()"></button>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Icon</th>
+                <th style="width:4em"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-placetype let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="placetype">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="placetype.name">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{placetype.name}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="lIcons" [showClear]="true" [(ngModel)]="placetype.icon"
+                                [style]="{'width':'100%'}">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="flex align-items-center gap-2" *ngIf="placetype.icon">
+                                        <i [class]="'pi ' + placetype.icon" style="width: 18px"></i> {{ placetype.icon }}
+                                    </div>
+                                </ng-template>
+                                <ng-template let-icons pTemplate="item">
+                                    <div class="flex align-items-center gap-2">
+                                        <i [class]="'pi ' + icons.icon" style="width: 18px"></i>
+                                        <div>{{ icons.label }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <i [class]="'pi ' + placetype.icon" style="width: 18px"></i> {{placetype.icon}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                            (click)="onRowEditInit(placetype)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="!editing && placetype.id > 0" pButton pRipple type="button" icon="pi pi-trash"
+                            (click)="onRowDelete(placetype, ri)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                            (click)="onRowEditSave(placetype, ri)"
+                            class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                            (click)="onRowEditCancel(placetype, ri)"
+                            class="p-button-rounded p-button-text p-button-danger"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

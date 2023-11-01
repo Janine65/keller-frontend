@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
 import { MenuItem, MessageService } from 'primeng/api';
@@ -11,12 +12,17 @@ import { MenuItem, MessageService } from 'primeng/api';
 })
 export class AppMenuComponent implements OnInit {
   items: MenuItem[] = [];
+  user: User = new User();
 
   constructor(private backendService: BackendService, private messageService: MessageService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.isLoggedIn().subscribe({
       next: (loggedIn) => this.setMenu(loggedIn)
+    })
+
+    this.authService.getUserValue().subscribe({
+      next: (loggedinUser) => this.user = loggedinUser
     })
   }
 

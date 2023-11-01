@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { AuthService } from './auth.service';
 import { ReturnStruct } from '@models/generel';
-import { Place } from '@models/places';
+import { Place, Placetype, Subplace } from '@models/places';
+import { Object2Subplace, Thing } from '@models/things';
 
 @Injectable({
   providedIn: 'root'
@@ -33,15 +34,12 @@ export class BackendService {
 
   doLogin(login: string, password: string): Observable<any> {
     const apiURL = environment.apiUrl + '/login';
-    const retVal = this.http.post<{}>(apiURL, { login: login, password: password }, { headers: this.header });
-    return retVal
+    return this.http.post<{}>(apiURL, { login: login, password: password }, { headers: this.header });
   }
 
   doLogout(): Observable<any> {
     const apiURL = environment.apiUrl + '/logout';
-    const retVal = this.http.post<{}>(apiURL, {}, this.httpConfig);
-    return retVal
-
+    return this.http.post<{}>(apiURL, {}, this.httpConfig);
   }
 
   getUsers(): Observable<ReturnStruct> {
@@ -49,23 +47,93 @@ export class BackendService {
     return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
   }
 
-  getPlaces(): Observable<any> {
-    const apiURL = environment.apiUrl + '/places';
-    return this.http.get<any>(apiURL, this.httpConfig);
+  getPlaces(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/places';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
   }
 
   insertPlace(place: Place): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/places/insert';
+    const apiURL = environment.apiUrl + '/basedata/places/insert';
     return this.http.put<ReturnStruct>(apiURL, place, this.httpConfig)
   }
 
   updatePlace(place: Place): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/places/update';
+    const apiURL = environment.apiUrl + '/basedata/places/update';
     return this.http.post<ReturnStruct>(apiURL, place, this.httpConfig)
   }
 
   deletePlace(place: Place): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/places/delete?id=' + place.id;
+    const apiURL = environment.apiUrl + '/basedata/places/delete?id=' + place.id;
+    return this.http.delete<ReturnStruct>(apiURL, this.httpConfig)
+  }
+
+  getPlacetypes(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/placetypes';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
+  insertPlacetype(placetype: Placetype): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/placetypes/insert';
+    return this.http.put<ReturnStruct>(apiURL, placetype, this.httpConfig)
+  }
+
+  updatePlacetype(placetype: Placetype): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/placetypes/update';
+    return this.http.post<ReturnStruct>(apiURL, placetype, this.httpConfig)
+  }
+
+  deletePlacetype(placetype: Placetype): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/placetypes/delete?id=' + placetype.id;
+    return this.http.delete<ReturnStruct>(apiURL, this.httpConfig)
+  }
+
+  getSubplaces(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/subplaces';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
+  insertSubplace(subplace: Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/subplaces/insert';
+    return this.http.put<ReturnStruct>(apiURL, subplace, this.httpConfig)
+  }
+
+  updateSubplace(subplace: Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/subplaces/update';
+    return this.http.post<ReturnStruct>(apiURL, subplace, this.httpConfig)
+  }
+
+  deleteSubplace(subplace: Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/subplaces/delete?id=' + subplace.id;
+    return this.http.delete<ReturnStruct>(apiURL, this.httpConfig)
+  }
+
+  getThings(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
+  getAllThing2Subplaces(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/subplaces/all';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
+  getThing2Subplaces(thing: Thing): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/subplaces?id=' + thing.id;
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
+  insertThing(thing: Thing, obj2sub: Object2Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/subplaces/insert';
+    return this.http.put<ReturnStruct>(apiURL, {thing: thing, obj2sub: obj2sub}, this.httpConfig)
+  }
+
+  updateThing(thing: Thing, obj2sub: Object2Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/subplaces/update';
+    return this.http.post<ReturnStruct>(apiURL, {thing: thing, obj2sub: obj2sub}, this.httpConfig)
+  }
+
+  deleteThing(obj2sub: Object2Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/subplaces/delete?thingid=' + obj2sub.objectid + '&subplaceid=' + obj2sub.subplaceid ;
     return this.http.delete<ReturnStruct>(apiURL, this.httpConfig)
   }
 }

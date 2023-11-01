@@ -19,12 +19,16 @@ export class AuthService {
     if (userString) {
       const user: User = JSON.parse(userString)
         this.userSubject.next(user);
-        this.isLoggedBehavor.next(true);
         this.cookieService.set('Authorization', user.token, { expires: 3600} );
+        this.isLoggedBehavor.next(true);
     }
     this.apiUrl = environment.apiUrl
     console.log(this.apiUrl)
 
+  }
+
+  public getUserValue(): Observable<User> {
+    return this.userSubject.asObservable()
   }
 
   public isLoggedIn(): Observable<boolean> {
@@ -44,15 +48,15 @@ export class AuthService {
     const token = userData.token.split(';');
     userData.token = token[0];
     this.userSubject.next(userData);
-    this.isLoggedBehavor.next(true);
     localStorage.setItem('login', JSON.stringify(userData));
     this.cookieService.set('Authorization', userData.token, { expires: Number(token[2].replace('Max-Age=',''))} );
+    this.isLoggedBehavor.next(true);
   }
 
   logout() {
+    this.isLoggedBehavor.next(false);
     this.userSubject.next(new User());
     localStorage.removeItem('login');
     this.cookieService.delete('Authorization');
-    this.isLoggedBehavor.next(false);
   }
 }

@@ -1,1 +1,64 @@
-<p>subplace-list works!</p>
+<h1>Subplaces</h1>
+<p-table *ngIf="!isLoading" dataKey="id" editMode="row" [value]="lSubplaces">
+    <ng-template pTemplate="caption">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+            (click)="onRowNew()"></button>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name" style="width:30%">Name <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="place" style="width:20%">Type <p-sortIcon field="place"></p-sortIcon></th>
+            <th pSortableColumn="updatedAt_date" style="width:20%">Last updated <p-sortIcon
+                    field="updatedAt_date"></p-sortIcon></th>
+            <th pSortableColumn="user" style="width:20%">Last User <p-sortIcon field="user"></p-sortIcon></th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-subplace let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="subplace">
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="subplace.name">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{subplace.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-dropdown [options]="lPlaces" appendTo="body" [(ngModel)]="subplace.placeid"
+                            [style]="{'width':'100%'}" optionLabel="name" optionValue="id">
+                    </p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{subplace.place}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                {{subplace.updatedAt_date | date: 'd. MMMM yyyy HH:mm' }}
+            </td>
+            <td>
+                {{subplace.user}}
+
+            </td>
+            <td>
+                <div class="flex align-items-center justify-content-center gap-2">
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        (click)="onRowEditInit(subplace)" class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="!editing && subplace.id > 0" pButton pRipple type="button" icon="pi pi-trash"
+                        (click)="onRowDelete(subplace, ri)" class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        (click)="onRowEditSave(subplace, ri)"
+                        class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                        (click)="onRowEditCancel(subplace, ri)"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
