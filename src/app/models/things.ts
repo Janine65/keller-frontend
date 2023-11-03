@@ -71,7 +71,10 @@ export class Thing {
   }
 
   export class Object2Subplace {
-    objectid: number | undefined = 0;
+    alcoholicid: number | undefined = 0;
+    foodid: number | undefined = 0;
+    nonalcoholicod: number | undefined = 0;
+    nonfoodid: number | undefined = 0;
     subplaceid: number | undefined;
     weight: number | undefined;
     count: number | undefined;

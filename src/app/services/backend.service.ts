@@ -5,7 +5,7 @@ import { environment } from '@environments/environment';
 import { AuthService } from './auth.service';
 import { ReturnStruct } from '@models/generel';
 import { Place, Placetype, Subplace } from '@models/places';
-import { Object2Subplace, Thing } from '@models/things';
+import { Alcoholic, Object2Subplace } from '@models/things';
 
 @Injectable({
   providedIn: 'root'
@@ -107,33 +107,44 @@ export class BackendService {
     return this.http.delete<ReturnStruct>(apiURL, this.httpConfig)
   }
 
-  getThings(): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/basedata/things';
-    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
-  }
-
   getAllThing2Subplaces(): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/basedata/things/subplaces/all';
+    const apiURL = environment.apiUrl + '/basedata/things/subplaces';
     return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
   }
 
-  getThing2Subplaces(thing: Thing): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/basedata/things/subplaces?id=' + thing.id;
+  getAlcoholics(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/alcoholic';
     return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
   }
 
-  insertThing(thing: Thing, obj2sub: Object2Subplace): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/basedata/things/subplaces/insert';
-    return this.http.put<ReturnStruct>(apiURL, {thing: thing, obj2sub: obj2sub}, this.httpConfig)
+  insertAlcoholic2Subplace(alcoholic: Alcoholic, obj2sub: Object2Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/alcoholic/subplaces/insert';
+    return this.http.put<ReturnStruct>(apiURL, {alcoholic: alcoholic, obj2sub: obj2sub}, this.httpConfig)
   }
 
-  updateThing(thing: Thing, obj2sub: Object2Subplace): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/basedata/things/subplaces/update';
-    return this.http.post<ReturnStruct>(apiURL, {thing: thing, obj2sub: obj2sub}, this.httpConfig)
+  updateAlcoholic2Subplace(alcoholic: Alcoholic, obj2sub: Object2Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/alcohoic/subplaces/update';
+    return this.http.post<ReturnStruct>(apiURL, {alcoholic: alcoholic, obj2sub: obj2sub}, this.httpConfig)
   }
 
-  deleteThing(obj2sub: Object2Subplace): Observable<ReturnStruct> {
-    const apiURL = environment.apiUrl + '/basedata/things/subplaces/delete?thingid=' + obj2sub.objectid + '&subplaceid=' + obj2sub.subplaceid ;
+  deleteAlcoholic2Subplace(obj2sub: Object2Subplace): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/alcoholic/subplaces/delete?alcoholicid=' + obj2sub.alcoholicid + '&subplaceid=' + obj2sub.subplaceid ;
     return this.http.delete<ReturnStruct>(apiURL, this.httpConfig)
   }
+
+  getFood(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/food';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
+  getNonalcoholics(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/nonalcoholic';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
+  getNonfood(): Observable<ReturnStruct> {
+    const apiURL = environment.apiUrl + '/basedata/things/nonfood';
+    return this.http.get<ReturnStruct>(apiURL, this.httpConfig);
+  }
+
 }
