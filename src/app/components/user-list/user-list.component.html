@@ -1,1 +1,49 @@
-<p>user-list works!</p>
+<h1>Users</h1>
+<div style="height: 100%;">
+    <p-table *ngIf="!isLoading" dataKey="id" [value]="lUsers" [scrollable]="true" scrollHeight="flex">
+        <ng-template pTemplate="caption">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="doRegister()"></button>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:30%">Name </th>
+                <th style="width:30%">Email </th>
+                <th  style="width:20%">Login</th>
+                <th style="width:20%">Last updated </th>
+                <th style="width:20%">Last User </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr [pSelectableRow]="selUser">
+                <td>
+                    {{user.name}}
+                </td>
+                <td>
+                    {{user.email}}
+                </td>
+                <td>
+                    {{user.login}}
+                </td>
+                <td>
+                    {{user.updatedAt | stringDate: 'd. MMMM yyyy HH:mm' }}
+                </td>
+                <td>
+                    {{user.user}}
+
+                </td>
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-trash" (click)="doDelete(user)"
+                            class="p-button-rounded p-button-text"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <hr />
+            {{lUsers.length}} Things
+        </ng-template>
+    </p-table>
+</div>

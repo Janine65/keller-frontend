@@ -1,0 +1,165 @@
+<div class="flex flex-wrap gap-3 mb-3">
+    <div class="flex align-items-center">
+        <p-radioButton name="pizza" value="alcoholic" [(ngModel)]="thing.thing_type" inputId="ingredient1"
+            [disabled]="thing.id !== undefined && thing.id > 0"></p-radioButton>
+        <label for="ingredient1" class="ml-2">Alcoholic</label>
+    </div>
+
+    <div class="flex align-items-center">
+        <p-radioButton name="pizza" value="food" [(ngModel)]="thing.thing_type" inputId="ingredient2"
+            [disabled]="thing.id !== undefined && thing.id > 0"></p-radioButton>
+        <label for="ingredient2" class="ml-2">Food</label>
+    </div>
+
+    <div class="flex align-items-center">
+        <p-radioButton name="pizza" value="nonalcoholic" [(ngModel)]="thing.thing_type" inputId="ingredient3"
+            [disabled]="thing.id !== undefined && thing.id > 0"></p-radioButton>
+        <label for="ingredient3" class="ml-2">Nonalcoholic</label>
+    </div>
+
+    <div class="flex align-items-center">
+        <p-radioButton name="pizza" value="nonfood" [(ngModel)]="thing.thing_type" inputId="ingredient4"
+            [disabled]="thing.id !== undefined && thing.id > 0"></p-radioButton>
+        <label for="ingredient4" class="ml-2">Nonfood</label>
+    </div>
+</div>
+<small *ngIf="thing.id == undefined || thing.id == 0">First select the type of the thing you want to add</small>
+<hr />
+<div *ngIf="thing.thing_type === 'alcoholic'">
+    <div class="field grid">
+        <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
+        <div class="col-12 md:col-10">
+            <input type="text" id="name" pInputText [(ngModel)]="alcoholic.name" />
+        </div>
+    </div>
+    <div class="field grid">
+        <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
+        <div class="col-12 md:col-10">
+            <input type="text" id="weight" pInputText [(ngModel)]="alcoholic.weight"
+                aria-describedby="weight-help" />
+            <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+        </div>
+    </div>
+    <div class="field grid">
+        <label class="col-12 mb-2 md:col-2 md:mb-0">Type of Wine</label>
+        <div class="col-12 md:col-10">
+            <div *ngFor="let wtype of wineType" class="flex align-items-center">
+                <p-radioButton [inputId]="wtype.type" name="winetype" [value]="wtype.type"
+                    [(ngModel)]="alcoholic.type"></p-radioButton>
+                <label [for]="wtype.type" class="col-12 mb-2 md:col-2 md:mb-0">{{wtype.label}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="field grid">
+        <label for="country" class="col-12 mb-2 md:col-2 md:mb-0">Country / Region</label>
+        <div class="col-12 md:col-3">
+            <p-dropdown [options]="countries" [(ngModel)]="selectedCountry" optionLabel="name" [filter]="true"
+                [showClear]="true" placeholder="Select a Country">
+                <ng-template pTemplate="selectedItem">
+                    <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
+                        <span [ngClass]="'fi fi-'+selectedCountry.code"></span>
+                        <div>{{ selectedCountry.name }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-country pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <span [ngClass]="'fi fi-'+country.code"></span>
+                        <div>{{ country.name }}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="col-12 md:col-7 pl-2">
+            <input type="text" id="region" pInputText [(ngModel)]="alcoholic.region" />
+        </div>
+    </div>
+    <div class="field grid">
+        <label for="year" class="col-12 mb-2 md:col-2 md:mb-0">Year</label>
+        <div class="col-12 md:col-10">
+            <p-calendar [(ngModel)]="alcoholic.year_date" view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
+        </div>
+    </div>
+    <div class="field grid">
+        <label for="grapes" class="col-12 mb-2 md:col-2 md:mb-0">Grapes</label>
+        <div class="col-12 md:col-10">
+            <p-multiSelect [options]="grapes" [group]="true" [showClear]="true" [(ngModel)]="alcoholic.grapes"
+                placeholder="Select Grapes" appendTo="body" [contentEditable]="true" display="chip" optionLabel="label"
+                optionValue="label" [filter]="true">
+                <ng-template let-group pTemplate="group">
+                    <span>{{ group.label }}</span>
+                </ng-template>
+            </p-multiSelect>
+        </div>
+    </div>
+    <div class="field grid">
+        <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
+        <div class="col-12 md:col-10">
+            <input type="text" id="shop" pInputText [(ngModel)]="alcoholic.shop" />
+        </div>
+    </div>
+</div>
+<div *ngIf="thing.thing_type === 'food'" class="card">
+    <div class="field grid">
+        <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
+        <input type="text" id="name" pInputText [(ngModel)]="food.name" />
+    </div>
+    <div class="field grid">
+        <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
+        <input type="text" id="weight" pInputText [(ngModel)]="food.weight" aria-describedby="weight-help" />
+        <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+    </div>
+    <div class="field grid">
+        <label for="vacuumed" class="col-12 mb-2 md:col-2 md:mb-0">Vacuumed</label>
+        <p-checkbox [(ngModel)]="food.vacuumed" [binary]="true" id="vacuumed"></p-checkbox>
+    </div>
+    <div class="field grid">
+        <label for="sealed" class="col-12 mb-2 md:col-2 md:mb-0">Sealed</label>
+        <p-checkbox [(ngModel)]="food.sealed" [binary]="true" id="sealed"></p-checkbox>
+    </div>
+    <div class="field grid">
+        <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
+        <div class="col-12 md:col-10">
+            <input type="text" id="shop" pInputText [(ngModel)]="food.shop" />
+        </div>
+    </div>
+</div>
+<div *ngIf="thing.thing_type === 'nonalcoholic'" class="card">
+    <div class="field grid">
+        <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
+        <input type="text" id="name" pInputText [(ngModel)]="nonalcoholic.name" />
+    </div>
+    <div class="field grid">
+        <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
+        <input type="text" id="weight" pInputText [(ngModel)]="nonalcoholic.weight"
+            aria-describedby="weight-help" />
+        <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+    </div>
+    <div class="field grid">
+        <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
+        <div class="col-12 md:col-10">
+            <input type="text" id="shop" pInputText [(ngModel)]="nonalcoholic.shop" />
+        </div>
+    </div>
+</div>
+<div *ngIf="thing.thing_type === 'nonfood'" class="card">
+    <div class="field grid">
+        <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
+        <input type="text" id="name" pInputText [(ngModel)]="nonfood.name" />
+    </div>
+    <div class="field grid">
+        <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
+        <input type="text" id="weight" pInputText [(ngModel)]="nonfood.weight"
+            aria-describedby="weight-help" />
+        <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+    </div>
+    <div class="field grid">
+        <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
+        <div class="col-12 md:col-10">
+            <input type="text" id="shop" pInputText [(ngModel)]="nonfood.shop" />
+        </div>
+    </div>
+</div>
+<p-toolbar>
+    <button pButton (click)="onSave()">Save</button>
+    <button pButton (click)="onCancel()">Cancel</button>
+</p-toolbar>

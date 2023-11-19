@@ -43,8 +43,6 @@ export class PlacesListComponent implements OnInit, OnDestroy {
           this.lPlaces = placesRet.data as Place[];
           this.lUsers = usersRet.data! as User[];
           this.lPlaces.forEach((place) => {
-            place.createdAt_date = new Date(place.createdAt);
-            place.updatedAt_date = new Date(place.updatedAt);
             place.placetype = (placetypeRet.data as Placetype[]).find(placetype => placetype.id == place.placetypeid)?.name!
             place.icon = (placetypeRet.data as Placetype[]).find(placetype => placetype.id == place.placetypeid)?.icon!
             if (place.userid != undefined) {
@@ -87,8 +85,6 @@ export class PlacesListComponent implements OnInit, OnDestroy {
           next: (placeRet: ReturnStruct) => {
             delete this.clonedPlaces[0];
             this.lPlaces[row] = placeRet.data as Place;
-            this.lPlaces[row].createdAt_date = new Date(this.lPlaces[row].createdAt);
-            this.lPlaces[row].updatedAt_date = new Date(this.lPlaces[row].updatedAt);
             this.lPlaces[row].placetype = this.lPlaceType.find(placetype => placetype.value == this.lPlaces[row].placetypeid)?.label!
             this.lPlaces[row].icon = this.lPlaceType.find(placetype => placetype.value == this.lPlaces[row].placetypeid)?.icon!
             this.lPlaces[row].user = this.authService.userValue.name;
@@ -100,8 +96,6 @@ export class PlacesListComponent implements OnInit, OnDestroy {
           next: (placeRet: ReturnStruct) => {
             delete this.clonedPlaces[place.id!];
             this.lPlaces[row] = placeRet.data as Place;
-            this.lPlaces[row].createdAt_date = new Date(this.lPlaces[row].createdAt);
-            this.lPlaces[row].updatedAt_date = new Date(this.lPlaces[row].updatedAt);
             this.lPlaces[row].placetype = this.lPlaceType.find(placetype => placetype.value == this.lPlaces[row].placetypeid)?.label!
             this.lPlaces[row].icon = this.lPlaceType.find(placetype => placetype.value == this.lPlaces[row].placetypeid)?.icon!
             this.lPlaces[row].user = this.authService.userValue.name;

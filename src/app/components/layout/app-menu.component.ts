@@ -71,12 +71,6 @@ export class AppMenuComponent implements OnInit {
             }
           },
           {
-            label: 'Register',
-            icon: 'pi pi-fw pi-user-plus',
-            visible: !loggedIn,
-            routerLink: 'user/register'
-          },
-          {
             label: 'Search',
             icon: 'pi pi-fw pi-search',
             visible: loggedIn,

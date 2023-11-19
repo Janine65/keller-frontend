@@ -34,8 +34,6 @@ export class SubplaceListComponent implements OnInit {
           this.lPlaces = placesRet.data! as Place[];
           this.lUsers = usersRet.data! as User[];
           this.lSubplaces.forEach((subplace) => {
-            subplace.createdAt_date = new Date(subplace.createdAt);
-            subplace.updatedAt_date = new Date(subplace.updatedAt);
             subplace.place = this.lPlaces.find(place => place.id == subplace.placeid)?.name!;
             if (subplace.userid != undefined) {
               const iUser = (usersRet.data! as User[]).findIndex(
@@ -72,8 +70,6 @@ export class SubplaceListComponent implements OnInit {
           next: (subplaceRet: ReturnStruct) => {
             delete this.clonedSubplaces[0];
             this.lSubplaces[row] = subplaceRet.data as Subplace;
-            this.lSubplaces[row].createdAt_date = new Date(this.lSubplaces[row].createdAt);
-            this.lSubplaces[row].updatedAt_date = new Date(this.lSubplaces[row].updatedAt);
             this.lSubplaces[row].place = this.lPlaces.find(place => place.id == this.lSubplaces[row].placeid)?.name!;
             this.lSubplaces[row].user = this.authService.userValue.name;
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Subplace is updated' });
@@ -84,8 +80,6 @@ export class SubplaceListComponent implements OnInit {
           next: (subplaceRet: ReturnStruct) => {
             delete this.clonedSubplaces[subplace.id!];
             this.lSubplaces[row] = subplaceRet.data as Subplace;
-            this.lSubplaces[row].createdAt_date = new Date(this.lSubplaces[row].createdAt);
-            this.lSubplaces[row].updatedAt_date = new Date(this.lSubplaces[row].updatedAt);
             this.lSubplaces[row].user = this.authService.userValue.name;
             this.lSubplaces[row].place = this.lPlaces.find(place => place.id == this.lSubplaces[row].placeid)?.name!;
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Subplace is updated' });

@@ -1,5 +1,5 @@
 export class User {
-    public id: number | undefined = 0;
+    public id: number | undefined;
     public createdAt?: Date;
     public updatedAt?: Date;
     public login: string = '';
@@ -7,4 +7,6 @@ export class User {
     password!: string;
     name!: string;
     token!: string;
+    userid: number | undefined;
+    user: string | undefined;
 }

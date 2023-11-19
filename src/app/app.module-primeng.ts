@@ -41,6 +41,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TagModule } from 'primeng/tag';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 //
 export const APP_PRIMENG_MODULE = [
@@ -67,6 +68,7 @@ export const APP_PRIMENG_MODULE = [
     MenubarModule,
     MessageModule,
     MessagesModule,
+    MultiSelectModule,
     PanelModule,
     PasswordModule,
     ProgressBarModule,

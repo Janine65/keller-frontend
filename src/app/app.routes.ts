@@ -37,10 +37,6 @@ export const appRoutes: Route[] = [
                 component: UserLoginComponent
             },
             {
-                path: 'register',
-                component: UserRegisterComponent
-            },
-            {
                 path: 'list',
                 component: UserListComponent
             }

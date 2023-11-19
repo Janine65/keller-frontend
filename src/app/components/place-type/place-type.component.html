@@ -1,5 +1,6 @@
-<div class="card">
-    <p-table *ngIf="!isLoading" dataKey="id" editMode="row" [value]="lPlacetypes">
+<div style="height: 100%;">
+    <p-table *ngIf="!isLoading" dataKey="id" editMode="row" [value]="lPlacetypes" [scrollable]="true"
+        scrollHeight="flex">
         <ng-template pTemplate="caption">
             <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
                 (click)="onRowNew()"></button>
@@ -32,7 +33,8 @@
                                 [style]="{'width':'100%'}">
                                 <ng-template pTemplate="selectedItem">
                                     <div class="flex align-items-center gap-2" *ngIf="placetype.icon">
-                                        <i [class]="'pi ' + placetype.icon" style="width: 18px"></i> {{ placetype.icon }}
+                                        <i [class]="'pi ' + placetype.icon" style="width: 18px"></i> {{ placetype.icon
+                                        }}
                                     </div>
                                 </ng-template>
                                 <ng-template let-icons pTemplate="item">
@@ -63,6 +65,10 @@
                     </div>
                 </td>
             </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <hr />
+            {{lPlacetypes.length}} Placetypes
         </ng-template>
     </p-table>
 </div>

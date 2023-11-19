@@ -34,6 +34,8 @@ import { PlacesListComponent } from './components/places-list/places-list.compon
 import { SubplaceListComponent } from './components/subplace-list/subplace-list.component';
 import { ThingsListComponent } from './components/things-list/things-list.component';
 import { PlaceTypeComponent } from './components/place-type/place-type.component';
+import { ThingEditComponent } from './components/thing-edit/thing-edit.component';
+import { StringDatePipe } from './shared/string-date.pipe';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { PlaceTypeComponent } from './components/place-type/place-type.component
     ThingsListComponent,
     PlaceTypeComponent,
     PlaceTypeComponent,
+    ThingEditComponent,
+    StringDatePipe,    
   ],
   imports: [
     BrowserModule,
@@ -71,6 +75,7 @@ import { PlaceTypeComponent } from './components/place-type/place-type.component
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     APP_PRIMENG_PROVIDERS,
+    DatePipe, DecimalPipe, PercentPipe, StringDatePipe
   ],
   bootstrap: [AppComponent],
 })
