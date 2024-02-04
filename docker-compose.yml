@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  keller-backend:
+    container_name: keller-backend
+    restart: always
+    image: janine65/keller-backend:latest
+    platform: linux/amd64
+    build:
+      context: ../keller-backend/
+      dockerfile: ../keller-backend/Dockerfile
+    environment:
+      - COMPOSE_PROJECT_NAME
+      - NODE_ENV=production
+    ports:
+      - 3000:3000
+    hostname: keller-backend
+    networks:
+      - back-tier
+      - keller-front-tier
+
+  keller-frontend:
+    container_name: keller-frontend
+    restart: always
+    image: janine65/keller-frontend:latest
+    platform: linux/amd64
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    depends_on:
+      - keller-backend
+    environment:
+      - COMPOSE_PROJECT_NAME
+      - NODE_ENV=production
+    ports:
+      - 4300:4300
+    links:
+      - keller-backend
+    hostname: keller-frontend
+    networks:
+      - keller-front-tier
+
+
+networks:
+  # The presence of these objects is sufficient to define them
+  keller-front-tier: {}
+  back-tier: {}

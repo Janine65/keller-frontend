@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../dist/keller",
     "module": "commonjs",
     "target": "es2016",
     "types": ["jest", "node"]

@@ -1,0 +1,201 @@
+[NX CLOUD] Verifying current cloud bundle
+[NX CLOUD] A local bundle currently exists:  {
+  version: '2311.09.8.hotfix6',
+  fullPath: '/Users/janine/Development/JS/keller-frontend/.nx/cache/cloud/2311.09.8.hotfix6'
+}
+[NX CLOUD] Last verification was within the past 30 minutes, will not verify this time
+[NX CLOUD] Done:  /Users/janine/Development/JS/keller-frontend/.nx/cache/cloud/2311.09.8.hotfix6
+[Nx Cloud] Did not identify a VCS platform.
+
+ >  NX   RunStart
+
+   
+{
+  "meta": {},
+  "branch": null,
+  "runGroup": "fe825385e6e4ab7af1fcfde028c8e8c20b111b04",
+  "ciExecutionId": null,
+  "ciExecutionEnv": "",
+  "hashes": [
+    "4724898554543463226"
+  ],
+  "machineInfo": {
+    "machineId": "nayI3Exqt8+4LyGpLRqFvQ==",
+    "platform": "darwin",
+    "version": "Darwin Kernel Version 23.1.0: Mon Oct  9 21:28:45 PDT 2023; root:xnu-10002.41.9~6/RELEASE_ARM64_T6020",
+    "cpuCores": 12
+  },
+  "vcsContext": null
+}
+
+RunStart duration: 389
+
+ >  NX   Nx Cloud: Cache miss 4724898554543463226.
+
+
+> nx run keller-frontend:build:production
+
+asset main.e8b27a127272aa66.js 1.1 MiB {179} [emitted] [immutable] (name: main)
+asset styles.17261ab2a5fac9f1.css 529 KiB {532} [emitted] [immutable] (name: styles)
+asset primeicons.943ab24c43224d29.svg 285 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/primeicons/fonts/primeicons.svg] (auxiliary name: styles)
+asset rs.f294f880d8abbc9b.svg 183 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/4x3/rs.svg] (auxiliary name: styles)
+asset rs.9161cc07ad098413.svg 183 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/1x1/rs.svg] (auxiliary name: styles)
+asset sh-ac.12d1137d7583ffad.svg 153 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/4x3/sh-ac.svg] (auxiliary name: styles)
+asset sh-ac.f23e902dd48ecd10.svg 150 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/1x1/sh-ac.svg] (auxiliary name: styles)
+asset bo.143f58702c4fd165.svg 113 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/1x1/bo.svg] (auxiliary name: styles)
+asset bo.fea05d8a1c0a0195.svg 111 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/4x3/bo.svg] (auxiliary name: styles)
+asset mx.427d7675adb1fa44.svg 93.2 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/4x3/mx.svg] (auxiliary name: styles)
+asset es.3cde52fa937c9699.svg 91.5 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/1x1/es.svg] (auxiliary name: styles)
+asset es.b796348253df1d0d.svg 89.7 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/4x3/es.svg] (auxiliary name: styles)
+asset mx.1925a8ee62094360.svg 88.8 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/1x1/mx.svg] (auxiliary name: styles)
+asset sv.c9d2ec665cb74d65.svg 81.8 KiB ({532}) [emitted] [from: /Users/janine/Development/JS/keller-frontend/node_modules/flag-icons/flags/1x1/sv.svg] (auxiliary name: styles)
++ 538 assets
+Entrypoint main 1.1 MiB = runtime.a7ceedeaa0398253.js 908 bytes main.e8b27a127272aa66.js 1.1 MiB
+Entrypoint polyfills 33.9 KiB = runtime.a7ceedeaa0398253.js 908 bytes polyfills.78cfe5b18cd5b220.js 33 KiB
+Entrypoint styles 530 KiB (4.56 MiB) = runtime.a7ceedeaa0398253.js 908 bytes styles.17261ab2a5fac9f1.css 529 KiB 547 auxiliary assets
+chunk {179} (runtime: runtime) main.e8b27a127272aa66.js (main) 4.67 MiB [initial] [rendered]
+  ./src/main.ts + 226 modules [578] 4.67 MiB {179} [built] [code generated]
+    [no exports used]
+    entry /Users/janine/Development/JS/keller-frontend/src/main.ts main
+chunk {429} (runtime: runtime) polyfills.78cfe5b18cd5b220.js (polyfills) 104 KiB [initial]
+  cached modules 104 KiB [cached] 1 module
+chunk {532} (runtime: runtime) styles.17261ab2a5fac9f1.css (styles) 50 bytes (javascript) 663 KiB (css/mini-extract) [initial]
+  cached modules 663 KiB [cached] 6 modules
+  ./src/styles.css?ngGlobalStyle [481] 50 bytes {532} [built]
+    [no exports used]
+    entry /Users/janine/Development/JS/keller-frontend/src/styles.css?ngGlobalStyle styles
+chunk {666} (runtime: runtime) runtime.a7ceedeaa0398253.js (runtime) 2.48 KiB [entry]
+  cached modules 2.48 KiB [cached] 3 modules
+  
+
+LOG from webpack.FileSystemInfo
+    343 new snapshots created
+    33% root snapshot uncached (1164 / 3563)
+    15% children snapshot uncached (417 / 2729)
+    2136 entries tested
+    File info in cache: 443 timestamps 77 hashes 77 timestamp hash combinations
+    File timestamp snapshot optimization: 13% (18/140) entries shared via 1 shared snapshots (1 times referenced)
+    File timestamp hash combination snapshot optimization: 82% (2407/2929) entries shared via 17 shared snapshots (353 times referenced)
+    Directory info in cache: 0 timestamps 0 hashes 0 timestamp hash combinations
+    Missing items snapshot optimization: 58% (1730/2985) entries shared via 40 shared snapshots (395 times referenced)
+    Managed items info in cache: 80 items
+    Managed items snapshot optimization: 48% (432/893) entries shared via 19 shared snapshots (70 times referenced)
+    Managed files snapshot optimization: 52% (909/1743) entries shared via 25 shared snapshots (242 times referenced)
+    Managed missing snapshot optimization: 77% (754/976) entries shared via 27 shared snapshots (103 times referenced)
++ 4 hidden lines
+
+LOG from webpack.Compilation
+<t> runtime requirements.modules: 0.063209 ms
+<t> runtime requirements.chunks: 0.055041 ms
+<t> runtime requirements.entries: 0.402792 ms
+<t> compute affected modules: 0.002167 ms
+<t> finish modules: 48.521 ms
+<t> report dependency errors and warnings: 8.110208 ms
+<t> optimize dependencies: 26.983291 ms
+<t> create chunks: 5.654458 ms
+<t> compute affected modules with chunk graph: 0.000958 ms
+<t> optimize: 28.0245 ms
+    9 modules hashed, 0 from cache (0.02 variants per module in average)
+<t> module hashing: 12.072541 ms
+    11% code generated (1 generated, 8 from cache)
+<t> code generation: 540.186334 ms
+<t> runtime requirements.modules: 0.199083 ms
+<t> runtime requirements.chunks: 0.049875 ms
+<t> runtime requirements.entries: 0.260958 ms
+<t> runtime requirements: 0.593 ms
+<t> hashing: initialize hash: 0.01675 ms
+<t> hashing: sort chunks: 0.034792 ms
+<t> hashing: hash runtime modules: 0.604458 ms
+<t> hashing: hash chunks: 0.546708 ms
+<t> hashing: hash digest: 0.007375 ms
+<t> hashing: process full hash modules: 0.000667 ms
+<t> hashing: 1.253542 ms
+    0% code generated (0 generated, 3 from cache)
+<t> record hash: 0.02275 ms
+<t> module assets: 1.621709 ms
+<t> create chunk assets: 1.197667 ms
+<t> process assets: 4709.152542 ms
+
+LOG from webpack.Compiler
+<t> make hook: 1285.854084 ms
+<t> finish make hook: 0.045167 ms
+<t> finish compilation: 56.657084 ms
+<t> seal compilation: 5327.8827089999995 ms
+<t> afterCompile hook: 0.05375 ms
+<t> emitAssets: 29.328291 ms
+<t> emitRecords: 0.032792 ms
+<t> done hook: 0.074292 ms
+<t> beginIdle: 0.542625 ms
+
+LOG from webpack.ResolverCachePlugin
+    10% really resolved (322 real resolves with 258 cached but invalid, 2940 cached valid, 0 concurrent)
+
+LOG from webpack.FlagDependencyExportsPlugin
+<t> restore cached provided exports: 1.546334 ms
+<t> figure out provided exports: 2.899458 ms
+    6% of exports of modules have been determined (13 no declared exports, 21 not cached, 0 flagged uncacheable, 343 from cache, 0 from mem cache, 0 additional calculations due to dependencies)
+<t> store provided exports into cache: 0.177416 ms
+
+LOG from webpack.InnerGraphPlugin
+<t> infer dependency usage: 0.579126 ms
+
+LOG from webpack.SideEffectsFlagPlugin
+<t> update dependencies: 16.7075 ms
+
+LOG from webpack.FlagDependencyUsagePlugin
+<t> initialize exports usage: 0.16275 ms
+<t> trace exports usage in graph: 9.971084 ms
+
+LOG from webpack.buildChunkGraph
+<t> visitModules: prepare: 4.308255 ms
+<t> visitModules: visiting: 4.794042 ms
+    507 queue items processed (235 blocks)
+    0 chunk groups connected
+    0 chunk groups processed for merging (0 module sets, 0 forked, 0 + 0 modules forked, 0 + 0 modules merged into fork, 0 resulting modules)
+    0 chunk group info updated (0 already connected chunk groups reconnected)
+<t> visitModules: 4.834291 ms
+<t> connectChunkGroups: 0.001334 ms
+<t> cleanup: 0.000583 ms
+
+LOG from webpack.SplitChunksPlugin
+<t> prepare: 0.019583 ms
+<t> modules: 1.946167 ms
+<t> queue: 0.0075 ms
+<t> maxSize: 0.038208 ms
+
+LOG from webpack.ModuleConcatenationPlugin
+<t> select relevant modules: 1.076667 ms
+<t> sort relevant modules: 0.21875 ms
+<t> find modules to concatenate: 12.985875 ms
+<t> sort concat configurations: 0.000542 ms
+<t> create concatenated modules: 5.94275 ms
++ 3 hidden lines
+
+LOG from build-angular.JavaScriptOptimizerPlugin
+<t> optimize asset: main.bac238488a28b726.js: 3208.391917 ms
+<t> optimize js assets: 3309.482542 ms
++ 2 hidden lines
+
+LOG from build-angular.CssOptimizerPlugin
+<t> optimize css assets: 1.055166 ms
++ 1 hidden lines
+
+2023-11-26 16:12:00: webpack 5.88.2 compiled in 7462 ms (2a552015da7fa801)
+
+Initial Chunk Files           | Names         |  Raw Size | Estimated Transfer Size
+main.e8b27a127272aa66.js      | main          |   1.10 MB |               217.58 kB
+styles.17261ab2a5fac9f1.css   | styles        | 529.44 kB |                39.97 kB
+polyfills.78cfe5b18cd5b220.js | polyfills     |  33.04 kB |                10.64 kB
+runtime.a7ceedeaa0398253.js   | runtime       | 908 bytes |               520 bytes
+
+| Initial Total |   1.65 MB |               268.71 kB
+
+Build at: 2023-11-26T15:12:01.235Z - Hash: 2a552015da7fa801 - Time: 8404ms
+
+ 
+
+ >  NX   Successfully ran target build for project keller-frontend
+
+
+   View logs and investigate cache misses at https://nx.app/runs/LBsKa0Qe0S
+

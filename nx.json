@@ -1,21 +1,7 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
-        "accessToken": "MjkxZjg3ZjUtOGE0NC00MmEyLTgxYjctY2EwNmUyYzExODEzfHJlYWQtd3JpdGU="
-      }
-    }
-  },
   "targetDefaults": {
     "build": {
+      "cache": true,
       "dependsOn": [
         "^build"
       ],
@@ -25,6 +11,7 @@
       ]
     },
     "test": {
+      "cache": true,
       "inputs": [
         "default",
         "^production",
@@ -32,44 +19,31 @@
       ]
     },
     "lint": {
+      "cache": true,
       "inputs": [
         "default",
         "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.js"
+        "{workspaceRoot}/.eslintignore"
       ]
     }
   },
+  "affected": {
+    "defaultBase": "master"
+  },
   "namedInputs": {
     "default": [
-      "/**/*",
+      "{workspaceRoot}/**/*",
       "sharedGlobals"
     ],
     "production": [
       "default",
-      "/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "/tsconfig.spec.json",
-      "/jest.config.[jt]s",
-      "/src/test-setup.[jt]s",
-      "/test-setup.[jt]s",
-      "/.eslintrc.json",
-      "/eslint.config.js"
+      "{workspaceRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "{workspaceRoot}/tsconfig.spec.json",
+      "{workspaceRoot}/jest.config.[jt]s",
+      "{workspaceRoot}/src/test-setup.[jt]s",
+      "{workspaceRoot}/test-setup.[jt]s",
+      "{workspaceRoot}/.eslintrc.json"
     ],
     "sharedGlobals": []
-  },
-  "generators": {
-    "@nx/angular:application": {
-      "style": "css",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "none"
-    },
-    "@nx/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nx/angular:component": {
-      "style": "css"
-    }
   }
 }
