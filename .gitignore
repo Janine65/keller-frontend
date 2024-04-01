@@ -42,3 +42,4 @@ Thumbs.db
 
 .nx/cache
 docker-compose-prod.yml
+docker-compose-dev.yml
