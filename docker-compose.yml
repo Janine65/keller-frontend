@@ -12,12 +12,6 @@ services:
     environment:
       - COMPOSE_PROJECT_NAME
       - NODE_ENV=production
-      - DB_PASSWORD_FILE /run/secrets/DB_PASSWORD
-    env_file:
-      - ../keller-backend/src/config/prod/.env
-    secrets:
-      - DB_PASSWORD:
-      - SECRET_KEY
     ports:
       - 3000:3000
     hostname: keller-backend
@@ -45,12 +39,6 @@ services:
     hostname: keller-frontend
     networks:
       - keller-front-tier
-
-secrets:
-  DB_PASSWORD:
-    file: ./src/config/prod/db_passwort.txt
-  SECRET_KEY:
-    file: ./src/config/prod/secret_key.txt
 
 networks:
   # The presence of these objects is sufficient to define them
