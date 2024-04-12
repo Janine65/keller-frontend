@@ -1,16 +1,17 @@
-FROM guergeiro/pnpm:18-8 AS build
+FROM --platform=arm64 guergeiro/pnpm:18-8 AS build
 #FROM node:18-slim AS build
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 
 # set working directory
 WORKDIR /usr/local/app
 
-COPY package.json pnpm-lock.yaml nginx.conf /usr/local/app/
+COPY package.json pnpm-lock.yaml nginx-dev.conf /usr/local/app/
 # install package.json (o sea las dependencies)
-# RUN pnpm fetch --prod
+
 RUN pnpm install --frozen-lockfile 
 
 COPY ./dist /usr/local/app/dist
+RUN mv nginx-dev.conf nginx.conf
 
 # Stage 1, for copying the compiled app from the previous step and making it ready for production with Nginx
 FROM nginx:alpine

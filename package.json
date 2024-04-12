@@ -14,7 +14,7 @@
     "build": "nx build",
     "postbuild": "cp -f ./package.json dist",
     "postversion": "git push && git push --tags",
-    "docker": "nx build && docker-compose build && docker-compose push"
+    "docker": "nx build && docker-compose build --no-cache && docker-compose push"
   },
   "private": true,
   "dependencies": {

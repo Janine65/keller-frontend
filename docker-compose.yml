@@ -12,6 +12,8 @@ services:
     environment:
       - COMPOSE_PROJECT_NAME
       - NODE_ENV=production
+    volumes:
+      - logfile:/usr/src/keller-app/logs:rw
     ports:
       - 3000:3000
     hostname: keller-backend
@@ -44,3 +46,11 @@ networks:
   # The presence of these objects is sufficient to define them
   keller-front-tier: {}
   back-tier: {}
+
+volumes:
+  logfile:
+    driver: local
+    driver_opts:
+      type: 'nfs'
+      o: 'bind'
+      device: '/volume1/server/kellerapp/logs'
