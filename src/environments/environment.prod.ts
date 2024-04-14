@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: '/kellerbackend',
+  apiUrl: '/keller-backend',
   apiUrlSelf: 'http://keller.olconet.com',
 };
