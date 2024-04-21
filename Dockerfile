@@ -2,6 +2,8 @@ FROM guergeiro/pnpm:18-8 AS build
 #FROM node:18-slim AS build
 ENV NODE_ENV=production
 
+RUN pnpm add pnpm
+
 # set working directory
 WORKDIR /usr/local/app
 
