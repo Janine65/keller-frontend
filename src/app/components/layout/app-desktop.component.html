@@ -22,7 +22,7 @@
         <tr>
             <td *ngFor="let col of columns; let i = index">
                 <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
-                <span *ngIf="col.field == 'type' && rowData.icon != undefined" [class]="'pi ' + rowData.icon"></span>
+                <span *ngIf="col.field == 'name' && rowData.icon != undefined" [class]="'pi ' + rowData.icon"></span>
                 {{ rowData[col.field] }}
             </td>
             <td>

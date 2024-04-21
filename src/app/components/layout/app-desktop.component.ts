@@ -94,10 +94,10 @@ export class AppDesktopComponent implements OnInit {
               this.lSubPlaceSelect = []
               this.selSubplace = undefined;
               this.lPlaces.forEach(place => {
-                this.lSubplaces.forEach(sub => {
-                    const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
+                  const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
+                  this.lSubplaces.forEach(sub => {
                     if (sub.placeid == place.id) {
-                    const rec: DropdownList = {icon: placetype!.icon, name: place.name + ' - ' + sub.name, value: sub.id!, disabled: false}
+                    const rec: DropdownList = {name: place.name, icon: placetype!.icon + ' - ' + sub.name, value: sub.id!, disabled: false}
                     this.lSubPlaceSelect.push(rec)
                   }
                   });
@@ -116,7 +116,7 @@ export class AppDesktopComponent implements OnInit {
                     const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
                     const place = this.lPlaces.find(p => p.id == sub?.placeid)
                     const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                    children.push({ data: { name: sub?.name, icon: placetype?.icon, type: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+                    children.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
                   }
                 });
                 node = {
@@ -139,9 +139,9 @@ export class AppDesktopComponent implements OnInit {
                   if (obj2sub.foodid && obj2sub.foodid == thing.id) {
                     total += obj2sub.count!;
                     const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
-                    const place = this.lPlaces.find(p => p.id = sub?.placeid)
+                    const place = this.lPlaces.find(p => p.id == sub?.placeid)
                     const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                    children.push({ data: { name: sub?.name, icon: placetype?.icon, type: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+                    children.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
                   }
                 });
                 node = {
@@ -164,9 +164,9 @@ export class AppDesktopComponent implements OnInit {
                   if (obj2sub.nonalcoholicid && obj2sub.nonalcoholicid == thing.id) {
                     total += obj2sub.count!;
                     const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
-                    const place = this.lPlaces.find(p => p.id = sub?.placeid)
+                    const place = this.lPlaces.find(p => p.id == sub?.placeid)
                     const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                    children.push({ data: { name: sub?.name, icon: placetype?.icon ,type: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+                    children.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
                   }
                 });
                 node = {
@@ -189,9 +189,9 @@ export class AppDesktopComponent implements OnInit {
                   if (obj2sub.nonfoodid && obj2sub.nonfoodid == thing.id) {
                     total += obj2sub.count!;
                     const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
-                    const place = this.lPlaces.find(p => p.id = sub?.placeid)
+                    const place = this.lPlaces.find(p => p.id == sub?.placeid)
                     const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                    children.push({ data: { name: sub?.name, icon: placetype?.icon, type: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+                    children.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
                   }
                 });
                 node = {
