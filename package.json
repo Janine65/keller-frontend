@@ -2,7 +2,7 @@
   "name": "keller-frontend",
   "displayName": "Keller Organisator",
   "description": "Keller Organisator: angular, typescript, rxjs, primeng",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "license": "MIT",
   "author": {
     "name": "Janine Franken",
