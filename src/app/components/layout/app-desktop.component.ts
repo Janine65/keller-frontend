@@ -97,8 +97,8 @@ export class AppDesktopComponent implements OnInit {
                   const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
                   this.lSubplaces.forEach(sub => {
                     if (sub.placeid == place.id) {
-                    const rec: DropdownList = {name: place.name, icon: placetype!.icon + ' - ' + sub.name, value: sub.id!, disabled: false}
-                    this.lSubPlaceSelect.push(rec)
+                      const rec: DropdownList = {name: place.name + ' - ' + sub.name, icon: placetype!.icon, value: sub.id!, disabled: false}
+                      this.lSubPlaceSelect.push(rec)
                   }
                   });
               });
