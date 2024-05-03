@@ -56,7 +56,10 @@ export class SubplaceListComponent implements OnInit {
   }
 
   onRowNew() {
-    this.lSubplaces.unshift(new Subplace());
+    const newSub = new Subplace();
+    newSub.id = 0
+    this.lSubplaces.unshift(newSub);
+    this.onRowEditInit(this.lSubplaces[0])
   }
 
   onRowEditSave(subplace: Subplace, row: number) {

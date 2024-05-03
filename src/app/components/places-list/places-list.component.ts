@@ -72,7 +72,10 @@ export class PlacesListComponent implements OnInit, OnDestroy {
   }
 
   onRowNew() {
-    this.lPlaces.unshift(new Place());
+    const newPlace = new Place();
+    newPlace.id = 0;
+    this.lPlaces.unshift(newPlace);
+    this.onRowEditInit(this.lPlaces[0])
   }
 
   onRowEditSave(place: Place, row: number) {

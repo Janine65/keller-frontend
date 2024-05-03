@@ -25,7 +25,7 @@ interface TreeData {
   type: string | undefined;
   id: number;
   count: number | undefined;
-  icon: string  | undefined;
+  icon: string | undefined;
   shopped_at: string | undefined | null;
   valid_until: string | undefined | null;
 }
@@ -49,26 +49,35 @@ export class AppDesktopComponent implements OnInit {
   lNonfood: Nonfood[] = [];
   lObj2Subl: Object2Subplace[] = [];
 
-  selectedNode: TreeTableNode<any> | TreeTableNode<any>[] | null = null;
+  selectedNode: TreeTableNode<any> | null = null;
 
   isLoading = true;
 
   // Dialog Parameters
   showDialog = false;
-  selSubplace : DropdownList | undefined;
+  selSubplace: DropdownList | undefined;
   lSubPlaceSelect: DropdownList[] = []
 
   selObj2Sub: Object2Subplace = new Object2Subplace();
 
+  thingsTypes = [
+    {label: 'Alcoholic', value: 'Alcoholic'},
+    {label: 'Food', value: 'Food'},
+    {label: 'Nonalcoholic', value: 'Nonalcoholic'},
+    {label: 'Nonfood', value: 'Nonfood'}
+  ]
+
+  thingType = ''
+
   constructor(
-    private backendService: BackendService, 
-    private authService: AuthService, 
+    private backendService: BackendService,
+    private authService: AuthService,
     private messageService: MessageService,
     private stringDatePipe: StringDatePipe
-    ) { 
-    }
+  ) {
+  }
 
-    reloadNodes() {
+  reloadNodes() {
     this.authService.isLoggedIn().subscribe({
       next: (value) => {
         this.isLoading = true;
@@ -94,13 +103,13 @@ export class AppDesktopComponent implements OnInit {
               this.lSubPlaceSelect = []
               this.selSubplace = undefined;
               this.lPlaces.forEach(place => {
-                  const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                  this.lSubplaces.forEach(sub => {
-                    if (sub.placeid == place.id) {
-                      const rec: DropdownList = {name: place.name + ' - ' + sub.name, icon: placetype!.icon, value: sub.id!, disabled: false}
-                      this.lSubPlaceSelect.push(rec)
+                const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
+                this.lSubplaces.forEach(sub => {
+                  if (sub.placeid == place.id) {
+                    const rec: DropdownList = { name: place.name + ' - ' + sub.name, icon: placetype!.icon, value: sub.id!, disabled: false }
+                    this.lSubPlaceSelect.push(rec)
                   }
-                  });
+                });
               });
 
               let children: { data: TreeData }[] = []
@@ -218,9 +227,9 @@ export class AppDesktopComponent implements OnInit {
   }
   ngOnInit(): void {
     this.cols = [
-      { field: 'name', header: 'Name' },
+      { field: 'name', header: 'Name'},
       { field: 'type', header: 'Type / Place' },
-      { field: 'count', header: 'Count' },
+      { field: 'count', header: 'Count'},
       { field: 'shopped_at', header: 'Weight / Bought at' },
       { field: 'valid_until', header: 'Valid until' }
     ];
@@ -232,38 +241,46 @@ export class AppDesktopComponent implements OnInit {
   }
 
   fieldSearch(event: Event, tt: TreeTable, field: string) {
-    return tt.filter((event.target as HTMLInputElement).value, field, 'lenient')
+    return tt.filter((event.target as HTMLInputElement).value, field, 'contains')
+  }
+  fieldSearchType(tt: TreeTable) {
+    if (this.thingType == '')
+      tt.reset()
+    else
+      return tt.filter(this.thingType, this.cols[1].field, 'equals')
   }
 
   onAddOnSubject(rowNode: TreeTableNode<any>) {
     if (rowNode.node!.data) {
       const data: TreeData = rowNode.node!.data as TreeData;
+      this.selectedNode = rowNode;
 
       this.selObj2Sub = new Object2Subplace()
 
       switch (data.type) {
-        case 'Alcoholic':
+        case 'Alcoholic': {
           const alcoholic = this.lAlcohoic.find(al => al.id == data.id);
           this.selObj2Sub.alcoholicid = alcoholic?.id;
           break;
-
-        case 'Food':
+        }
+        case 'Food': {
           const food = this.lFood.find(al => al.id == data.id);
           this.selObj2Sub.foodid = food?.id;
 
           break;
-
-        case 'Nonalcoholic':
+        }
+        case 'Nonalcoholic': {
           const nonalcoholic = this.lNonalcohoic.find(al => al.id == data.id);
           this.selObj2Sub.nonalcoholicid = nonalcoholic?.id;
 
           break;
-
-        case 'Nonfood':
+        }
+        case 'Nonfood': {
           const nonfood = this.lNonfood.find(al => al.id == data.id);
           this.selObj2Sub.nonfoodid = nonfood?.id;
 
           break;
+        }
         default:
           break;
       }
@@ -273,7 +290,7 @@ export class AppDesktopComponent implements OnInit {
 
   saveSubplace() {
     if (this.selSubplace == undefined) {
-      this.messageService.add({severity: 'error', summary: 'Add to Subplace', detail: 'Subplace must be selected'});
+      this.messageService.add({ severity: 'error', summary: 'Add to Subplace', detail: 'Subplace must be selected' });
       return;
     }
 
@@ -281,8 +298,25 @@ export class AppDesktopComponent implements OnInit {
 
     this.backendService.insertOject2Subplace(this.selObj2Sub).subscribe({
       next: (result) => {
-        this.reloadNodes();
         this.showDialog = false;
+        const obj2sub = result.data as Object2Subplace
+        if (this.selectedNode) {
+        const mainNode = this.lKeller.findIndex(value => value.data.id == this.selectedNode?.node?.data.id)
+        if (mainNode != undefined) {
+          const ind = this.lKeller[mainNode].children?.findIndex(value => value.data.id == obj2sub.id);
+          if (ind != undefined) {
+            this.lKeller[mainNode].data.count += obj2sub.count!;
+            const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
+            const place = this.lPlaces.find(p => p.id == sub?.placeid)
+            const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
+            this.lKeller[mainNode].children?.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+          }
+        } else {
+          this.reloadNodes();
+        }
+      }
+      else
+        this.reloadNodes();
       }
     });
 
@@ -337,12 +371,20 @@ export class AppDesktopComponent implements OnInit {
       })
     }
   }
-  delEntry(rowNode: TreeNode, rowData: TreeData) {
+  delEntry(tt: TreeTable, rowNode: any, rowData: TreeData) {
     const obj2sub = this.lObj2Subl.find(o => o.id == rowData.id);
     if (obj2sub) {
       this.backendService.deleteObject2Subplace(obj2sub).subscribe({
         next: (_) => {
-        this.reloadNodes();
+          const mainNode = this.lKeller.findIndex(value => value.data.id == rowNode.node.parent.data.id)
+          if (mainNode != undefined) {
+            const ind = this.lKeller[mainNode].children?.findIndex(value => value.data.id == rowData.id);
+            if (ind != undefined) {
+              this.lKeller[mainNode].children?.splice(ind, 1);
+            }
+          } else {
+            this.reloadNodes();
+          }
         }
       })
     }

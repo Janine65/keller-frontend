@@ -1,9 +1,9 @@
 <p-treeTable #tt *ngIf="!isLoading" paginatorLocale="en-GB" [value]="lKeller" [columns]="cols" [paginator]="true"
-    [alwaysShowPaginator]="false" paginatorPosition="both" [showCurrentPageReport]="true"
-    [showJumpToPageDropdown]="true" filterMode="lenient" selectionMode="single" [(selection)]="selectedNode"
+    filterMode="lenient" [alwaysShowPaginator]="false" paginatorPosition="top" [showCurrentPageReport]="true"
+    [showJumpToPageDropdown]="true" selectionMode="single" [(selection)]="selectedNode"
     dataKey="id" [rows]="10" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}" scrollHeight="flex">
     <ng-template pTemplate="caption">
-        <div class="flex justify-content-end align-items-center">
+        <div class="flex justify-content-center mb-4">
             <div class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input type="text" pInputText placeholder="Global Search" (input)="globalSearch($event, tt)" />
@@ -17,19 +17,33 @@
             </th>
             <th></th>
         </tr>
+        <tr>
+            <th *ngFor="let col of cols">
+                <input *ngIf="col.field == 'name'" pInputText type="text"
+                    (input)="fieldSearch($event, tt, col.field)" />
+                <p-dropdown *ngIf="col.field == 'type'" [options]="thingsTypes" [(ngModel)]="thingType" appendTo="body"
+                    class="w-full" (onChange)="fieldSearchType(tt)" [showClear]="true"></p-dropdown>
+            </th>
+            <th></th>
+        </tr>
+
     </ng-template>
     <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-        <tr>
+        <tr [ttRow]="rowNode">
             <td *ngFor="let col of columns; let i = index">
                 <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
                 <span *ngIf="col.field == 'name' && rowData.icon != undefined" [class]="'pi ' + rowData.icon"></span>
                 {{ rowData[col.field] }}
             </td>
             <td>
-                <button *ngIf="rowNode.level == 0" pButton label="+" (click)="onAddOnSubject(rowNode)" class="mr-2"></button>
-                <button *ngIf="rowNode.level > 0" pButton label="-1" (click)="onRemoveOne(rowNode, rowData)" class="mr-2"></button>
-                <button *ngIf="rowNode.level > 0" pButton label="+1" (click)="onAddOne(rowNode, rowData)" class="mr-2"></button>
-                <button *ngIf="rowNode.level > 0" pButton icon="pi pi-trash" (click)="delEntry(rowNode, rowData)" class="mr-2"></button>
+                <button *ngIf="rowNode.level == 0" pButton label="+" (click)="onAddOnSubject(rowNode)"
+                    class="mr-2"></button>
+                <button *ngIf="rowNode.level > 0" pButton label="-1" (click)="onRemoveOne(rowNode, rowData)"
+                    class="mr-2"></button>
+                <button *ngIf="rowNode.level > 0" pButton label="+1" (click)="onAddOne(rowNode, rowData)"
+                    class="mr-2"></button>
+                <button *ngIf="rowNode.level > 0" pButton icon="pi pi-trash" (click)="delEntry(tt, rowNode, rowData)"
+                    class="mr-2"></button>
             </td>
         </tr>
     </ng-template>
@@ -58,7 +72,7 @@
                         <div [ngClass]="'pi '+ subplace.icon"> {{ subplace.name }}</div>
                     </div>
                 </ng-template>
-            
+
             </p-dropdown>
         </div>
     </div>
@@ -83,7 +97,7 @@
     <div class="grid m-2">
         <div class="col-12 md:col-2">
             <button pButton label="Save" (click)="saveSubplace()"></button>
-            </div>
+        </div>
         <div class="col-12 md:col-2">
             <button pButton label="Cancel" (click)="showDialog=false"></button>
         </div>
