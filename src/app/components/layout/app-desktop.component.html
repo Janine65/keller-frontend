@@ -1,7 +1,7 @@
 <p-treeTable #tt *ngIf="!isLoading" paginatorLocale="en-GB" [value]="lKeller" [columns]="cols" [paginator]="true"
     filterMode="lenient" [alwaysShowPaginator]="false" paginatorPosition="top" [showCurrentPageReport]="true"
-    [showJumpToPageDropdown]="true" selectionMode="single" [(selection)]="selectedNode"
-    dataKey="id" [rows]="10" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}" scrollHeight="flex">
+    [showJumpToPageDropdown]="true" selectionMode="single" [(selection)]="selectedNode" dataKey="id" [rows]="10"
+    [scrollable]="true" [tableStyle]="{'min-width':'50rem'}" scrollHeight="flex" [autoLayout]="true">
     <ng-template pTemplate="caption">
         <div class="flex justify-content-center mb-4">
             <div class="p-input-icon-left">
@@ -29,7 +29,7 @@
 
     </ng-template>
     <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-        <tr [ttRow]="rowNode">
+        <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
             <td *ngFor="let col of columns; let i = index">
                 <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
                 <span *ngIf="col.field == 'name' && rowData.icon != undefined" [class]="'pi ' + rowData.icon"></span>

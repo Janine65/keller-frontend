@@ -61,10 +61,10 @@ export class AppDesktopComponent implements OnInit {
   selObj2Sub: Object2Subplace = new Object2Subplace();
 
   thingsTypes = [
-    {label: 'Alcoholic', value: 'Alcoholic'},
-    {label: 'Food', value: 'Food'},
-    {label: 'Nonalcoholic', value: 'Nonalcoholic'},
-    {label: 'Nonfood', value: 'Nonfood'}
+    { label: 'Alcoholic', value: 'Alcoholic' },
+    { label: 'Food', value: 'Food' },
+    { label: 'Nonalcoholic', value: 'Nonalcoholic' },
+    { label: 'Nonfood', value: 'Nonfood' }
   ]
 
   thingType = ''
@@ -227,9 +227,9 @@ export class AppDesktopComponent implements OnInit {
   }
   ngOnInit(): void {
     this.cols = [
-      { field: 'name', header: 'Name'},
+      { field: 'name', header: 'Name' },
       { field: 'type', header: 'Type / Place' },
-      { field: 'count', header: 'Count'},
+      { field: 'count', header: 'Count' },
       { field: 'shopped_at', header: 'Weight / Bought at' },
       { field: 'valid_until', header: 'Valid until' }
     ];
@@ -250,9 +250,9 @@ export class AppDesktopComponent implements OnInit {
       return tt.filter(this.thingType, this.cols[1].field, 'equals')
   }
 
-  onAddOnSubject(rowNode: TreeTableNode<any>) {
+  onAddOnSubject(rowNode: TreeTableNode<TreeData>) {
     if (rowNode.node!.data) {
-      const data: TreeData = rowNode.node!.data as TreeData;
+      const data: TreeData = rowNode.node!.data;
       this.selectedNode = rowNode;
 
       this.selObj2Sub = new Object2Subplace()
@@ -300,43 +300,41 @@ export class AppDesktopComponent implements OnInit {
       next: (result) => {
         this.showDialog = false;
         const obj2sub = result.data as Object2Subplace
+        this.lObj2Subl.push(obj2sub);
         if (this.selectedNode) {
-        const mainNode = this.lKeller.findIndex(value => value.data.id == this.selectedNode?.node?.data.id)
-        if (mainNode != undefined) {
-          const ind = this.lKeller[mainNode].children?.findIndex(value => value.data.id == obj2sub.id);
-          if (ind != undefined) {
-            this.lKeller[mainNode].data.count += obj2sub.count!;
+          const mainNode = this.lKeller.findIndex(value => value.data.id == this.selectedNode?.node?.data.id)
+          if (mainNode != undefined && mainNode >= 0) {
+            this.lKeller[mainNode].data!.count = this.lKeller[mainNode].data.count = this.lKeller[mainNode].data.count ? this.lKeller[mainNode].data.count + (obj2sub.count ?? 0) : obj2sub.count ?? 0;
             const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
             const place = this.lPlaces.find(p => p.id == sub?.placeid)
             const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
             this.lKeller[mainNode].children?.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+          } else {
+            this.reloadNodes();
           }
-        } else {
-          this.reloadNodes();
         }
-      }
-      else
-        this.reloadNodes();
+        else
+          this.reloadNodes();
       }
     });
 
   }
 
-  onRemoveOne(rowNode: TreeNode, rowData: TreeData) {
+  onRemoveOne(rowNode: TreeTableNode<TreeData>, rowData: TreeData) {
     const obj2sub = this.lObj2Subl.find(o => o.id == rowData.id);
     if (obj2sub) {
       obj2sub.count = obj2sub.count ? obj2sub.count - 1 : 0;
       this.backendService.updateObject2Subplace(obj2sub).subscribe({
         next: (ret) => {
           const keller = this.lKeller.findIndex(kl => kl.data.id == rowNode.parent!.data.id);
-          if (keller >= 0 && this.lKeller[keller].children) {
+          if (keller != undefined && keller >= 0 && this.lKeller[keller].children) {
             const children = this.lKeller[keller].children;
             if (children != undefined) {
               const childInd = children.findIndex(child => child.data!.id == obj2sub.id)
               if (childInd != undefined && childInd >= 0) {
                 children[childInd].data.count = obj2sub.count;
                 this.lKeller[keller].children = children
-                this.lKeller[keller].data.count = this.lKeller[keller].data.count ? this.lKeller[keller].data.count - 1 : 0
+                this.lKeller[keller].data.count = this.lKeller[keller].data.count ? this.lKeller[keller].data.count - 1 : 0;
               }
               else console.log('child not found')
             }
@@ -347,14 +345,14 @@ export class AppDesktopComponent implements OnInit {
     }
   }
 
-  onAddOne(rowNode: TreeNode, rowData: TreeData) {
+  onAddOne(rowNode: TreeTableNode<TreeData>, rowData: TreeData) {
     const obj2sub = this.lObj2Subl.find(o => o.id == rowData.id);
     if (obj2sub) {
       obj2sub.count = obj2sub.count ? obj2sub.count + 1 : 1;
       this.backendService.updateObject2Subplace(obj2sub).subscribe({
         next: (ret) => {
           const keller = this.lKeller.findIndex(kl => kl.data.id == rowNode.parent!.data.id);
-          if (keller >= 0 && this.lKeller[keller].children) {
+          if (keller != undefined && keller >= 0 && this.lKeller[keller].children) {
             const children = this.lKeller[keller].children;
             if (children != undefined) {
               const childInd = children.findIndex(child => child.data!.id == obj2sub.id)
@@ -371,16 +369,22 @@ export class AppDesktopComponent implements OnInit {
       })
     }
   }
-  delEntry(tt: TreeTable, rowNode: any, rowData: TreeData) {
-    const obj2sub = this.lObj2Subl.find(o => o.id == rowData.id);
-    if (obj2sub) {
+  delEntry(tt: TreeTable, rowNode: TreeTableNode<TreeData>, rowData: TreeData) {
+    const obj2subInd = this.lObj2Subl.findIndex(o => o.id == rowData.id);
+    if (obj2subInd != undefined && obj2subInd >= 0) {
+      const obj2sub = this.lObj2Subl[obj2subInd]
       this.backendService.deleteObject2Subplace(obj2sub).subscribe({
         next: (_) => {
-          const mainNode = this.lKeller.findIndex(value => value.data.id == rowNode.node.parent.data.id)
-          if (mainNode != undefined) {
+          const mainNode = this.lKeller.findIndex(value => value.data.id == rowNode.parent!.data!.id)
+          if (mainNode != undefined && mainNode >= 0) {
+            this.lKeller[mainNode].data.count = this.lKeller[mainNode].data.count = this.lKeller[mainNode].data.count ? this.lKeller[mainNode].data.count - (obj2sub.count ?? 0) : obj2sub.count ?? 0;
             const ind = this.lKeller[mainNode].children?.findIndex(value => value.data.id == rowData.id);
             if (ind != undefined) {
+              if (this.lKeller[mainNode].children?.length == 1)
+                this.lKeller[mainNode].expanded = false;
               this.lKeller[mainNode].children?.splice(ind, 1);
+              this.lObj2Subl.splice(obj2subInd,1);
+              rowNode.visible = false;
             }
           } else {
             this.reloadNodes();
