@@ -30,23 +30,22 @@
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <p-dropdown [options]="lIcons" [showClear]="true" [(ngModel)]="placetype.icon"
-                                [style]="{'width':'100%'}">
+                                [style]="{'width':'100%'}" appendTo="body">
                                 <ng-template pTemplate="selectedItem">
                                     <div class="flex align-items-center gap-2" *ngIf="placetype.icon">
-                                        <i [class]="'pi ' + placetype.icon" style="width: 18px"></i> {{ placetype.icon
-                                        }}
+                                        <fa-icon [icon]="['fas', placetype.icon]"></fa-icon> {{placetype.icon}}
                                     </div>
                                 </ng-template>
                                 <ng-template let-icons pTemplate="item">
                                     <div class="flex align-items-center gap-2">
-                                        <i [class]="'pi ' + icons.icon" style="width: 18px"></i>
+                                        <fa-icon [icon]="['fas',icons.icon]"></fa-icon> 
                                         <div>{{ icons.label }}</div>
                                     </div>
                                 </ng-template>
                             </p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            <i [class]="'pi ' + placetype.icon" style="width: 18px"></i> {{placetype.icon}}
+                            <fa-icon [icon]="['fas', placetype.icon]"></fa-icon> {{placetype.icon}}
                         </ng-template>
                     </p-cellEditor>
                 </td>

@@ -39,7 +39,7 @@ export class PlaceTypeComponent implements OnInit {
   ngOnInit(): void {
     this.lIcons = [];
     const drop = new DropdownClass();
-    drop.icon = '';
+    drop.icon = '0';
     drop.value = '';
     drop.label = '';
 
@@ -99,7 +99,7 @@ export class PlaceTypeComponent implements OnInit {
             this.lPlacetypes[row].updatedAt_date = new Date(this.lPlacetypes[row].updatedAt);
             this.lPlacetypes[row].user = this.authService.userValue.name;
             this.hasChanged = true;
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Placetype is updated' });
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Placetype is inserted' });
           }
         })
       } else {

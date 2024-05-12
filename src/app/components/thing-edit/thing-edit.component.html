@@ -28,21 +28,26 @@
 <div *ngIf="thing.thing_type === 'alcoholic'">
     <div class="field grid">
         <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-        <div class="col-12 md:col-10">
+        <div class="col-12 md:col-7">
             <input type="text" id="name" pInputText [(ngModel)]="alcoholic.name" />
         </div>
+    </div>
+    <div class="field grid col-offset-2">
+        <p-image [src]="alcoholic.photo" [preview]="true" width="150" height="150">
+        </p-image>
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
         <div class="col-12 md:col-10">
-            <input type="text" id="weight" pInputText [(ngModel)]="alcoholic.weight"
-                aria-describedby="weight-help" />
-            <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+            <input type="text" id="weight" pInputText [(ngModel)]="alcoholic.weight" aria-describedby="weight-help" />
         </div>
     </div>
+    <div class="field grid col-offset-2">
+        <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+    </div>
     <div class="field grid">
-        <label class="col-12 mb-2 md:col-2 md:mb-0">Type of Wine</label>
-        <div class="col-12 md:col-10">
+        <label for="winetype" class="col-12 mb-2 md:col-2 md:mb-0">Type of Wine</label>
+        <div class="col-12 md:col-4">
             <div *ngFor="let wtype of wineType" class="flex align-items-center">
                 <p-radioButton [inputId]="wtype.type" name="winetype" [value]="wtype.type"
                     [(ngModel)]="alcoholic.type"></p-radioButton>
@@ -101,11 +106,19 @@
 <div *ngIf="thing.thing_type === 'food'" class="card">
     <div class="field grid">
         <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-        <input type="text" id="name" pInputText [(ngModel)]="food.name" />
+        <div class="col-12 md:col-7">
+            <input type="text" id="name" pInputText [(ngModel)]="food.name" />
+        </div>
+    </div>
+    <div class="field grid col-offset-2">
+        <p-image [src]="food.photo" [preview]="true" width="150" height="150">
+        </p-image>
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
         <input type="text" id="weight" pInputText [(ngModel)]="food.weight" aria-describedby="weight-help" />
+    </div>
+    <div class="field grid col-offset-2">
         <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
     </div>
     <div class="field grid">
@@ -114,7 +127,9 @@
     </div>
     <div class="field grid">
         <label for="sealed" class="col-12 mb-2 md:col-2 md:mb-0">Sealed</label>
-        <p-checkbox [(ngModel)]="food.sealed" [binary]="true" id="sealed"></p-checkbox>
+        <div class="col-12 md:col-4">
+            <p-checkbox [(ngModel)]="food.sealed" [binary]="true" id="sealed"></p-checkbox>
+        </div>
     </div>
     <div class="field grid">
         <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
@@ -126,12 +141,19 @@
 <div *ngIf="thing.thing_type === 'nonalcoholic'" class="card">
     <div class="field grid">
         <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-        <input type="text" id="name" pInputText [(ngModel)]="nonalcoholic.name" />
+        <div class="col-12 md:col-7">
+            <input type="text" id="name" pInputText [(ngModel)]="nonalcoholic.name" />
+        </div>
+    </div>
+    <div class="field grid col-offset-2">
+        <p-image [src]="nonalcoholic.photo" [preview]="true" width="150" height="150">
+        </p-image>
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-        <input type="text" id="weight" pInputText [(ngModel)]="nonalcoholic.weight"
-            aria-describedby="weight-help" />
+        <input type="text" id="weight" pInputText [(ngModel)]="nonalcoholic.weight" aria-describedby="weight-help" />
+    </div>
+    <div class="field grid col-offset-2">
         <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
     </div>
     <div class="field grid">
@@ -144,13 +166,20 @@
 <div *ngIf="thing.thing_type === 'nonfood'" class="card">
     <div class="field grid">
         <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-        <input type="text" id="name" pInputText [(ngModel)]="nonfood.name" />
+        <div class="col-12 md:col-7">
+            <input type="text" id="name" pInputText [(ngModel)]="nonfood.name" />
+        </div>
+    </div>
+    <div class="field grid col-offset-2">
+        <p-image [src]="nonfood.photo" [preview]="true" width="150" height="150">
+        </p-image>
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-        <input type="text" id="weight" pInputText [(ngModel)]="nonfood.weight"
-            aria-describedby="weight-help" />
-        <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+        <input type="text" id="weight" pInputText [(ngModel)]="nonfood.weight" aria-describedby="weight-help" />
+        <div class="field grid col-offset-2">
+            <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+        </div>
     </div>
     <div class="field grid">
         <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
@@ -161,5 +190,8 @@
 </div>
 <p-toolbar>
     <button pButton (click)="onSave()">Save</button>
+    <p-fileUpload mode="basic" name="pict[]" chooseIcon="pi pi-upload"
+        url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" maxFileSize="1000000000"
+        (onUpload)="loadPhoto($event)" [auto]="true" chooseLabel="Load Photo" />
     <button pButton (click)="onCancel()">Cancel</button>
 </p-toolbar>

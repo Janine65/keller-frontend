@@ -5,6 +5,7 @@ import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FileUploadEvent } from 'primeng/fileupload';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -180,4 +181,29 @@ export class ThingEditComponent {
     this.ref.close()
   }
 
+  loadPhoto(event: FileUploadEvent) {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+        // Set image src
+        switch (this.thing.thing_type) {
+          case 'alcoholic': {
+            this.alcoholic.photo = e.target.result;
+            break;
+          }
+          case 'nonalcoholic': {
+            this.nonalcoholic.photo = e.target.result;
+            break;
+          }
+          case 'food': {
+            this.food.photo = e.target.result;
+            break;
+          }
+          case 'nonfood': {
+            this.nonfood.photo = e.target.result;
+            break;
+          }
+        }
+    }
+    reader.readAsDataURL(event.files[0]);
+  }
 }

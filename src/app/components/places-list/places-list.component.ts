@@ -57,7 +57,7 @@ export class PlacesListComponent implements OnInit, OnDestroy {
             const drop = new DropdownClass();
             drop.label = placetype.name;
             drop.value = placetype.id;
-            drop.icon = placetype.icon;
+            drop.icon = placetype.icon!;
             this.lPlaceType.push(drop);
           })
           this.isLoading = false;

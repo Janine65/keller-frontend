@@ -1,58 +1,57 @@
-<p-treeTable #tt *ngIf="!isLoading" paginatorLocale="en-GB" [value]="lKeller" [columns]="cols" [paginator]="true"
-    filterMode="lenient" [alwaysShowPaginator]="false" paginatorPosition="top" [showCurrentPageReport]="true"
-    [showJumpToPageDropdown]="true" selectionMode="single" [(selection)]="selectedNode" dataKey="id" [rows]="10"
-    [scrollable]="true" [tableStyle]="{'min-width':'50rem'}" scrollHeight="flex" [autoLayout]="true">
-    <ng-template pTemplate="caption">
-        <div class="flex justify-content-center mb-4">
-            <div class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input type="text" pInputText placeholder="Global Search" (input)="globalSearch($event, tt)" />
+<p-toolbar *ngIf="!isLoading">
+    <div class="flex justify-content-start gap-1" *ngFor="let type of thingsTypes">
+        <p-checkbox name="selTypes" (onChange)="filterList()" [binary]="false" [label]="type.label" [value]="type.value"
+            [(ngModel)]="selTypes">
+            <ng-template let-item pTemplate>
+                <fa-icon [icon]="['fas',item.icon]"></fa-icon>
+            </ng-template>
+        </p-checkbox>
+    </div>
+    <div class="flex justify-content-end">
+        <label for="selection" class="mr-3 mt-2">Display all Things:</label>
+        <p-toggleButton id="selection" [(ngModel)]="fDisplayAll" (onChange)="filterList()" onLabel="Yes"
+            offLabel="No" />
+    </div>
+</p-toolbar>
+<p-scrollPanel [style]="{ width: '100%', height: '100%' }">
+    <div *ngIf="!isLoading" class="surface-ground px-2 py-5 md:px-4 lg:px-6">
+        <div class="grid">
+            <div class="col-12 md:col-6 lg:col-3" *ngFor="let data of lThingsList; index as ind">
+                <div class="surface-card shadow-2 p-3 border-round">
+                    <div class="flex justify-content-between mb-3">
+                        <div>
+                            <span class="flex align-content-start text-500 font-medium mb-3 text-xl">{{data.name}}
+                                <p-image class=" mr-2 ml-2 justify-content-center align-content-center"
+                                    *ngIf="data.photo && data.photo != ''" [src]="data.photo" [preview]="true"
+                                    width="50" height="50"></p-image>
+                                <p-badge class="ml-2 text-sm" [value]="data.obj2sub ? data.obj2sub!.count ?? 0 : 0" />
+                            </span>
+                            <div class="text-900 font-medium align-content-end" *ngIf="data.obj2sub">
+                                <fa-icon [icon]="['fas', data.placetype!.icon!]"></fa-icon>
+                                {{data.place?.name}} - {{data.subplace?.name}}
+                            </div>
+                            <div class="text-500 font-medium font-italic align-content-start mt-1" *ngIf="data.obj2sub && data.obj2sub.valid_until">
+                                <span *ngIf="isValidPast(data)" class="text-red-500">
+                                    valid: {{data.obj2sub.valid_until}}
+                                </span>
+                                <span *ngIf="!isValidPast(data)" class="text-green-500">
+                                    valid: {{data.obj2sub.valid_until}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex align-items-center justify-content-center border-round">
+                            <button pButton pRipple [raised]="false" [outlined]="true" (dblclick)="onAddOne(data)"
+                                (click)="onRemoveOne(data, $event)">
+                                <fa-icon [icon]="['fas', data.icon!]" class="text-blue-500 text-xl"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </ng-template>
-    <ng-template pTemplate="header" let-columns>
-        <tr>
-            <th *ngFor="let col of columns">
-                {{ col.header }}
-            </th>
-            <th></th>
-        </tr>
-        <tr>
-            <th *ngFor="let col of cols">
-                <input *ngIf="col.field == 'name'" pInputText type="text"
-                    (input)="fieldSearch($event, tt, col.field)" />
-                <p-dropdown *ngIf="col.field == 'type'" [options]="thingsTypes" [(ngModel)]="thingType" appendTo="body"
-                    class="w-full" (onChange)="fieldSearchType(tt)" [showClear]="true"></p-dropdown>
-            </th>
-            <th></th>
-        </tr>
+    </div>
+</p-scrollPanel>
 
-    </ng-template>
-    <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-        <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
-            <td *ngFor="let col of columns; let i = index">
-                <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
-                <span *ngIf="col.field == 'name' && rowData.icon != undefined" [class]="'pi ' + rowData.icon"></span>
-                {{ rowData[col.field] }}
-            </td>
-            <td>
-                <button *ngIf="rowNode.level == 0" pButton label="+" (click)="onAddOnSubject(rowNode)"
-                    class="mr-2"></button>
-                <button *ngIf="rowNode.level > 0" pButton label="-1" (click)="onRemoveOne(rowNode, rowData)"
-                    class="mr-2"></button>
-                <button *ngIf="rowNode.level > 0" pButton label="+1" (click)="onAddOne(rowNode, rowData)"
-                    class="mr-2"></button>
-                <button *ngIf="rowNode.level > 0" pButton icon="pi pi-trash" (click)="delEntry(tt, rowNode, rowData)"
-                    class="mr-2"></button>
-            </td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td [attr.colspan]="cols.length">No data found.</td>
-        </tr>
-    </ng-template>
-</p-treeTable>
 <p-dialog header="Add Thing to Subplace" [(visible)]="showDialog" [style]="{width: '50vw'}">
     <p>
         Select the subplace to add the thing and fill out the necessary fields
@@ -64,12 +63,13 @@
                 placeholder="Select a Subplace" appendTo="body">
                 <ng-template pTemplate="selectedItem">
                     <div class="flex align-items-center gap-2" *ngIf="selSubplace">
-                        <div [ngClass]="'pi '+ selSubplace.icon">{{selSubplace.name }}</div>
+
+                        <div><fa-icon [icon]="['fas',selSubplace.icon]"></fa-icon> {{selSubplace.name }}</div>
                     </div>
                 </ng-template>
                 <ng-template let-subplace pTemplate="item">
                     <div class="flex align-items-center gap-2">
-                        <div [ngClass]="'pi '+ subplace.icon"> {{ subplace.name }}</div>
+                        <div><fa-icon [icon]="['fas',subplace.icon]"></fa-icon> {{ subplace.name }}</div>
                     </div>
                 </ng-template>
 

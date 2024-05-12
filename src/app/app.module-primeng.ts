@@ -4,6 +4,7 @@ import { SharedModule, Header, Footer, ConfirmationService, MessageService } fro
 import { TableModule } from 'primeng/table';
 import { Dialog, DialogModule } from 'primeng/dialog';
 import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -42,6 +43,8 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TagModule } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ImageModule } from 'primeng/image';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 //
 export const APP_PRIMENG_MODULE = [
@@ -52,6 +55,7 @@ export const APP_PRIMENG_MODULE = [
     CalendarModule,
     CheckboxModule,
     ConfirmDialogModule,
+    ConfirmPopupModule,
     ContextMenuModule,
     DataViewModule,
     DialogModule,
@@ -60,6 +64,7 @@ export const APP_PRIMENG_MODULE = [
     FieldsetModule,
     FileUploadModule,
     FocusTrapModule,
+    ImageModule,
     InputNumberModule,
     InputSwitchModule,
     InputTextareaModule,
@@ -85,6 +90,7 @@ export const APP_PRIMENG_MODULE = [
     TagModule,
     ToastModule,
     ToolbarModule,
+    ToggleButtonModule,
     TreeModule,
     TreeTableModule,
 ];

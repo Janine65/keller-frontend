@@ -15,6 +15,8 @@ import { appRoutes } from './app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieModule } from 'ngx-cookie';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 import {
   APP_PRIMENG_MODULE,
@@ -67,6 +69,7 @@ import { StringDatePipe } from './shared/string-date.pipe';
     DecimalPipe,
     DatePipe,
     PercentPipe,
+    FontAwesomeModule,
     APP_PRIMENG_MODULE,
   ],
   providers: [

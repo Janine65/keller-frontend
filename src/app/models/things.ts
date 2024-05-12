@@ -7,74 +7,31 @@ export class Thing {
   weight: string = '';
   thing_type: string = '';
   shop: string = '';
+  photo?: string;
   createdAt_date: Date = new Date();
   updatedAt_date: Date = new Date();
   user: string = ''
 }
 
-export class Alcoholic {
-  id: number | undefined = 0;
-  name: string = '';
-  createdAt: string = '';
-  updatedAt: string = '';
-  userid: number | undefined;
-  weight: string | undefined;
+export class Alcoholic extends Thing {
   country: string | undefined;
   region: string | undefined;
   year: number | undefined;
   grapes: string[] | undefined;
   type: string | undefined;
-  thing_type: string = 'alcoholic';
-  shop: string = '';
-  createdAt_date: Date = new Date();
-  updatedAt_date: Date = new Date();
   year_date: Date | undefined;
-  user: string = ''
 }
 
-export class Food {
-  id: number | undefined = 0;
-  name: string = '';
-  createdAt: string = '';
-  updatedAt: string = '';
-  userid: number | undefined;
-  weight: string = '';
+export class Food extends Thing {
   vacuumed: boolean = false;
   sealed: boolean = false;
-  thing_type: string = 'food';
-  shop: string = '';
-  createdAt_date: Date = new Date();
-  updatedAt_date: Date = new Date();
   icon: string = ''
-  user: string = ''
 }
 
-export class Nonalcoholic {
-  id: number | undefined = 0;
-  name: string = '';
-  createdAt: string = '';
-  updatedAt: string = '';
-  userid: number | undefined;
-  weight: string = '';
-  thing_type: string = 'nonalcoholic'
-  shop: string = '';
-  createdAt_date: Date = new Date();
-  updatedAt_date: Date = new Date();
-  user: string = ''
+export class Nonalcoholic extends Thing {
 }
 
-export class Nonfood {
-  id: number | undefined = 0;
-  name: string = '';
-  createdAt: string = '';
-  updatedAt: string = '';
-  userid: number | undefined;
-  weight: string = '';
-  thing_type: string = 'nonfood';
-  shop: string = '';
-  createdAt_date: Date = new Date();
-  updatedAt_date: Date = new Date();
-  user: string = ''
+export class Nonfood extends Thing {
 }
 
 export class Object2Subplace {

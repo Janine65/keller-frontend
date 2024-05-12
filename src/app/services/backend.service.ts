@@ -16,7 +16,7 @@ export class BackendService {
   private header!: HttpHeaders;
   private httpConfig: { headers: HttpHeaders, withCredentials: boolean } = { headers: this.header, withCredentials: true }
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient) {
 
     this.header = new HttpHeaders({
       'Access-Control-Allow-Origin': environment.apiUrlSelf,
@@ -41,6 +41,11 @@ export class BackendService {
   doLogout(): Observable<any> {
     const apiURL = environment.apiUrl + '/logout';
     return this.http.post<{}>(apiURL, {}, this.httpConfig);
+  }
+
+  doRefreshToken(userData: User): Observable<any> {
+    const apiURL = environment.apiUrl + '/refreshToken';
+    return this.http.post(apiURL, userData, this.httpConfig);
   }
 
   getUsers(): Observable<ReturnStruct> {

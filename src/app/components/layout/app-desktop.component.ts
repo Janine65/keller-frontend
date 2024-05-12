@@ -1,33 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { Icon, IconName } from '@fortawesome/fontawesome-svg-core';
 import { Place, Placetype, Subplace } from '@models/places';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Object2Subplace } from '@models/things';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { StringDatePipe } from '@shared/string-date.pipe';
-import { MessageService, TreeNode, TreeTableNode } from 'primeng/api';
-import { TreeTable } from 'primeng/treetable';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { map, zip } from 'rxjs';
-
-interface Column {
-  field: string;
-  header: string;
-}
 
 interface DropdownList {
   name: string;
   value: number;
-  icon: string;
+  icon: IconName;
   disabled: boolean;
 }
 
-interface TreeData {
+class ThingStruct {
+  id: number | undefined;
   name: string | undefined;
   type: string | undefined;
-  id: number;
-  count: number | undefined;
-  icon: string | undefined;
-  shopped_at: string | undefined | null;
-  valid_until: string | undefined | null;
+  photo: string | undefined;
+  icon: IconName | undefined;
+  obj2sub: Object2Subplace | undefined;
+  subplace: Subplace | undefined;
+  place: Place | undefined;
+  placetype: Placetype | undefined;
 }
 
 @Component({
@@ -36,9 +32,6 @@ interface TreeData {
   styleUrls: ['./app-desktop.component.css'],
 })
 export class AppDesktopComponent implements OnInit {
-
-  lKeller: TreeNode[] = [];
-  cols: Column[] = [];
 
   lPlaces: Place[] = [];
   lSubplaces: Subplace[] = [];
@@ -49,9 +42,16 @@ export class AppDesktopComponent implements OnInit {
   lNonfood: Nonfood[] = [];
   lObj2Subl: Object2Subplace[] = [];
 
-  selectedNode: TreeTableNode<any> | null = null;
+  lThingsList: ThingStruct[] = [];
+  lAllThingsList: ThingStruct[] = [];
+  selThing: ThingStruct | undefined;
 
   isLoading = true;
+  preventSingleClick = false;
+  timer: any;
+  delay: Number = 200;
+
+  fDisplayAll = false
 
   // Dialog Parameters
   showDialog = false;
@@ -61,19 +61,19 @@ export class AppDesktopComponent implements OnInit {
   selObj2Sub: Object2Subplace = new Object2Subplace();
 
   thingsTypes = [
-    { label: 'Alcoholic', value: 'Alcoholic' },
-    { label: 'Food', value: 'Food' },
-    { label: 'Nonalcoholic', value: 'Nonalcoholic' },
-    { label: 'Nonfood', value: 'Nonfood' }
+    { label: 'Alcoholic', value: 'Alcoholic', icon: 'wine-bottle' as IconName },
+    { label: 'Food', value: 'Food', icon: 'pizza-slice' as IconName },
+    { label: 'Nonalcoholic', value: 'Nonalcoholic', icon: 'bottle-water' as IconName },
+    { label: 'Nonfood', value: 'Nonfood', icon: 'toilet-paper' as IconName }
   ]
-
   thingType = ''
+  selTypes: string[] = [this.thingsTypes[0].label, this.thingsTypes[1].label,this.thingsTypes[2].label,this.thingsTypes[3].label]
 
   constructor(
     private backendService: BackendService,
     private authService: AuthService,
     private messageService: MessageService,
-    private stringDatePipe: StringDatePipe
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -99,6 +99,12 @@ export class AppDesktopComponent implements OnInit {
               this.lNonalcohoic = nonalcoholicReturn.data as Nonalcoholic[];
               this.lNonfood = nonfoodReturn.data as Nonfood[];
               this.lObj2Subl = obj2subReturn.data as Object2Subplace[];
+              this.lObj2Subl.forEach((obj) => {
+                if (obj.valid_until && obj.valid_until != '') {
+                  const date = Date.parse(obj.valid_until);
+                  obj.valid_until_date = new Date(date);
+                }
+              })
 
               this.lSubPlaceSelect = []
               this.selSubplace = undefined;
@@ -106,186 +112,180 @@ export class AppDesktopComponent implements OnInit {
                 const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
                 this.lSubplaces.forEach(sub => {
                   if (sub.placeid == place.id) {
-                    const rec: DropdownList = { name: place.name + ' - ' + sub.name, icon: placetype!.icon, value: sub.id!, disabled: false }
+                    const rec: DropdownList = { name: place.name + ' - ' + sub.name, icon: placetype!.icon!, value: sub.id!, disabled: false }
                     this.lSubPlaceSelect.push(rec)
                   }
                 });
               });
 
-              let children: { data: TreeData }[] = []
+              this.lAllThingsList = [];
 
-              this.lKeller = [];
-              let node: TreeNode;
               this.lAlcohoic.forEach((thing) => {
-                children = []
-                let total = 0
+                let thingElem = new ThingStruct();
+                thingElem.id = thing.id;
+                thingElem.name = thing.name;
+                thingElem.type = this.thingsTypes[0].label;
+                thingElem.icon = this.thingsTypes[0].icon as IconName;
+                this.lAllThingsList.push(thingElem)
+
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.alcoholicid && obj2sub.alcoholicid == thing.id) {
-                    total += obj2sub.count!;
-                    const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
-                    const place = this.lPlaces.find(p => p.id == sub?.placeid)
-                    const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                    children.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+                    let thingElem = new ThingStruct();
+                    thingElem.id = thing.id;
+                    thingElem.name = thing.name;
+                    thingElem.photo = thing.photo;
+                    thingElem.type = this.thingsTypes[0].label;
+                    thingElem.icon = this.thingsTypes[0].icon as IconName;
+                    thingElem.obj2sub = obj2sub;
+                    thingElem.subplace = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
+                    thingElem.place = this.lPlaces.find(p => p.id == thingElem.subplace?.placeid)
+                    thingElem.placetype = this.lPlacetypes.find(pt => pt.id == thingElem.place?.placetypeid)
+                    this.lAllThingsList.push(thingElem)
                   }
                 });
-                node = {
-                  data: {
-                    id: thing.id,
-                    name: thing.name,
-                    type: 'Alcoholic',
-                    count: total,
-                    shopped_at: thing.weight
-                  },
-                  children: children
-                };
-
-                this.lKeller.push(node!);
               })
               this.lFood.forEach((thing) => {
-                children = []
-                let total = 0
+                let thingElem = new ThingStruct();
+                thingElem.id = thing.id;
+                thingElem.name = thing.name;
+                thingElem.type = this.thingsTypes[1].label;
+                thingElem.icon = this.thingsTypes[1].icon as IconName;
+                this.lAllThingsList.push(thingElem)
+
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.foodid && obj2sub.foodid == thing.id) {
-                    total += obj2sub.count!;
-                    const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
-                    const place = this.lPlaces.find(p => p.id == sub?.placeid)
-                    const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                    children.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+                    let thingElem = new ThingStruct();
+                    thingElem.id = thing.id;
+                    thingElem.name = thing.name;
+                    thingElem.photo = thing.photo;
+                    thingElem.type = this.thingsTypes[1].label;
+                    thingElem.icon = this.thingsTypes[1].icon as IconName;
+                    thingElem.obj2sub = obj2sub;
+                    thingElem.subplace = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
+                    thingElem.place = this.lPlaces.find(p => p.id == thingElem.subplace?.placeid)
+                    thingElem.placetype = this.lPlacetypes.find(pt => pt.id == thingElem.place?.placetypeid)
+                    this.lAllThingsList.push(thingElem)
                   }
                 });
-                node = {
-                  data: {
-                    id: thing.id,
-                    name: thing.name,
-                    type: 'Food',
-                    count: total,
-                    shopped_at: thing.weight
-                  },
-                  children: children
-                };
-
-                this.lKeller.push(node!);
               })
               this.lNonalcohoic.forEach((thing) => {
-                children = []
-                let total = 0
+                let thingElem = new ThingStruct();
+                thingElem.id = thing.id;
+                thingElem.name = thing.name;
+                thingElem.type = this.thingsTypes[2].label;
+                thingElem.icon = this.thingsTypes[2].icon as IconName;
+                this.lAllThingsList.push(thingElem)
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.nonalcoholicid && obj2sub.nonalcoholicid == thing.id) {
-                    total += obj2sub.count!;
-                    const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
-                    const place = this.lPlaces.find(p => p.id == sub?.placeid)
-                    const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                    children.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+                    let thingElem = new ThingStruct();
+                    thingElem.id = thing.id;
+                    thingElem.name = thing.name;
+                    thingElem.photo = thing.photo;
+                    thingElem.type = this.thingsTypes[2].label;
+                    thingElem.icon = this.thingsTypes[2].icon as IconName;
+                    thingElem.obj2sub = obj2sub;
+                    thingElem.subplace = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
+                    thingElem.place = this.lPlaces.find(p => p.id == thingElem.subplace?.placeid)
+                    thingElem.placetype = this.lPlacetypes.find(pt => pt.id == thingElem.place?.placetypeid)
+                    this.lAllThingsList.push(thingElem)
                   }
                 });
-                node = {
-                  data: {
-                    id: thing.id,
-                    name: thing.name,
-                    type: 'Nonalcoholic',
-                    count: total,
-                    shopped_at: thing.weight
-                  },
-                  children: children
-                };
-
-                this.lKeller.push(node!);
               })
               this.lNonfood.forEach((thing) => {
-                children = []
-                let total = 0
+                let thingElem = new ThingStruct();
+                thingElem.id = thing.id;
+                thingElem.name = thing.name;
+                thingElem.type = this.thingsTypes[3].label;
+                thingElem.icon = this.thingsTypes[3].icon as IconName;
+                this.lAllThingsList.push(thingElem)
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.nonfoodid && obj2sub.nonfoodid == thing.id) {
-                    total += obj2sub.count!;
-                    const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
-                    const place = this.lPlaces.find(p => p.id == sub?.placeid)
-                    const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-                    children.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
+                    let thingElem = new ThingStruct();
+                    thingElem.id = thing.id;
+                    thingElem.name = thing.name;
+                    thingElem.photo = thing.photo;
+                    thingElem.type = this.thingsTypes[3].label;
+                    thingElem.icon = this.thingsTypes[3].icon as IconName;
+                    thingElem.obj2sub = obj2sub;
+                    thingElem.subplace = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
+                    thingElem.place = this.lPlaces.find(p => p.id == thingElem.subplace?.placeid)
+                    thingElem.placetype = this.lPlacetypes.find(pt => pt.id == thingElem.place?.placetypeid)
+                    this.lAllThingsList.push(thingElem)
                   }
                 });
-                node = {
-                  data: {
-                    id: thing.id,
-                    name: thing.name,
-                    type: 'Nonfood',
-                    count: total,
-                    shopped_at: thing.weight
-                  },
-                  children: children
-                };
-
-                this.lKeller.push(node!);
               })
-
+              this.sortList();
+              this.filterList();
               this.isLoading = false;
             })).subscribe()
         else {
-          this.lKeller = [];
+          this.lAllThingsList = [];
         }
       }
     });
   }
+
+  sortList() {
+    this.lAllThingsList.sort((a, b) => {
+      if (a.name! < b.name!)
+        return -1;
+      if (a.name! > b.name!)
+        return 1;
+      if (a.name! === b.name!)
+        if (a.obj2sub)
+          return -1
+        else
+          if (b.obj2sub)
+            return 1;
+          else
+            return 0;
+      return 0;
+    })
+  }
+
+  filterList() {
+    this.lThingsList = this.lAllThingsList.filter((value) => this.selTypes.includes(value.type!))
+    if (!this.fDisplayAll)
+      this.lThingsList = this.lThingsList.filter((value) => value.obj2sub != undefined)
+
+  }
+
+  selectType(type: any) {
+    this.selTypes.push(type);
+  }
+
   ngOnInit(): void {
-    this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'type', header: 'Type / Place' },
-      { field: 'count', header: 'Count' },
-      { field: 'shopped_at', header: 'Weight / Bought at' },
-      { field: 'valid_until', header: 'Valid until' }
-    ];
     this.reloadNodes();
   }
 
-  globalSearch(event: Event, tt: TreeTable) {
-    return tt.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-  }
+  onAddOnSubject() {
+    if (!this.selThing)
+      return;
 
-  fieldSearch(event: Event, tt: TreeTable, field: string) {
-    return tt.filter((event.target as HTMLInputElement).value, field, 'contains')
-  }
-  fieldSearchType(tt: TreeTable) {
-    if (this.thingType == '')
-      tt.reset()
-    else
-      return tt.filter(this.thingType, this.cols[1].field, 'equals')
-  }
-
-  onAddOnSubject(rowNode: TreeTableNode<TreeData>) {
-    if (rowNode.node!.data) {
-      const data: TreeData = rowNode.node!.data;
-      this.selectedNode = rowNode;
-
-      this.selObj2Sub = new Object2Subplace()
-
-      switch (data.type) {
-        case 'Alcoholic': {
-          const alcoholic = this.lAlcohoic.find(al => al.id == data.id);
-          this.selObj2Sub.alcoholicid = alcoholic?.id;
-          break;
-        }
-        case 'Food': {
-          const food = this.lFood.find(al => al.id == data.id);
-          this.selObj2Sub.foodid = food?.id;
-
-          break;
-        }
-        case 'Nonalcoholic': {
-          const nonalcoholic = this.lNonalcohoic.find(al => al.id == data.id);
-          this.selObj2Sub.nonalcoholicid = nonalcoholic?.id;
-
-          break;
-        }
-        case 'Nonfood': {
-          const nonfood = this.lNonfood.find(al => al.id == data.id);
-          this.selObj2Sub.nonfoodid = nonfood?.id;
-
-          break;
-        }
-        default:
-          break;
+    this.selObj2Sub = new Object2Subplace()
+    switch (this.selThing!.type) {
+      case 'Alcoholic': {
+        this.selObj2Sub.alcoholicid = this.selThing.id;
+        break;
       }
-      this.showDialog = true;
+      case 'Food': {
+        this.selObj2Sub.foodid = this.selThing.id;
+        break;
+      }
+      case 'Nonalcoholic': {
+        this.selObj2Sub.nonalcoholicid = this.selThing.id;
+
+        break;
+      }
+      case 'Nonfood': {
+        this.selObj2Sub.nonfoodid = this.selThing.id;
+
+        break;
+      }
+      default:
+        break;
     }
+    this.showDialog = true;
   }
 
   saveSubplace() {
@@ -293,104 +293,88 @@ export class AppDesktopComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Add to Subplace', detail: 'Subplace must be selected' });
       return;
     }
-
     this.selObj2Sub.subplaceid = this.selSubplace.value;
-
     this.backendService.insertOject2Subplace(this.selObj2Sub).subscribe({
       next: (result) => {
         this.showDialog = false;
-        const obj2sub = result.data as Object2Subplace
-        this.lObj2Subl.push(obj2sub);
-        if (this.selectedNode) {
-          const mainNode = this.lKeller.findIndex(value => value.data.id == this.selectedNode?.node?.data.id)
-          if (mainNode != undefined && mainNode >= 0) {
-            this.lKeller[mainNode].data!.count = this.lKeller[mainNode].data.count = this.lKeller[mainNode].data.count ? this.lKeller[mainNode].data.count + (obj2sub.count ?? 0) : obj2sub.count ?? 0;
-            const sub = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
-            const place = this.lPlaces.find(p => p.id == sub?.placeid)
-            const placetype = this.lPlacetypes.find(pt => pt.id == place?.placetypeid)
-            this.lKeller[mainNode].children?.push({ data: { type: sub?.name, icon: placetype?.icon, name: place?.name, id: obj2sub.id!, count: obj2sub.count, shopped_at: this.stringDatePipe.transform(obj2sub.shopped_at, 'dd.MM.yyyy'), valid_until: this.stringDatePipe.transform(obj2sub.valid_until, 'dd.MM.yyyy') } })
-          } else {
-            this.reloadNodes();
-          }
-        }
-        else
-          this.reloadNodes();
+        const thing: ThingStruct = Object.assign({}, this.selThing);
+        thing.obj2sub = result.data as Object2Subplace
+        thing.subplace = this.lSubplaces.find(s => s.id == thing.obj2sub!.subplaceid);
+        thing.place = this.lPlaces.find(p => p.id == thing.subplace?.placeid)
+        thing.placetype = this.lPlacetypes.find(pt => pt.id == thing.place?.placetypeid)
+        this.lAllThingsList.push(thing)
+        this.sortList();
+        this.filterList();
       }
     });
 
   }
 
-  onRemoveOne(rowNode: TreeTableNode<TreeData>, rowData: TreeData) {
-    const obj2sub = this.lObj2Subl.find(o => o.id == rowData.id);
-    if (obj2sub) {
-      obj2sub.count = obj2sub.count ? obj2sub.count - 1 : 0;
-      this.backendService.updateObject2Subplace(obj2sub).subscribe({
-        next: (ret) => {
-          const keller = this.lKeller.findIndex(kl => kl.data.id == rowNode.parent!.data.id);
-          if (keller != undefined && keller >= 0 && this.lKeller[keller].children) {
-            const children = this.lKeller[keller].children;
-            if (children != undefined) {
-              const childInd = children.findIndex(child => child.data!.id == obj2sub.id)
-              if (childInd != undefined && childInd >= 0) {
-                children[childInd].data.count = obj2sub.count;
-                this.lKeller[keller].children = children
-                this.lKeller[keller].data.count = this.lKeller[keller].data.count ? this.lKeller[keller].data.count - 1 : 0;
+  onRemoveOne(data: ThingStruct, event: Event) {
+    this.preventSingleClick = false;
+    const delay = 200;
+    this.timer = setTimeout(() => {
+      if (!this.preventSingleClick) {
+        if (data.obj2sub) {
+          if (data.obj2sub.count == 0) {
+            this.confirmationService.confirm({
+              target: event.target as EventTarget,
+              message: 'Do you want to delete this record?',
+              icon: 'pi pi-question',
+              acceptButtonStyleClass: 'p-button-danger p-button-sm',
+              accept: () => {
+                this.backendService.deleteObject2Subplace(data.obj2sub!).subscribe({
+                  next: () => {
+                    let ind = this.lAllThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
+                    this.lAllThingsList.splice(ind, 1)  
+                    ind = this.lThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
+                    this.lThingsList.splice(ind, 1)  
+                  }
+                });  
+              },
+              reject: () => {
+                  return;
               }
-              else console.log('child not found')
-            }
+          });
+          } else {
+            data.obj2sub.count = data.obj2sub.count ? data.obj2sub.count - 1 : 0;
+            this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
+              next: (ret) => {
+              }
+            })
           }
-          else console.log('parent not found')
+        }
+      }
+    }, delay);
+  }
+
+  onAddOne(data: ThingStruct) {
+    this.preventSingleClick = true;
+    clearTimeout(this.timer);
+    if (data.obj2sub) {
+      data.obj2sub.count = data.obj2sub.count ? data.obj2sub.count + 1 : 1;
+      this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
+        next: (ret) => {
         }
       })
+    } else {
+      this.selThing = data;
+      this.onAddOnSubject();
     }
   }
 
-  onAddOne(rowNode: TreeTableNode<TreeData>, rowData: TreeData) {
-    const obj2sub = this.lObj2Subl.find(o => o.id == rowData.id);
-    if (obj2sub) {
-      obj2sub.count = obj2sub.count ? obj2sub.count + 1 : 1;
-      this.backendService.updateObject2Subplace(obj2sub).subscribe({
-        next: (ret) => {
-          const keller = this.lKeller.findIndex(kl => kl.data.id == rowNode.parent!.data.id);
-          if (keller != undefined && keller >= 0 && this.lKeller[keller].children) {
-            const children = this.lKeller[keller].children;
-            if (children != undefined) {
-              const childInd = children.findIndex(child => child.data!.id == obj2sub.id)
-              if (childInd != undefined && childInd >= 0) {
-                children[childInd].data.count = obj2sub.count;
-                this.lKeller[keller].children = children
-                this.lKeller[keller].data.count = this.lKeller[keller].data.count ? this.lKeller[keller].data.count + 1 : 1
-              }
-              else console.log('child not found')
-            }
-          }
-          else console.log('parent not found')
-        }
-      })
-    }
+  isValidPast(data: ThingStruct) {
+    const now = new Date()
+    if (data.obj2sub && data.obj2sub.valid_until_date) {
+      const timeNow = now.getTime();
+      const timeValid = data.obj2sub.valid_until_date.getTime()
+      if (timeNow > timeValid)
+        return true;
+      else
+        return false;
+      }
+    
+    return false
   }
-  delEntry(tt: TreeTable, rowNode: TreeTableNode<TreeData>, rowData: TreeData) {
-    const obj2subInd = this.lObj2Subl.findIndex(o => o.id == rowData.id);
-    if (obj2subInd != undefined && obj2subInd >= 0) {
-      const obj2sub = this.lObj2Subl[obj2subInd]
-      this.backendService.deleteObject2Subplace(obj2sub).subscribe({
-        next: (_) => {
-          const mainNode = this.lKeller.findIndex(value => value.data.id == rowNode.parent!.data!.id)
-          if (mainNode != undefined && mainNode >= 0) {
-            this.lKeller[mainNode].data.count = this.lKeller[mainNode].data.count = this.lKeller[mainNode].data.count ? this.lKeller[mainNode].data.count - (obj2sub.count ?? 0) : obj2sub.count ?? 0;
-            const ind = this.lKeller[mainNode].children?.findIndex(value => value.data.id == rowData.id);
-            if (ind != undefined) {
-              if (this.lKeller[mainNode].children?.length == 1)
-                this.lKeller[mainNode].expanded = false;
-              this.lKeller[mainNode].children?.splice(ind, 1);
-              this.lObj2Subl.splice(obj2subInd,1);
-              rowNode.visible = false;
-            }
-          } else {
-            this.reloadNodes();
-          }
-        }
-      })
-    }
-  }
+
 }

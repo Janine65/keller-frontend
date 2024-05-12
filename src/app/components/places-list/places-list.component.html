@@ -35,19 +35,19 @@
                                 [style]="{'width':'100%'}">
                                 <ng-template pTemplate="selectedItem">
                                     <div class="flex align-items-center gap-2" *ngIf="place.icon">
-                                        <i [class]="'pi ' + place.icon" style="width: 18px"></i> {{ place.placetype }}
+                                        <fa-icon [icon]="['fas', place.icon]"></fa-icon>  {{ place.placetype }}
                                     </div>
                                 </ng-template>
                                 <ng-template let-icons pTemplate="item">
                                     <div class="flex align-items-center gap-2">
-                                        <i [class]="'pi ' + icons.icon" style="width: 18px"></i>
+                                        <fa-icon [icon]="['fas', icons.icon]"></fa-icon>
                                         <div>{{ icons.label }}</div>
                                     </div>
                                 </ng-template>
                             </p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            <i [class]="'pi ' + place.icon" style="width: 18px"></i> {{place.placetype}}
+                            <fa-icon [icon]="['fas', place.icon]"></fa-icon> {{ place.placetype }}
                         </ng-template>
                     </p-cellEditor>
                 </td>
