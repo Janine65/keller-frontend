@@ -42,6 +42,7 @@ export class ThingEditComponent {
         { name: 'Hungaria', code: 'hu' },
         { name: 'Italy', code: 'it' },
         { name: 'Spain', code: 'es' },
+        { name: 'South Africa', code: 'sa' },
         { name: 'Switzerland', code: 'ch' },
         { name: 'United States', code: 'us' }
     ];
@@ -102,6 +103,7 @@ export class ThingEditComponent {
     let obs: Observable<ReturnStruct> = new Observable<ReturnStruct>()
     switch (this.thing.thing_type) {
       case 'alcoholic':
+        this.alcoholic.thing_type = this.thing.thing_type;
         if (this.alcoholic.name == undefined || this.alcoholic.name.length == 0) {
           this.messageService.add({closable: true, detail: 'Name must not be empty', key: 'error', sticky: true, summary: 'Must-Field empty'})
           return
@@ -121,6 +123,7 @@ export class ThingEditComponent {
         }
         break;
       case 'food':
+        this.food.thing_type = this.thing.thing_type;
         if (this.food.name == undefined || this.food.name.length == 0) {
           this.messageService.add({closable: true, detail: 'Name must not be empty', key: 'error', sticky: true, summary: 'Must-Field empty'})
           return
@@ -136,6 +139,7 @@ export class ThingEditComponent {
         }
         break;
       case 'nonalcoholic':
+        this.nonalcoholic.thing_type = this.thing.thing_type;
         if (this.nonalcoholic.name == undefined || this.nonalcoholic.name.length == 0) {
           this.messageService.add({closable: true, detail: 'Name must not be empty', key: 'error', sticky: true, summary: 'Must-Field empty'})
           return
@@ -151,6 +155,7 @@ export class ThingEditComponent {
         }
         break;
       case 'nonfood':
+        this.nonfood.thing_type = this.thing.thing_type;
         if (this.nonfood.name == undefined || this.nonfood.name.length == 0) {
           this.messageService.add({closable: true, detail: 'Name must not be empty', key: 'error', sticky: true, summary: 'Must-Field empty'})
           return
