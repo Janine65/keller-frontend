@@ -297,7 +297,7 @@ export class AppDesktopComponent implements OnInit {
     this.backendService.insertOject2Subplace(this.selObj2Sub).subscribe({
       next: (result) => {
         this.showDialog = false;
-        const thing: ThingStruct = Object.assign({}, this.selThing);
+        const thing: ThingStruct = Object.assign({...this.selThing});
         thing.obj2sub = result.data as Object2Subplace
         thing.subplace = this.lSubplaces.find(s => s.id == thing.obj2sub!.subplaceid);
         thing.place = this.lPlaces.find(p => p.id == thing.subplace?.placeid)
@@ -316,33 +316,36 @@ export class AppDesktopComponent implements OnInit {
     this.timer = setTimeout(() => {
       if (!this.preventSingleClick) {
         if (data.obj2sub) {
-          if (data.obj2sub.count == 0) {
-            this.confirmationService.confirm({
-              target: event.target as EventTarget,
-              message: 'Do you want to delete this record?',
-              icon: 'pi pi-question',
-              acceptButtonStyleClass: 'p-button-danger p-button-sm',
-              accept: () => {
-                this.backendService.deleteObject2Subplace(data.obj2sub!).subscribe({
-                  next: () => {
-                    let ind = this.lAllThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
-                    this.lAllThingsList.splice(ind, 1)  
-                    ind = this.lThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
-                    this.lThingsList.splice(ind, 1)  
-                  }
-                });  
-              },
-              reject: () => {
-                  return;
-              }
-          });
-          } else {
-            data.obj2sub.count = data.obj2sub.count ? data.obj2sub.count - 1 : 0;
-            this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
+            data.obj2sub.count = Math.max(data.obj2sub.count ? data.obj2sub.count - 1 : 0,0);
+            if (data.obj2sub.count == 0) {
+              this.confirmationService.confirm({
+                target: event.target as EventTarget,
+                message: 'Do you want to delete this record?',
+                icon: 'pi pi-question',
+                acceptButtonStyleClass: 'p-button-danger p-button-sm',
+                accept: () => {
+                  this.backendService.deleteObject2Subplace(data.obj2sub!).subscribe({
+                    next: () => {
+                      let ind = this.lAllThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
+                      this.lAllThingsList.splice(ind, 1)  
+                      ind = this.lThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
+                      this.lThingsList.splice(ind, 1)  
+                    }
+                  });  
+                },
+                reject: () => {
+                    return;
+                }
+            });
+            } else {
+              this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
               next: (ret) => {
               }
             })
           }
+        } else {
+          this.selThing = data;
+          this.onAddOnSubject();    
         }
       }
     }, delay);
