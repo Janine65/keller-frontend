@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Icon, IconName } from '@fortawesome/fontawesome-svg-core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ThingEditComponent } from '@components/thing-edit/thing-edit.component';
+import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { Place, Placetype, Subplace } from '@models/places';
-import { Alcoholic, Food, Nonalcoholic, Nonfood, Object2Subplace } from '@models/things';
+import { Alcoholic, Food, Nonalcoholic, Nonfood, Object2Subplace, Thing } from '@models/things';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ContextMenu } from 'primeng/contextmenu';
+import { DialogService } from 'primeng/dynamicdialog';
 import { map, zip } from 'rxjs';
 
 interface DropdownList {
@@ -20,6 +23,7 @@ class ThingStruct {
   type: string | undefined;
   photo: string | undefined;
   icon: IconName | undefined;
+  thing: Thing | undefined;
   obj2sub: Object2Subplace | undefined;
   subplace: Subplace | undefined;
   place: Place | undefined;
@@ -30,6 +34,7 @@ class ThingStruct {
   selector: 'app-desktop',
   templateUrl: './app-desktop.component.html',
   styleUrls: ['./app-desktop.component.css'],
+  providers: [DialogService]
 })
 export class AppDesktopComponent implements OnInit {
 
@@ -45,6 +50,8 @@ export class AppDesktopComponent implements OnInit {
   lThingsList: ThingStruct[] = [];
   lAllThingsList: ThingStruct[] = [];
   selThing: ThingStruct | undefined;
+
+  cmObj2Sub: MenuItem[] = [];
 
   isLoading = true;
   preventSingleClick = false;
@@ -67,14 +74,50 @@ export class AppDesktopComponent implements OnInit {
     { label: 'Nonfood', value: 'Nonfood', icon: 'toilet-paper' as IconName }
   ]
   thingType = ''
-  selTypes: string[] = [this.thingsTypes[0].label, this.thingsTypes[1].label,this.thingsTypes[2].label,this.thingsTypes[3].label]
+  selTypes: string[] = [this.thingsTypes[0].label, this.thingsTypes[1].label, this.thingsTypes[2].label, this.thingsTypes[3].label]
+
+  @ViewChild('contextmenu') public cm?: ContextMenu;
 
   constructor(
     private backendService: BackendService,
     private authService: AuthService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private dialogService: DialogService
   ) {
+    this.cmObj2Sub = [
+      {
+        label: 'Add One', icon: 'pi pi-plus',
+        command: (event) => {
+          this.onAddOne(this.selThing!);
+        }
+      },
+      {
+        label: 'Remove One', icon: 'pi pi-minus',
+        command: (event) => {
+          this.onRemoveOne(this.selThing!, event as Event);
+        }
+      },
+      { separator: true },
+      {
+        label: 'Update', icon: 'pi pi-pencil',
+        command: (event) => {
+          this.onUpdateOnSubject();
+        }
+      },
+      { separator: true },
+      {
+        label: 'Update Thing', icon: 'pi pi-search',
+        command: (event) => {
+          this.onUpdateThing();
+        }
+      }
+    ]
+  }
+
+  showContextMenu(data: ThingStruct, event: any) {
+    this.selThing = data;
+    this.cm?.show(event)
   }
 
   reloadNodes() {
@@ -122,6 +165,7 @@ export class AppDesktopComponent implements OnInit {
 
               this.lAlcohoic.forEach((thing) => {
                 let thingElem = new ThingStruct();
+                thingElem.thing = thing;
                 thingElem.id = thing.id;
                 thingElem.name = thing.name;
                 thingElem.type = this.thingsTypes[0].label;
@@ -131,6 +175,7 @@ export class AppDesktopComponent implements OnInit {
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.alcoholicid && obj2sub.alcoholicid == thing.id) {
                     let thingElem = new ThingStruct();
+                    thingElem.thing = thing;
                     thingElem.id = thing.id;
                     thingElem.name = thing.name;
                     thingElem.photo = thing.photo;
@@ -146,6 +191,7 @@ export class AppDesktopComponent implements OnInit {
               })
               this.lFood.forEach((thing) => {
                 let thingElem = new ThingStruct();
+                thingElem.thing = thing;
                 thingElem.id = thing.id;
                 thingElem.name = thing.name;
                 thingElem.type = this.thingsTypes[1].label;
@@ -155,6 +201,7 @@ export class AppDesktopComponent implements OnInit {
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.foodid && obj2sub.foodid == thing.id) {
                     let thingElem = new ThingStruct();
+                    thingElem.thing = thing;
                     thingElem.id = thing.id;
                     thingElem.name = thing.name;
                     thingElem.photo = thing.photo;
@@ -170,6 +217,7 @@ export class AppDesktopComponent implements OnInit {
               })
               this.lNonalcohoic.forEach((thing) => {
                 let thingElem = new ThingStruct();
+                thingElem.thing = thing;
                 thingElem.id = thing.id;
                 thingElem.name = thing.name;
                 thingElem.type = this.thingsTypes[2].label;
@@ -178,6 +226,7 @@ export class AppDesktopComponent implements OnInit {
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.nonalcoholicid && obj2sub.nonalcoholicid == thing.id) {
                     let thingElem = new ThingStruct();
+                    thingElem.thing = thing;
                     thingElem.id = thing.id;
                     thingElem.name = thing.name;
                     thingElem.photo = thing.photo;
@@ -193,6 +242,7 @@ export class AppDesktopComponent implements OnInit {
               })
               this.lNonfood.forEach((thing) => {
                 let thingElem = new ThingStruct();
+                thingElem.thing = thing;
                 thingElem.id = thing.id;
                 thingElem.name = thing.name;
                 thingElem.type = this.thingsTypes[3].label;
@@ -201,6 +251,7 @@ export class AppDesktopComponent implements OnInit {
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.nonfoodid && obj2sub.nonfoodid == thing.id) {
                     let thingElem = new ThingStruct();
+                    thingElem.thing = thing;
                     thingElem.id = thing.id;
                     thingElem.name = thing.name;
                     thingElem.photo = thing.photo;
@@ -258,6 +309,66 @@ export class AppDesktopComponent implements OnInit {
     this.reloadNodes();
   }
 
+  onUpdateOnSubject() {
+    if (!this.selThing)
+      return;
+
+    this.selObj2Sub = this.selThing.obj2sub!;
+    this.selSubplace = this.lSubPlaceSelect.find((value) => value.value == this.selThing?.subplace?.id);
+
+    switch (this.selThing!.type) {
+      case 'Alcoholic': {
+        this.selObj2Sub.alcoholicid = this.selThing.id;
+        break;
+      }
+      case 'Food': {
+        this.selObj2Sub.foodid = this.selThing.id;
+        break;
+      }
+      case 'Nonalcoholic': {
+        this.selObj2Sub.nonalcoholicid = this.selThing.id;
+
+        break;
+      }
+      case 'Nonfood': {
+        this.selObj2Sub.nonfoodid = this.selThing.id;
+
+        break;
+      }
+      default:
+        break;
+    }
+    this.showDialog = true;
+
+  }
+
+  onUpdateThing() {
+    if (this.selThing) {
+      const ref = this.dialogService.open(ThingEditComponent, {
+        data: this.selThing.thing,
+        header: 'Show Thing of type ' + this.selThing.thing!.thing_type,
+        width: '50%',
+        height: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: false,
+        closable: true,
+        resizable: true,
+        modal: true,
+        closeOnEscape: true,
+        draggable: true,
+      });
+
+      ref.onClose.subscribe((thing: Thing) => {
+        if (thing) {
+          this.selThing!.name = thing.name;
+          this.selThing!.photo = thing.photo;
+          this.selThing!.thing = thing;  
+        }
+      })
+    }  
+  }
+
   onAddOnSubject() {
     if (!this.selThing)
       return;
@@ -293,20 +404,42 @@ export class AppDesktopComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Add to Subplace', detail: 'Subplace must be selected' });
       return;
     }
-    this.selObj2Sub.subplaceid = this.selSubplace.value;
-    this.backendService.insertOject2Subplace(this.selObj2Sub).subscribe({
-      next: (result) => {
-        this.showDialog = false;
-        const thing: ThingStruct = Object.assign({...this.selThing});
-        thing.obj2sub = result.data as Object2Subplace
-        thing.subplace = this.lSubplaces.find(s => s.id == thing.obj2sub!.subplaceid);
-        thing.place = this.lPlaces.find(p => p.id == thing.subplace?.placeid)
-        thing.placetype = this.lPlacetypes.find(pt => pt.id == thing.place?.placetypeid)
-        this.lAllThingsList.push(thing)
-        this.sortList();
-        this.filterList();
-      }
-    });
+    if (this.selObj2Sub.id == 0) {
+      this.selObj2Sub.subplaceid = this.selSubplace.value;
+      this.backendService.insertOject2Subplace(this.selObj2Sub).subscribe({
+        next: (result) => {
+          this.showDialog = false;
+          const thing: ThingStruct = Object.assign({ ...this.selThing });
+          thing.obj2sub = result.data as Object2Subplace
+          if (thing.obj2sub.valid_until && thing.obj2sub.valid_until != '') {
+            const date = Date.parse(thing.obj2sub.valid_until);
+            thing.obj2sub.valid_until_date = new Date(date);
+          }
+          thing.subplace = this.lSubplaces.find(s => s.id == thing.obj2sub!.subplaceid);
+          thing.place = this.lPlaces.find(p => p.id == thing.subplace?.placeid)
+          thing.placetype = this.lPlacetypes.find(pt => pt.id == thing.place?.placetypeid)
+          this.lAllThingsList.push(thing)
+          this.sortList();
+          this.filterList();
+        }
+      });
+    } else {
+      this.selObj2Sub.subplaceid = this.selSubplace.value;
+      this.backendService.updateObject2Subplace(this.selObj2Sub).subscribe({
+        next: (result) => {
+          this.showDialog = false;
+          this.selThing!.obj2sub = result.data as Object2Subplace;
+          this.selThing!.subplace = this.lSubplaces.find(s => s.id == this.selThing!.obj2sub!.subplaceid);
+          this.selThing!.place = this.lPlaces.find(p => p.id == this.selThing!.subplace?.placeid)
+          this.selThing!.placetype = this.lPlacetypes.find(pt => pt.id == this.selThing!.place?.placetypeid)
+          if (this.selThing!.obj2sub.valid_until && this.selThing!.obj2sub.valid_until != '') {
+            const date = Date.parse(this.selThing!.obj2sub.valid_until);
+            this.selThing!.obj2sub.valid_until_date = new Date(date);
+          }
+        }
+      });
+
+    }
 
   }
 
@@ -316,36 +449,36 @@ export class AppDesktopComponent implements OnInit {
     this.timer = setTimeout(() => {
       if (!this.preventSingleClick) {
         if (data.obj2sub) {
-            data.obj2sub.count = Math.max(data.obj2sub.count ? data.obj2sub.count - 1 : 0,0);
-            if (data.obj2sub.count == 0) {
-              this.confirmationService.confirm({
-                target: event.target as EventTarget,
-                message: 'Do you want to delete this record?',
-                icon: 'pi pi-question',
-                acceptButtonStyleClass: 'p-button-danger p-button-sm',
-                accept: () => {
-                  this.backendService.deleteObject2Subplace(data.obj2sub!).subscribe({
-                    next: () => {
-                      let ind = this.lAllThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
-                      this.lAllThingsList.splice(ind, 1)  
-                      ind = this.lThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
-                      this.lThingsList.splice(ind, 1)  
-                    }
-                  });  
-                },
-                reject: () => {
-                    return;
-                }
+          data.obj2sub.count = Math.max(data.obj2sub.count ? data.obj2sub.count - 1 : 0, 0);
+          if (data.obj2sub.count == 0) {
+            this.confirmationService.confirm({
+              target: event.target as EventTarget,
+              message: 'Do you want to delete this record?',
+              icon: 'pi pi-question',
+              acceptButtonStyleClass: 'p-button-danger p-button-sm',
+              accept: () => {
+                this.backendService.deleteObject2Subplace(data.obj2sub!).subscribe({
+                  next: () => {
+                    let ind = this.lAllThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
+                    this.lAllThingsList.splice(ind, 1)
+                    ind = this.lThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
+                    this.lThingsList.splice(ind, 1)
+                  }
+                });
+              },
+              reject: () => {
+                return;
+              }
             });
-            } else {
-              this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
+          } else {
+            this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
               next: (ret) => {
               }
             })
           }
         } else {
           this.selThing = data;
-          this.onAddOnSubject();    
+          this.onAddOnSubject();
         }
       }
     }, delay);
@@ -375,8 +508,8 @@ export class AppDesktopComponent implements OnInit {
         return true;
       else
         return false;
-      }
-    
+    }
+
     return false
   }
 

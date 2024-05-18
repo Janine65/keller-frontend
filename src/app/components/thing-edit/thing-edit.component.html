@@ -32,9 +32,10 @@
             <input type="text" id="name" pInputText [(ngModel)]="alcoholic.name" />
         </div>
     </div>
-    <div class="field grid col-offset-2">
+    <div *ngIf="alcoholic.photo && alcoholic.photo != ''" class="field grid col-offset-2">
         <p-image [src]="alcoholic.photo" [preview]="true" width="150" height="150">
         </p-image>
+        <button pButton class="ml-4" (click)="alcoholic.photo = ''">Remove Photo</button>
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
@@ -110,9 +111,10 @@
             <input type="text" id="name" pInputText [(ngModel)]="food.name" />
         </div>
     </div>
-    <div class="field grid col-offset-2">
+    <div *ngIf="food.photo && food.photo != ''" class="field grid col-offset-2">
         <p-image [src]="food.photo" [preview]="true" width="150" height="150">
         </p-image>
+        <button pButton class="ml-4" (click)="food.photo = ''">Remove Photo</button>
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
@@ -145,9 +147,10 @@
             <input type="text" id="name" pInputText [(ngModel)]="nonalcoholic.name" />
         </div>
     </div>
-    <div class="field grid col-offset-2">
+    <div *ngIf="nonalcoholic.photo && nonalcoholic.photo != ''" class="field grid col-offset-2">
         <p-image [src]="nonalcoholic.photo" [preview]="true" width="150" height="150">
         </p-image>
+        <button pButton class="ml-4" (click)="nonalcoholic.photo = ''">Remove Photo</button>
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
@@ -170,9 +173,10 @@
             <input type="text" id="name" pInputText [(ngModel)]="nonfood.name" />
         </div>
     </div>
-    <div class="field grid col-offset-2">
+    <div *ngIf="nonfood.photo && nonfood.photo != ''" class="field grid col-offset-2">
         <p-image [src]="nonfood.photo" [preview]="true" width="150" height="150">
         </p-image>
+        <button pButton class="ml-4" (click)="nonfood.photo = ''">Remove Photo</button>
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
