@@ -346,17 +346,16 @@ export class AppDesktopComponent implements OnInit {
     if (this.selThing) {
       const ref = this.dialogService.open(ThingEditComponent, {
         data: this.selThing.thing,
-        header: 'Show Thing of type ' + this.selThing.thing!.thing_type,
-        width: '50%',
-        height: '70%',
+        header: 'Update Thing of type ' + this.selThing.thing!.thing_type,
+        breakpoints: { '900px': '50vw', '500px': '100vw' },
         contentStyle: { overflow: 'auto' },
         baseZIndex: 10000,
-        maximizable: false,
+        maximizable: true,
         closable: true,
-        resizable: true,
+        resizable: false,
         modal: true,
         closeOnEscape: true,
-        draggable: true,
+        draggable: false,
       });
 
       ref.onClose.subscribe((thing: Thing) => {
@@ -374,6 +373,7 @@ export class AppDesktopComponent implements OnInit {
       return;
 
     this.selObj2Sub = new Object2Subplace()
+    this.selObj2Sub.id = 0;
     switch (this.selThing!.type) {
       case 'Alcoholic': {
         this.selObj2Sub.alcoholicid = this.selThing.id;

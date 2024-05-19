@@ -51,16 +51,15 @@ export class ThingsListComponent implements OnInit {
     const ref = this.dialogService.open(ThingEditComponent, {
       data:  undefined,
       header: 'Add new Thing',
-      width: '50%',
-      height: '70%',
+      breakpoints: { '900px': '50vw', '500px': '100vw' },
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
-      maximizable: false,
+      maximizable: true,
       closable: true,
-      resizable: true,
+      resizable: false,
       modal: true,
       closeOnEscape: true,
-      draggable: true
+      draggable: false,
     })
 
     ref.onClose.subscribe({
@@ -106,16 +105,15 @@ export class ThingsListComponent implements OnInit {
     const ref = this.dialogService.open(ThingEditComponent, {
       data: thing,
       header: 'Update Thing of type ' + thing.thing_type,
-      width: '50%',
-      height: '70%',
+      breakpoints: { '900px': '50vw', '500px': '100vw' },
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
-      maximizable: false,
+      maximizable: true,
       closable: true,
-      resizable: true,
+      resizable: false,
       modal: true,
       closeOnEscape: true,
-      draggable: true
+      draggable: false,
     })
 
     ref.onClose.subscribe({

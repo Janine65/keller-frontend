@@ -39,12 +39,9 @@
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-        <div class="col-12 md:col-10">
+        <div class="col-12 md:col-7">
             <input type="text" id="weight" pInputText [(ngModel)]="alcoholic.weight" aria-describedby="weight-help" />
         </div>
-    </div>
-    <div class="field grid col-offset-2">
-        <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
     </div>
     <div class="field grid">
         <label for="winetype" class="col-12 mb-2 md:col-2 md:mb-0">Type of Wine</label>
@@ -58,7 +55,7 @@
     </div>
     <div class="field grid">
         <label for="country" class="col-12 mb-2 md:col-2 md:mb-0">Country / Region</label>
-        <div class="col-12 md:col-3">
+        <div class="col-12 md:col-4">
             <p-dropdown [options]="countries" [(ngModel)]="selectedCountry" optionLabel="name" [filter]="true"
                 [showClear]="true" placeholder="Select a Country">
                 <ng-template pTemplate="selectedItem">
@@ -75,7 +72,7 @@
                 </ng-template>
             </p-dropdown>
         </div>
-        <div class="col-12 md:col-7 pl-2">
+        <div class="col-12 md:col-5">
             <input type="text" id="region" pInputText [(ngModel)]="alcoholic.region" />
         </div>
     </div>
@@ -118,14 +115,15 @@
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-        <input type="text" id="weight" pInputText [(ngModel)]="food.weight" aria-describedby="weight-help" />
-    </div>
-    <div class="field grid col-offset-2">
-        <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+        <div class="col-12 md:col-7">
+            <input type="text" id="weight" pInputText [(ngModel)]="food.weight" aria-describedby="weight-help" />
+        </div>
     </div>
     <div class="field grid">
         <label for="vacuumed" class="col-12 mb-2 md:col-2 md:mb-0">Vacuumed</label>
-        <p-checkbox [(ngModel)]="food.vacuumed" [binary]="true" id="vacuumed"></p-checkbox>
+        <div class="col-12 md:col-4">
+            <p-checkbox [(ngModel)]="food.vacuumed" [binary]="true" id="vacuumed"></p-checkbox>
+        </div>
     </div>
     <div class="field grid">
         <label for="sealed" class="col-12 mb-2 md:col-2 md:mb-0">Sealed</label>
@@ -154,10 +152,9 @@
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-        <input type="text" id="weight" pInputText [(ngModel)]="nonalcoholic.weight" aria-describedby="weight-help" />
-    </div>
-    <div class="field grid col-offset-2">
-        <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+        <div class="col-12 md:col-7">
+            <input type="text" id="weight" pInputText [(ngModel)]="nonalcoholic.weight" aria-describedby="weight-help" />
+        </div>
     </div>
     <div class="field grid">
         <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
@@ -180,9 +177,8 @@
     </div>
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-        <input type="text" id="weight" pInputText [(ngModel)]="nonfood.weight" aria-describedby="weight-help" />
-        <div class="field grid col-offset-2">
-            <small id="weight-help" class="pl-2">e.g.: 250g, Bottle, Pack, etc..</small>
+        <div class="col-12 md:col-7">
+            <input type="text" id="weight" pInputText [(ngModel)]="nonfood.weight" aria-describedby="weight-help" />
         </div>
     </div>
     <div class="field grid">
