@@ -28,3 +28,19 @@
         background: var(--highlight-bg) !important;
     }
 }
+
+.klBadgeWarning .p-badge { 
+    background-color: yellow !important;
+    color: black !important;
+}
+
+.klBadgeDanger .p-badge { 
+    background-color: red !important;
+    color: white !important;
+}
+
+.klBadgeSuccess .p-badge {
+    background-color: green !important;
+    color: white !important;
+}
+

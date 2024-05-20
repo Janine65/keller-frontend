@@ -11,6 +11,7 @@ export class Thing {
   createdAt_date: Date = new Date();
   updatedAt_date: Date = new Date();
   user: string = ''
+  levels: Array<number> = [1,3];
 }
 
 export class Alcoholic extends Thing {

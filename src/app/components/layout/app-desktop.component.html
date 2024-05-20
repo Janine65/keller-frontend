@@ -22,10 +22,9 @@
                 <div class="surface-card shadow-2 p-3 border-round">
                     <div class="flex justify-content-between mb-3">
                         <div>
-                            <span pBadge class="flex align-content-start text-500 font-medium mb-3 text-xl"
-                                [severity]="data.obj2sub!.count! < 2 ? 'danger' : null"
-                                [value]="data.obj2sub ? data.obj2sub!.count ?? 0 : 0"
-                                (click)="showContextMenu(data, $event)">{{data.name}}
+                            <span class="flex align-content-start text-500 font-medium mb-3 text-xl"
+                                (click)="showContextMenu(data, $event)">{{data.name}}&nbsp;&nbsp;
+                                <p-badge [class]="getSeverety(data)" [value]="data.obj2sub ? data.obj2sub!.count ?? 0 : 0" ></p-badge>
                                 <p-image class=" mr-2 ml-2 justify-content-center align-content-center"
                                     *ngIf="data.photo && data.photo != ''" [src]="data.photo" [preview]="true"
                                     width="50" height="50"></p-image>

@@ -305,6 +305,17 @@ export class AppDesktopComponent implements OnInit {
     this.selTypes.push(type);
   }
 
+  getSeverety(data: ThingStruct) {
+    if (data.obj2sub) {
+      if (data.obj2sub.count! <= data.thing?.levels[0]!)
+        return 'klBadgeDanger';
+      if (data.obj2sub.count! <= data.thing?.levels[1]!)
+        return 'klBadgeWarning';
+      return 'klBadgeSuccess';
+    }
+    return null;
+  }
+
   ngOnInit(): void {
     this.reloadNodes();
   }

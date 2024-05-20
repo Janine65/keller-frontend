@@ -153,7 +153,8 @@
     <div class="field grid">
         <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
         <div class="col-12 md:col-7">
-            <input type="text" id="weight" pInputText [(ngModel)]="nonalcoholic.weight" aria-describedby="weight-help" />
+            <input type="text" id="weight" pInputText [(ngModel)]="nonalcoholic.weight"
+                aria-describedby="weight-help" />
         </div>
     </div>
     <div class="field grid">
@@ -185,6 +186,26 @@
         <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
         <div class="col-12 md:col-10">
             <input type="text" id="shop" pInputText [(ngModel)]="nonfood.shop" />
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="field grid">
+        <label for="warnlevel" class="col-12 mb-2 md:col-2 md:mb-0">Level Warning</label>
+        <div class="col-12 md:col-4 mr-2">
+            <input id="warnlevel" type="number" [(ngModel)]="thing.levels[1]" min="1" step="1" />
+        </div>
+        <div class="col-12 md:col-4">
+            <p-badge [value]="thing.levels[1]" class="ml-5 klBadgeWarning"></p-badge>
+        </div>
+    </div>
+    <div class="field grid">
+        <label for="dangerlevel" class="col-12 mb-2 md:col-2 md:mb-0">Level Danger</label>
+        <div class="col-12 md:col-4 mr-2">
+            <input id="dangerlevel" type="number" [(ngModel)]="thing.levels[0]" min="0" step="1" />
+        </div>
+        <div class="col-12 md:col-4">
+            <p-badge [value]="thing.levels[0]" class="ml-5 klBadgeDanger"></p-badge>
         </div>
     </div>
 </div>
