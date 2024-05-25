@@ -45,7 +45,7 @@ export class BackendService {
 
   doRefreshToken(userData: User): Observable<any> {
     const apiURL = environment.apiUrl + '/refreshToken';
-    return this.http.post(apiURL, userData, this.httpConfig);
+    return this.http.post<any>(apiURL, userData, this.httpConfig);
   }
 
   getUsers(): Observable<ReturnStruct> {

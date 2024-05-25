@@ -4,13 +4,14 @@ import { LoggingService } from './logging.service';
 import { ErrorService } from './error.service';
 import { NotificationService } from './notification.service';
 import { AuthService } from '@services/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
-  constructor(private injector: Injector, private authService: AuthService) { }
+  constructor(private injector: Injector, private authService: AuthService, private router: Router) { }
   
-  handleError(error: Error | HttpErrorResponse) {
+  async handleError(error: Error | HttpErrorResponse) {
     const errorService = this.injector.get(ErrorService);
     const logger = this.injector.get(LoggingService);
     const notifier = this.injector.get(NotificationService);
@@ -24,10 +25,17 @@ export class GlobalErrorHandler implements ErrorHandler {
       // Server error
       message = errorService.getServerErrorMessage(error);
       notifier.showError(message);
+      console.debug(message);
+      if (message == 'Authentication token missing') {
+        this.authService.logout();
+        await this.router.navigate(['/user/login']);
+      }
     } else {
       // Client Error
-      if (error.message == 'Wrong authentication token') {
+      console.debug(error.message);
+      if (error.message == 'Wrong authentication token' || error.message == 'Authentication token missing') {
         this.authService.logout();
+        this.router.navigate(['/user/login']);
       }
       message = errorService.getClientErrorMessage(error);
       notifier.showError(message);

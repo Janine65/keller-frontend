@@ -56,7 +56,7 @@ export class AppDesktopComponent implements OnInit {
   isLoading = true;
   preventSingleClick = false;
   timer: any;
-  delay: Number = 200;
+  delay: number = 200;
 
   fDisplayAll = false
 
@@ -169,7 +169,7 @@ export class AppDesktopComponent implements OnInit {
                 thingElem.id = thing.id;
                 thingElem.name = thing.name;
                 thingElem.type = this.thingsTypes[0].label;
-                thingElem.icon = this.thingsTypes[0].icon as IconName;
+                thingElem.icon = this.thingsTypes[0].icon;
                 this.lAllThingsList.push(thingElem)
 
                 this.lObj2Subl.forEach(obj2sub => {
@@ -180,7 +180,7 @@ export class AppDesktopComponent implements OnInit {
                     thingElem.name = thing.name;
                     thingElem.photo = thing.photo;
                     thingElem.type = this.thingsTypes[0].label;
-                    thingElem.icon = this.thingsTypes[0].icon as IconName;
+                    thingElem.icon = this.thingsTypes[0].icon;
                     thingElem.obj2sub = obj2sub;
                     thingElem.subplace = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
                     thingElem.place = this.lPlaces.find(p => p.id == thingElem.subplace?.placeid)
@@ -195,7 +195,7 @@ export class AppDesktopComponent implements OnInit {
                 thingElem.id = thing.id;
                 thingElem.name = thing.name;
                 thingElem.type = this.thingsTypes[1].label;
-                thingElem.icon = this.thingsTypes[1].icon as IconName;
+                thingElem.icon = this.thingsTypes[1].icon;
                 this.lAllThingsList.push(thingElem)
 
                 this.lObj2Subl.forEach(obj2sub => {
@@ -206,7 +206,7 @@ export class AppDesktopComponent implements OnInit {
                     thingElem.name = thing.name;
                     thingElem.photo = thing.photo;
                     thingElem.type = this.thingsTypes[1].label;
-                    thingElem.icon = this.thingsTypes[1].icon as IconName;
+                    thingElem.icon = this.thingsTypes[1].icon;
                     thingElem.obj2sub = obj2sub;
                     thingElem.subplace = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
                     thingElem.place = this.lPlaces.find(p => p.id == thingElem.subplace?.placeid)
@@ -221,7 +221,7 @@ export class AppDesktopComponent implements OnInit {
                 thingElem.id = thing.id;
                 thingElem.name = thing.name;
                 thingElem.type = this.thingsTypes[2].label;
-                thingElem.icon = this.thingsTypes[2].icon as IconName;
+                thingElem.icon = this.thingsTypes[2].icon;
                 this.lAllThingsList.push(thingElem)
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.nonalcoholicid && obj2sub.nonalcoholicid == thing.id) {
@@ -231,7 +231,7 @@ export class AppDesktopComponent implements OnInit {
                     thingElem.name = thing.name;
                     thingElem.photo = thing.photo;
                     thingElem.type = this.thingsTypes[2].label;
-                    thingElem.icon = this.thingsTypes[2].icon as IconName;
+                    thingElem.icon = this.thingsTypes[2].icon;
                     thingElem.obj2sub = obj2sub;
                     thingElem.subplace = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
                     thingElem.place = this.lPlaces.find(p => p.id == thingElem.subplace?.placeid)
@@ -246,7 +246,7 @@ export class AppDesktopComponent implements OnInit {
                 thingElem.id = thing.id;
                 thingElem.name = thing.name;
                 thingElem.type = this.thingsTypes[3].label;
-                thingElem.icon = this.thingsTypes[3].icon as IconName;
+                thingElem.icon = this.thingsTypes[3].icon;
                 this.lAllThingsList.push(thingElem)
                 this.lObj2Subl.forEach(obj2sub => {
                   if (obj2sub.nonfoodid && obj2sub.nonfoodid == thing.id) {
@@ -256,7 +256,7 @@ export class AppDesktopComponent implements OnInit {
                     thingElem.name = thing.name;
                     thingElem.photo = thing.photo;
                     thingElem.type = this.thingsTypes[3].label;
-                    thingElem.icon = this.thingsTypes[3].icon as IconName;
+                    thingElem.icon = this.thingsTypes[3].icon;
                     thingElem.obj2sub = obj2sub;
                     thingElem.subplace = this.lSubplaces.find(s => s.id == obj2sub.subplaceid);
                     thingElem.place = this.lPlaces.find(p => p.id == thingElem.subplace?.placeid)
@@ -282,7 +282,7 @@ export class AppDesktopComponent implements OnInit {
         return -1;
       if (a.name! > b.name!)
         return 1;
-      if (a.name! === b.name!)
+      if (a.name === b.name)
         if (a.obj2sub)
           return -1
         else
@@ -327,7 +327,7 @@ export class AppDesktopComponent implements OnInit {
     this.selObj2Sub = this.selThing.obj2sub!;
     this.selSubplace = this.lSubPlaceSelect.find((value) => value.value == this.selThing?.subplace?.id);
 
-    switch (this.selThing!.type) {
+    switch (this.selThing.type) {
       case 'Alcoholic': {
         this.selObj2Sub.alcoholicid = this.selThing.id;
         break;
@@ -385,7 +385,7 @@ export class AppDesktopComponent implements OnInit {
 
     this.selObj2Sub = new Object2Subplace()
     this.selObj2Sub.id = 0;
-    switch (this.selThing!.type) {
+    switch (this.selThing.type) {
       case 'Alcoholic': {
         this.selObj2Sub.alcoholicid = this.selThing.id;
         break;
@@ -416,11 +416,12 @@ export class AppDesktopComponent implements OnInit {
       return;
     }
     if (this.selObj2Sub.id == 0) {
+      this.selObj2Sub.id = undefined;
       this.selObj2Sub.subplaceid = this.selSubplace.value;
       this.backendService.insertOject2Subplace(this.selObj2Sub).subscribe({
         next: (result) => {
           this.showDialog = false;
-          const thing: ThingStruct = Object.assign({ ...this.selThing });
+          const thing: ThingStruct = {...this.selThing!};
           thing.obj2sub = result.data as Object2Subplace
           if (thing.obj2sub.valid_until && thing.obj2sub.valid_until != '') {
             const date = Date.parse(thing.obj2sub.valid_until);
@@ -512,7 +513,7 @@ export class AppDesktopComponent implements OnInit {
 
   isValidPast(data: ThingStruct) {
     const now = new Date()
-    if (data.obj2sub && data.obj2sub.valid_until_date) {
+    if (data.obj2sub?.valid_until_date) {
       const timeNow = now.getTime();
       const timeValid = data.obj2sub.valid_until_date.getTime()
       if (timeNow > timeValid)
