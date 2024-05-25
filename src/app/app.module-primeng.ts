@@ -45,7 +45,8 @@ import { TagModule } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ImageModule } from 'primeng/image';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 //
 export const APP_PRIMENG_MODULE = [
     AccordionModule,
@@ -64,7 +65,9 @@ export const APP_PRIMENG_MODULE = [
     FieldsetModule,
     FileUploadModule,
     FocusTrapModule,
+    IconFieldModule,
     ImageModule,
+    InputIconModule,
     InputNumberModule,
     InputSwitchModule,
     InputTextareaModule,

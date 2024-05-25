@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '@services/backend.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
+import { InputIcon } from 'primeng/inputicon';
+import { IconField } from 'primeng/iconfield';
 
 @Component({
   selector: 'keller-frontend-user-login',
@@ -22,8 +24,9 @@ export class UserLoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       'login': new FormControl('', Validators.required),
       'password': new FormControl('', Validators.required)
-  });      
+  });
   }
+
   onLogin() {
     if (this.loginForm.get('login')?.invalid || this.loginForm.get('password')?.invalid) {
         this.messageService.add({
@@ -48,6 +51,7 @@ export class UserLoginComponent implements OnInit {
   onReset() {
     this.loginForm.get('login')!.setValue('');
     this.loginForm.get('password')!.setValue('');
+
   }
 
 }
