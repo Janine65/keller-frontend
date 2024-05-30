@@ -65,6 +65,8 @@ export class AppDesktopComponent implements OnInit {
   selSubplace: DropdownList | undefined;
   lSubPlaceSelect: DropdownList[] = []
 
+  searchText = '';
+
   selObj2Sub: Object2Subplace = new Object2Subplace();
 
   thingsTypes = [
@@ -274,6 +276,13 @@ export class AppDesktopComponent implements OnInit {
         }
       }
     });
+  }
+
+  doSearch() {
+    this.filterList();
+
+    if (this.searchText != '')
+      this.lThingsList = this.lThingsList.filter((value) => value.name?.toLowerCase().includes(this.searchText.toLowerCase()));
   }
 
   sortList() {

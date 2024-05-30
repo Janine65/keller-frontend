@@ -1,13 +1,18 @@
 <p-toolbar *ngIf="!isLoading">
-    <div class="flex justify-content-start gap-1" *ngFor="let type of thingsTypes">
+    <div class="flex justify-content-start" *ngFor="let type of thingsTypes">
         <p-checkbox name="selTypes" (onChange)="filterList()" [binary]="false" [label]="type.label" [value]="type.value"
             [(ngModel)]="selTypes">
-            <ng-template let-item pTemplate>
-                <fa-icon [icon]="['fas',item.icon]"></fa-icon>
-            </ng-template>
         </p-checkbox>
     </div>
-    <div class="flex justify-content-end">
+    <div class="flex justify-content-center">
+        <div class="ui-inputgroup mr-2">
+            <p-iconField iconPosition="right">
+                <p-inputIcon styleClass="pi pi-times"  (click)="searchText = ''; doSearch()"/>
+                <input type="text" pInputText placeholder="Search"  [(ngModel)]="searchText" (keyup)="doSearch()" />
+            </p-iconField>            
+        </div>
+        </div>
+        <div class="flex justify-content-end">
         <label for="selection" class="mr-3 mt-2">Display all Things:</label>
         <p-toggleButton id="selection" [(ngModel)]="fDisplayAll" (onChange)="filterList()" onLabel="Yes"
             offLabel="No" />
@@ -19,12 +24,13 @@
             <p-contextMenu #contextmenu [model]="cmObj2Sub" [global]="false" appendTo="body" />
             <div #thing (contextmenu)="showContextMenu(data, $event)" class="col-12 md:col-6 lg:col-3"
                 *ngFor="let data of lThingsList; index as ind">
-                <div class="surface-card shadow-2 p-3 border-round">
+                <div [id]="'box_'+data.id+'_'+ind" class="surface-card shadow-2 p-3 border-round">
                     <div class="flex justify-content-between mb-3">
                         <div>
                             <span class="flex align-content-start text-500 font-medium mb-3 text-xl"
                                 (click)="showContextMenu(data, $event)">{{data.name}}&nbsp;&nbsp;
-                                <p-badge [class]="getSeverety(data)" [value]="data.obj2sub ? data.obj2sub!.count ?? 0 : 0" ></p-badge>
+                                <p-badge *ngIf="data.obj2sub" [class]="getSeverety(data)"
+                                    [value]="data.obj2sub ? data.obj2sub!.count ?? 0 : 0"></p-badge>
                                 <p-image class=" mr-2 ml-2 justify-content-center align-content-center"
                                     *ngIf="data.photo && data.photo != ''" [src]="data.photo" [preview]="true"
                                     width="50" height="50"></p-image>
