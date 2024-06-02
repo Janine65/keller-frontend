@@ -1,21 +1,33 @@
 <p-toolbar *ngIf="!isLoading">
-    <div class="flex justify-content-start" *ngFor="let type of thingsTypes">
-        <p-checkbox name="selTypes" (onChange)="filterList()" [binary]="false" [label]="type.label" [value]="type.value"
-            [(ngModel)]="selTypes">
-        </p-checkbox>
+    <div class="flex justify-content-start">
+        <div class="p-1 border-cyan-100 border-1">
+            <label for="filtering">Filter:</label>
+            <div id="filtering" class="block mt-1">
+                <p-checkbox *ngFor="let type of thingsTypes" class="mr-4" name="selTypes" (onChange)="filterList()"
+                    [binary]="false" [label]="type.label" [value]="type.value" [(ngModel)]="selTypes">
+                </p-checkbox>
+            </div>
+        </div>
     </div>
     <div class="flex justify-content-center">
         <div class="ui-inputgroup mr-2">
             <p-iconField iconPosition="right">
-                <p-inputIcon styleClass="pi pi-times"  (click)="searchText = ''; doSearch()"/>
-                <input type="text" pInputText placeholder="Search"  [(ngModel)]="searchText" (keyup)="doSearch()" />
-            </p-iconField>            
+                <p-inputIcon styleClass="pi pi-times" (click)="searchText = ''; doSearch()" />
+                <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText" (keyup)="doSearch()" />
+            </p-iconField>
         </div>
+    </div>
+    <div class="flex justify-content-end">
+        <div class="p-1 border-cyan-100 border-1">
+            <label for="sorting" class="mr-2">Sort:</label>
+            <p-selectButton id="sorting" [options]="sortOptions" [(ngModel)]="sorting"
+                (onChange)="sortList();filterList();" optionLabel="label" optionValue="value" />
         </div>
-        <div class="flex justify-content-end">
-        <label for="selection" class="mr-3 mt-2">Display all Things:</label>
-        <p-toggleButton id="selection" [(ngModel)]="fDisplayAll" (onChange)="filterList()" onLabel="Yes"
-            offLabel="No" />
+        <div class="ml-4 p-1 border-cyan-100 border-1">
+            <label for="selection" class="mr-2">Display all:</label>
+            <p-toggleButton id="selection" class="block" [(ngModel)]="fDisplayAll" (onChange)="filterList()"
+                onLabel="Yes" offLabel="No" />
+        </div>
     </div>
 </p-toolbar>
 <p-scrollPanel [style]="{ width: '100%', height: '100%' }">

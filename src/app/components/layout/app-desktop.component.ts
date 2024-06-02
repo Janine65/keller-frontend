@@ -58,6 +58,9 @@ export class AppDesktopComponent implements OnInit {
   timer: any;
   delay: number = 200;
 
+  sortOptions: any[] = [{ label: 'A-Z', value: 1 }, { label: 'Severity', value: 2 }];
+  sorting = 1;
+
   fDisplayAll = false
 
   // Dialog Parameters
@@ -287,19 +290,52 @@ export class AppDesktopComponent implements OnInit {
 
   sortList() {
     this.lAllThingsList.sort((a, b) => {
-      if (a.name! < b.name!)
-        return -1;
-      if (a.name! > b.name!)
-        return 1;
-      if (a.name === b.name)
-        if (a.obj2sub)
-          return -1
-        else
-          if (b.obj2sub)
-            return 1;
+      if (this.sorting == 1) { // sorting alphabetically
+        if (a.name! < b.name!)
+          return -1;
+        if (a.name! > b.name!)
+          return 1;
+        if (a.name === b.name)
+          if (a.obj2sub)
+            return -1
           else
-            return 0;
-      return 0;
+            if (b.obj2sub)
+              return 1;
+            else
+              return 0;
+        return 0;
+      } else { // sorting by severity
+        let sevA = 1000, sevB = 1000, sevSA, sevSB;
+        sevSA = this.getSeverety(a);
+          switch (sevSA) {
+            case 'klBadgeSuccess':
+              sevA = 200 + a.obj2sub?.count!
+              break;
+            case 'klBadgeWarning':
+              sevA = 100 + a.obj2sub?.count!
+              break;
+            case 'klBadgeDanger':
+              sevA = a.obj2sub?.count!
+              break;
+            default:
+              break;
+          }
+        sevSB = this.getSeverety(b);
+          switch (sevSB) {
+            case 'klBadgeSuccess':
+              sevB = 200 + b.obj2sub?.count!
+              break;
+            case 'klBadgeWarning':
+              sevB = 100 + b.obj2sub?.count!
+              break;
+            case 'klBadgeDanger':
+              sevB = b.obj2sub?.count!
+              break;
+            default:
+              break;
+          }
+          return sevA - sevB;
+      }
     })
   }
 
@@ -382,10 +418,10 @@ export class AppDesktopComponent implements OnInit {
         if (thing) {
           this.selThing!.name = thing.name;
           this.selThing!.photo = thing.photo;
-          this.selThing!.thing = thing;  
+          this.selThing!.thing = thing;
         }
       })
-    }  
+    }
   }
 
   onAddOnSubject() {
@@ -430,7 +466,7 @@ export class AppDesktopComponent implements OnInit {
       this.backendService.insertOject2Subplace(this.selObj2Sub).subscribe({
         next: (result) => {
           this.showDialog = false;
-          const thing: ThingStruct = {...this.selThing!};
+          const thing: ThingStruct = { ...this.selThing! };
           thing.obj2sub = result.data as Object2Subplace
           if (thing.obj2sub.valid_until && thing.obj2sub.valid_until != '') {
             const date = Date.parse(thing.obj2sub.valid_until);
