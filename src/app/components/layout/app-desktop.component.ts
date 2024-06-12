@@ -271,7 +271,7 @@ export class AppDesktopComponent implements OnInit {
                 });
               })
               this.sortList();
-              this.filterList();
+              this.doSearch();
               this.isLoading = false;
             })).subscribe()
         else {
@@ -477,7 +477,7 @@ export class AppDesktopComponent implements OnInit {
           thing.placetype = this.lPlacetypes.find(pt => pt.id == thing.place?.placetypeid)
           this.lAllThingsList.push(thing)
           this.sortList();
-          this.filterList();
+          this.doSearch();
         }
       });
     } else {
@@ -524,12 +524,15 @@ export class AppDesktopComponent implements OnInit {
                 });
               },
               reject: () => {
-                return;
+                this.backendService.updateObject2Subplace(data.obj2sub!).subscribe({
+                  next: (_) => {
+                  }
+                })
               }
             });
           } else {
             this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
-              next: (ret) => {
+              next: (_) => {
               }
             })
           }
