@@ -1,20 +1,39 @@
 ::ng-deep .p-menubar {
-    background: var(--primary-color);
+  background: var(--primary-color);
 }
-::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-    color: var(--primary-color-text);
+::ng-deep
+  .p-menubar
+  .p-menubar-root-list
+  > .p-menuitem
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-text {
+  color: var(--primary-color-text);
 }
 
-::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
-    color: var(--primary-color-text);
+::ng-deep
+  .p-menubar
+  .p-menubar-root-list
+  > .p-menuitem
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-icon {
+  color: var(--primary-color-text);
 }
-.footer {
+@media (max-width: 1023px) {
+  .footer {
+    display: none;
+  }
+}
+@media (min-width: 1024px) {
+  .footer {
     position: absolute;
-    bottom: 1rem;
+    bottom: 0rem;
     right: 0%;
     width: 100%;
     padding-right: 10px;
     background-origin: padding-box;
     background-color: var(--primary-color);
     color: var(--primary-color-text);
+  }
 }
