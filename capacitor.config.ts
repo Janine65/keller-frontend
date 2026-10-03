@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.olconet.keller',
   appName: 'Keller Organisator',
-  webDir: 'dist/apps/keller-frontend',
+  webDir: 'dist/apps/keller-frontend/browser',
   ios: {
     contentInset: 'automatic',
   },

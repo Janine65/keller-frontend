@@ -13,7 +13,8 @@
     "lib": [
       "dom",
       "es2022"
-    ]
+    ],
+    "esModuleInterop": true
   },
   "files": [],
   "include": [],

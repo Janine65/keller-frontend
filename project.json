@@ -7,14 +7,16 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular/build:application",
       "outputs": [
-        "{options.outputPath}"
+        "{options.outputPath.base}"
       ],
+      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/keller-frontend",
+        "outputPath": {
+          "base": "dist/apps/keller-frontend"
+        },
         "index": "src/index.html",
-        "main": "src/main.ts",
         "polyfills": [
           "zone.js"
         ],
@@ -25,15 +27,16 @@
         "styles": [
           "src/styles.css"
         ],
-        "scripts": []
+        "scripts": [],
+        "browser": "src/main.ts"
       },
       "configurations": {
         "production": {
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "3mb",
-              "maximumError": "5mb"
+              "maximumWarning": "4mb",
+              "maximumError": "6mb"
             },
             {
               "type": "anyComponentStyle",
@@ -50,19 +53,18 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "outputHashing": "media"
         },
         "app": {
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "3mb",
-              "maximumError": "5mb"
+              "maximumWarning": "4mb",
+              "maximumError": "6mb"
             },
             {
               "type": "anyComponentStyle",
@@ -78,11 +80,12 @@
           ],
           "outputHashing": "all"
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "options": {
         "port": 4301
       },
@@ -93,12 +96,10 @@
         "development": {
           "buildTarget": "keller-frontend:build:development"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "keller-frontend:build"
       }
@@ -120,6 +121,9 @@
       "outputs": [
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
+      "styles": [
+        "src/styles.css"
+      ],
       "options": {
         "jestConfig": "jest.config.ts",
         "passWithNoTests": true,
@@ -130,10 +134,7 @@
           "ci": true,
           "codeCoverage": true
         }
-      },
-      "styles": [
-        "src/styles.css"
-      ]
+      }
     }
   }
 }

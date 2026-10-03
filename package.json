@@ -60,6 +60,7 @@
     "@angular-eslint/eslint-plugin-template": "21.4.0",
     "@angular-eslint/schematics": "21.4.0",
     "@angular-eslint/template-parser": "21.4.0",
+    "@angular/build": "22.1.9",
     "@angular/compiler-cli": "22.1.8",
     "@capacitor/cli": "^8.5.2",
     "@capacitor/ios": "^8.5.2",
