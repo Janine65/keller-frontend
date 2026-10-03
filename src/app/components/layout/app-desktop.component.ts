@@ -53,7 +53,7 @@ class ThingStruct {
     styleUrls: ['./app-desktop.component.css'],
     providers: [DialogService],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [Bind, Toolbar, Checkbox, FormsModule, IconField, InputIcon, InputText, SelectButton, Ripple, ToggleButton, ScrollPanel, ContextMenu, Badge, Image, FaIconComponent, ButtonDirective, ButtonIcon, ButtonLabel, Dialog, Select]
+    imports: [Bind, Toolbar, Checkbox, FormsModule, IconField, InputIcon, InputText, SelectButton, Ripple, ToggleButton, ScrollPanel, ContextMenu, Badge, Image, FaIconComponent, ButtonDirective, ButtonLabel, Dialog, Select]
 })
 export class AppDesktopComponent implements OnInit {
   private backendService = inject(BackendService);
