@@ -79,6 +79,17 @@
             }
           ],
           "outputHashing": "all"
+        },
+        "app-dev": {
+          "optimization": false,
+          "sourceMap": true,
+          "fileReplacements": [
+            {
+              "replace": "src/environments/environment.ts",
+              "with": "src/environments/environment.app-dev.ts"
+            }
+          ],
+          "outputHashing": "media"
         }
       }
     },
