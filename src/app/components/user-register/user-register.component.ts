@@ -7,14 +7,14 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormsModule } from '@angular/forms';
 import { Bind } from 'primeng/bind';
 import { InputText } from 'primeng/inputtext';
-import { ButtonDirective } from 'primeng/button';
+import { ButtonDirective, ButtonIcon, ButtonLabel } from 'primeng/button';
 
 @Component({
     selector: 'keller-frontend-user-register',
     templateUrl: './user-register.component.html',
     styleUrls: ['./user-register.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [FormsModule, Bind, InputText, ButtonDirective]
+    imports: [FormsModule, Bind, InputText, ButtonDirective, ButtonIcon, ButtonLabel]
 })
 export class UserRegisterComponent {
   private messageService = inject(MessageService);

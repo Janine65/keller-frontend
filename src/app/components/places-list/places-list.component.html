@@ -2,13 +2,13 @@
 <div style="height: 100%;">
   @if (!isLoading) {
     <p-table dataKey="id" editMode="row" [value]="lPlaces" [scrollable]="true" scrollHeight="flex">
-      <ng-template pTemplate="caption">
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
-        (click)="onRowNew()"></button>
-        <button pButton pRipple label="Placetypes" icon="pi pi-sitemap" class="p-button-secondary mr-2"
-        (click)="showPlacetype()"></button>
+      <ng-template #caption>
+        <button pButton pRipple class="p-button-success mr-2"
+        (click)="onRowNew()"><i class="pi pi-plus" pButtonIcon></i><span pButtonLabel>New</span></button>
+        <button pButton pRipple class="p-button-secondary mr-2"
+        (click)="showPlacetype()"><i class="pi pi-sitemap" pButtonIcon></i><span pButtonLabel>Placetypes</span></button>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th pSortableColumn="name" style="width:30%">Name <p-sorticon field="name"></p-sorticon></th>
           <th pSortableColumn="placetype" style="width:20%">Type <p-sorticon field="placetype"></p-sorticon></th>
@@ -17,31 +17,31 @@
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-place let-editing="editing" let-ri="rowIndex">
+      <ng-template #body let-place let-editing="editing" let-ri="rowIndex">
         <tr [pEditableRow]="place">
           <td>
             <p-celleditor>
-              <ng-template pTemplate="input">
+              <ng-template #input>
                 <input pInputText type="text" [(ngModel)]="place.name">
               </ng-template>
-              <ng-template pTemplate="output">
+              <ng-template #output>
                 {{place.name}}
               </ng-template>
             </p-celleditor>
           </td>
           <td>
             <p-celleditor>
-              <ng-template pTemplate="input">
+              <ng-template #input>
                 <p-select [options]="lPlaceType" appendTo="body" [(ngModel)]="place.placetypeid"
                   [style]="{'width':'100%'}">
-                  <ng-template pTemplate="selectedItem">
+                  <ng-template #selectedItem>
                     @if (place.icon) {
                       <div class="flex items-center gap-2">
                         <fa-icon [icon]="['fas', place.icon]"></fa-icon>  {{ place.placetype }}
                       </div>
                     }
                   </ng-template>
-                  <ng-template let-icons pTemplate="item">
+                  <ng-template let-icons #item>
                     <div class="flex items-center gap-2">
                       <fa-icon [icon]="['fas', icons.icon]"></fa-icon>
                       <div>{{ icons.label }}</div>
@@ -49,7 +49,7 @@
                   </ng-template>
                 </p-select>
               </ng-template>
-              <ng-template pTemplate="output">
+              <ng-template #output>
                 <fa-icon [icon]="['fas', place.icon]"></fa-icon> {{ place.placetype }}
               </ng-template>
             </p-celleditor>
@@ -63,28 +63,28 @@
           <td>
             <div class="flex items-center justify-center gap-2">
               @if (!editing) {
-                <button pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                (click)="onRowEditInit(place)" class="p-button-rounded p-button-text"></button>
+                <button pButton pRipple type="button" pInitEditableRow
+                (click)="onRowEditInit(place)" class="p-button-rounded p-button-text"><i class="pi pi-pencil" pButtonIcon></i></button>
               }
               @if (!editing && place.id > 0) {
-                <button pButton pRipple type="button" icon="pi pi-trash"
-                (click)="onRowDelete(place, ri)" class="p-button-rounded p-button-text"></button>
+                <button pButton pRipple type="button"
+                (click)="onRowDelete(place, ri)" class="p-button-rounded p-button-text"><i class="pi pi-trash" pButtonIcon></i></button>
               }
               @if (editing) {
-                <button pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                <button pButton pRipple type="button" pSaveEditableRow
                   (click)="onRowEditSave(place, ri)"
-                class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                class="p-button-rounded p-button-text p-button-success mr-2"><i class="pi pi-check" pButtonIcon></i></button>
               }
               @if (editing) {
-                <button pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                <button pButton pRipple type="button" pCancelEditableRow
                   (click)="onRowEditCancel(place, ri)"
-                class="p-button-rounded p-button-text p-button-danger"></button>
+                class="p-button-rounded p-button-text p-button-danger"><i class="pi pi-times" pButtonIcon></i></button>
               }
             </div>
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="summary">
+      <ng-template #summary>
         <hr/>
         {{lPlaces.length}} Places
       </ng-template>

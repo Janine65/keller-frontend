@@ -65,7 +65,7 @@
       <div class="col-span-12 md:col-span-4">
         <p-select [options]="countries" [(ngModel)]="selectedCountry" optionLabel="name" [filter]="true"
           [showClear]="true" placeholder="Select a Country">
-          <ng-template pTemplate="selectedItem">
+          <ng-template #selectedItem>
             @if (selectedCountry) {
               <div class="flex items-center gap-2">
                 <span [ngClass]="'fi fi-'+selectedCountry.code"></span>
@@ -73,7 +73,7 @@
               </div>
             }
           </ng-template>
-          <ng-template let-country pTemplate="item">
+          <ng-template let-country #item>
             <div class="flex items-center gap-2">
               <span [ngClass]="'fi fi-'+country.code"></span>
               <div>{{ country.name }}</div>
@@ -97,7 +97,7 @@
         <p-multiselect [options]="grapes" [group]="true" [showClear]="true" [(ngModel)]="alcoholic.grapes"
           placeholder="Select Grapes" appendTo="body" [contentEditable]="true" display="chip" optionLabel="label"
           optionValue="label" [filter]="true">
-          <ng-template let-group pTemplate="group">
+          <ng-template let-group #group>
             <span>{{ group.label }}</span>
           </ng-template>
         </p-multiselect>

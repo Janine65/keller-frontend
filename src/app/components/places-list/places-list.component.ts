@@ -5,12 +5,12 @@ import { Place, Placetype } from '@models/places';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MessageService, PrimeTemplate } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { map, zip } from 'rxjs';
 import { Bind } from 'primeng/bind';
 import { TableModule } from 'primeng/table';
-import { ButtonDirective } from 'primeng/button';
+import { ButtonDirective, ButtonIcon, ButtonLabel } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
 import { FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
@@ -24,7 +24,7 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     styleUrls: ['./places-list.component.css'],
     providers: [DialogService],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, FaIconComponent, StringDatePipe]
+    imports: [Bind, TableModule, ButtonDirective, ButtonIcon, ButtonLabel, Ripple, FormsModule, InputText, Select, FaIconComponent, StringDatePipe]
 })
 export class PlacesListComponent implements OnInit, OnDestroy {
   private backendService = inject(BackendService);

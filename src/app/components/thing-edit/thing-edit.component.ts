@@ -3,7 +3,7 @@ import { ReturnStruct } from '@models/generel';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Thing, Grapes, WineType, ListElement } from '@models/things';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MessageService, PrimeTemplate } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUploadEvent, FileUpload } from 'primeng/fileupload';
 import { Observable } from 'rxjs';
@@ -26,7 +26,7 @@ import { Toolbar } from 'primeng/toolbar';
     templateUrl: './thing-edit.component.html',
     styleUrls: ['./thing-edit.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [Bind, RadioButton, FormsModule, InputText, Image, ButtonDirective, Select, PrimeTemplate, NgClass, DatePicker, MultiSelect, Checkbox, Badge, Toolbar, FileUpload]
+    imports: [Bind, RadioButton, FormsModule, InputText, Image, ButtonDirective, Select, NgClass, DatePicker, MultiSelect, Checkbox, Badge, Toolbar, FileUpload]
 })
 export class ThingEditComponent {
   private backendService = inject(BackendService);

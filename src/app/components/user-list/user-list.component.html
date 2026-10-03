@@ -2,11 +2,11 @@
 <div style="height: 100%;">
   @if (!isLoading) {
     <p-table dataKey="id" [value]="lUsers" [scrollable]="true" scrollHeight="flex">
-      <ng-template pTemplate="caption">
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
-        (click)="doRegister()"></button>
+      <ng-template #caption>
+        <button pButton pRipple class="p-button-success mr-2"
+        (click)="doRegister()"><i class="pi pi-plus" pButtonIcon></i><span pButtonLabel>New</span></button>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th style="width:30%">Name </th>
           <th style="width:30%">Email </th>
@@ -16,7 +16,7 @@
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-user>
+      <ng-template #body let-user>
         <tr [pSelectableRow]="selUser">
           <td>
             {{user.name}}
@@ -35,13 +35,13 @@
           </td>
           <td>
             <div class="flex items-center justify-center gap-2">
-              <button pButton pRipple type="button" icon="pi pi-trash" (click)="doDelete(user)"
-              class="p-button-rounded p-button-text"></button>
+              <button pButton pRipple type="button" (click)="doDelete(user)"
+              class="p-button-rounded p-button-text"><i class="pi pi-trash" pButtonIcon></i></button>
             </div>
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="summary">
+      <ng-template #summary>
         <hr />
         {{lUsers.length}} Things
       </ng-template>

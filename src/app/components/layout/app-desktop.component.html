@@ -107,14 +107,14 @@
     <div class="col-span-12 md:col-span-10">
       <p-select inputId="subplace" [options]="lSubPlaceSelect" optionLabel="name" [(ngModel)]="selSubplace"
         placeholder="Select a Subplace" appendTo="body">
-        <ng-template pTemplate="selectedItem">
+        <ng-template #selectedItem>
           @if (selSubplace) {
             <div class="flex items-center gap-2">
               <div><fa-icon [icon]="['fas',selSubplace.icon]"></fa-icon> {{selSubplace.name }}</div>
             </div>
           }
         </ng-template>
-        <ng-template let-subplace pTemplate="item">
+        <ng-template let-subplace #item>
           <div class="flex items-center gap-2">
             <div><fa-icon [icon]="['fas',subplace.icon]"></fa-icon> {{ subplace.name }}</div>
           </div>
@@ -143,10 +143,10 @@
   </div>
   <div class="grid grid-cols-12 gap-4 m-2">
     <div class="col-span-12 md:col-span-2">
-      <button pButton label="Save" (click)="saveSubplace()"></button>
+      <button pButton (click)="saveSubplace()"><span pButtonLabel>Save</span></button>
     </div>
     <div class="col-span-12 md:col-span-2">
-      <button pButton label="Cancel" (click)="showDialog=false"></button>
+      <button pButton (click)="showDialog=false"><span pButtonLabel>Cancel</span></button>
     </div>
   </div>
 </p-dialog>

@@ -3,11 +3,11 @@
   @if (!isLoading) {
     <p-table dataKey="id" editMode="row" [value]="lSubplaces" [scrollable]="true"
       scrollHeight="flex">
-      <ng-template pTemplate="caption">
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
-        (click)="onRowNew()"></button>
+      <ng-template #caption>
+        <button pButton pRipple class="p-button-success mr-2"
+        (click)="onRowNew()"><i class="pi pi-plus" pButtonIcon></i><span pButtonLabel>New</span></button>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th pSortableColumn="name" style="width:30%">Name <p-sorticon field="name"></p-sorticon></th>
           <th pSortableColumn="place" style="width:20%">Type <p-sorticon field="place"></p-sorticon></th>
@@ -17,26 +17,26 @@
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-subplace let-editing="editing" let-ri="rowIndex">
+      <ng-template #body let-subplace let-editing="editing" let-ri="rowIndex">
         <tr [pEditableRow]="subplace">
           <td>
             <p-celleditor>
-              <ng-template pTemplate="input">
+              <ng-template #input>
                 <input pInputText type="text" [(ngModel)]="subplace.name">
               </ng-template>
-              <ng-template pTemplate="output">
+              <ng-template #output>
                 {{subplace.name}}
               </ng-template>
             </p-celleditor>
           </td>
           <td>
             <p-celleditor>
-              <ng-template pTemplate="input">
+              <ng-template #input>
                 <p-select [options]="lPlaces" appendTo="body" [(ngModel)]="subplace.placeid"
                   [style]="{'width':'100%'}" optionLabel="name" optionValue="id">
                 </p-select>
               </ng-template>
-              <ng-template pTemplate="output">
+              <ng-template #output>
                 {{subplace.place}}
               </ng-template>
             </p-celleditor>
@@ -50,28 +50,28 @@
           <td>
             <div class="flex items-center justify-center gap-2">
               @if (!editing) {
-                <button pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                (click)="onRowEditInit(subplace)" class="p-button-rounded p-button-text"></button>
+                <button pButton pRipple type="button" pInitEditableRow
+                (click)="onRowEditInit(subplace)" class="p-button-rounded p-button-text"><i class="pi pi-pencil" pButtonIcon></i></button>
               }
               @if (!editing && subplace.id > 0) {
-                <button pButton pRipple type="button" icon="pi pi-trash"
-                (click)="onRowDelete(subplace, ri)" class="p-button-rounded p-button-text"></button>
+                <button pButton pRipple type="button"
+                (click)="onRowDelete(subplace, ri)" class="p-button-rounded p-button-text"><i class="pi pi-trash" pButtonIcon></i></button>
               }
               @if (editing) {
-                <button pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                <button pButton pRipple type="button" pSaveEditableRow
                   (click)="onRowEditSave(subplace, ri)"
-                class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                class="p-button-rounded p-button-text p-button-success mr-2"><i class="pi pi-check" pButtonIcon></i></button>
               }
               @if (editing) {
-                <button pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                <button pButton pRipple type="button" pCancelEditableRow
                   (click)="onRowEditCancel(subplace, ri)"
-                class="p-button-rounded p-button-text p-button-danger"></button>
+                class="p-button-rounded p-button-text p-button-danger"><i class="pi pi-times" pButtonIcon></i></button>
               }
             </div>
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="summary">
+      <ng-template #summary>
         <hr />
         {{lSubplaces.length}} Subplaces
       </ng-template>

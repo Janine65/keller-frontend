@@ -2,11 +2,11 @@ import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/cor
 import { UserRegisterComponent } from '@components/user-register/user-register.component';
 import { User } from '@models/user';
 import { BackendService } from '@services/backend.service';
-import { MessageService, PrimeTemplate } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Bind } from 'primeng/bind';
 import { TableModule } from 'primeng/table';
-import { ButtonDirective } from 'primeng/button';
+import { ButtonDirective, ButtonIcon, ButtonLabel } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
 import { StringDatePipe } from '../../shared/string-date.pipe';
 
@@ -16,7 +16,7 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     styleUrls: ['./user-list.component.css'],
     providers: [DialogService],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, StringDatePipe]
+    imports: [Bind, TableModule, ButtonDirective, ButtonIcon, ButtonLabel, Ripple, StringDatePipe]
 })
 export class UserListComponent implements OnInit {
   private backendService = inject(BackendService);

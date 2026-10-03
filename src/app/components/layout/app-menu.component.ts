@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MenuItem, MessageService, PrimeTemplate } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Bind } from 'primeng/bind';
 import { Menubar } from 'primeng/menubar';
 
@@ -12,7 +12,7 @@ import { Menubar } from 'primeng/menubar';
     templateUrl: './app-menu.component.html',
     styleUrls: ['./app-menu.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [Bind, Menubar, PrimeTemplate, RouterLink]
+    imports: [Bind, Menubar, RouterLink]
 })
 export class AppMenuComponent implements OnInit {
   private backendService = inject(BackendService);
