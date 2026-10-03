@@ -1,17 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UserRegisterComponent } from '@components/user-register/user-register.component';
 import { User } from '@models/user';
 import { BackendService } from '@services/backend.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeTemplate } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { Bind } from 'primeng/bind';
+import { TableModule } from 'primeng/table';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
+import { StringDatePipe } from '../../shared/string-date.pipe';
 
 @Component({
-  selector: 'keller-frontend-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css'],
-  providers: [DialogService]
+    selector: 'keller-frontend-user-list',
+    templateUrl: './user-list.component.html',
+    styleUrls: ['./user-list.component.css'],
+    providers: [DialogService],
+    imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, StringDatePipe]
 })
 export class UserListComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private dialogService = inject(DialogService);
+
 
   lUsers : User[] = [];
   selUser: User | undefined;
@@ -19,11 +28,6 @@ export class UserListComponent implements OnInit {
   isLoading = true;
 
   inEditMode = false;
-
-  constructor(
-    private backendService: BackendService,
-    private dialogService: DialogService)
-  {}
 
   ngOnInit(): void {
       this.backendService.getUsers().subscribe({
@@ -68,7 +72,7 @@ export class UserListComponent implements OnInit {
       draggable: true
     })
 
-    ref.onClose.subscribe({
+    ref?.onClose.subscribe({
       next: (userRet) => {
         if (userRet) {
           this.lUsers.push(userRet as User)

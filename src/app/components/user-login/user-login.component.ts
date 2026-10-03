@@ -1,19 +1,29 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BackendService } from '@services/backend.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
+import { Bind } from 'primeng/bind';
+import { InputText } from 'primeng/inputtext';
+import { Password } from 'primeng/password';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
 
 @Component({
-  selector: 'keller-frontend-user-login',
-  templateUrl: './user-login.component.html',
-  styleUrls: ['./user-login.component.css'],
+    selector: 'keller-frontend-user-login',
+    templateUrl: './user-login.component.html',
+    styleUrls: ['./user-login.component.css'],
+    imports: [FormsModule, ReactiveFormsModule, Bind, InputText, Password, ButtonDirective, Ripple]
 })
 export class UserLoginComponent implements OnInit {
-  constructor(private backendService: BackendService, private messageService: MessageService, private authService: AuthService, private router: Router) {}
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
 
   login = '';
   password = ''

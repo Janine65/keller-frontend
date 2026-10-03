@@ -1,19 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DropdownClass, ReturnStruct } from '@models/generel';
 import { Placetype, Icons } from '@models/places';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeTemplate } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { map, zip } from 'rxjs';
+import { Bind } from 'primeng/bind';
+import { TableModule } from 'primeng/table';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
+import { FormsModule } from '@angular/forms';
+import { InputText } from 'primeng/inputtext';
+import { Select } from 'primeng/select';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'keller-frontend-place-type',
-  templateUrl: './place-type.component.html',
-  styleUrls: ['./place-type.component.css'],
+    selector: 'keller-frontend-place-type',
+    templateUrl: './place-type.component.html',
+    styleUrls: ['./place-type.component.css'],
+    imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, FaIconComponent]
 })
 export class PlaceTypeComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+  ref = inject(DynamicDialogRef);
+
   lPlacetypes: Placetype[] = [];
   clonedPlacetypes: Placetype[] = [];
 
@@ -22,13 +36,6 @@ export class PlaceTypeComponent implements OnInit {
   hasChanged = false;
   lIcons: DropdownClass[] = [];
   selIcon: DropdownClass | undefined;
-
-  constructor(
-    private backendService: BackendService,
-    private messageService: MessageService,
-    private authService: AuthService,
-    public ref: DynamicDialogRef) {
-  }
   onClose(): void {
     if (this.hasChanged)
       this.ref.close(this.lPlacetypes);

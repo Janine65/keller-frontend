@@ -1,29 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ReturnStruct } from '@models/generel';
 import { Place, Subplace } from '@models/places';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeTemplate } from 'primeng/api';
 import { map, zip } from 'rxjs';
+import { Bind } from 'primeng/bind';
+import { TableModule } from 'primeng/table';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
+import { FormsModule } from '@angular/forms';
+import { InputText } from 'primeng/inputtext';
+import { Select } from 'primeng/select';
+import { StringDatePipe } from '../../shared/string-date.pipe';
 
 @Component({
-  selector: 'keller-frontend-subplace-list',
-  templateUrl: './subplace-list.component.html',
-  styleUrls: ['./subplace-list.component.css'],
+    selector: 'keller-frontend-subplace-list',
+    templateUrl: './subplace-list.component.html',
+    styleUrls: ['./subplace-list.component.css'],
+    imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, StringDatePipe]
 })
 export class SubplaceListComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+
   lSubplaces: Subplace[] = [];
   clonedSubplaces: Subplace[] = [];
 
   isLoading = true;
   lPlaces: Place[] = [];
   lUsers: User[] = [];
-
-  constructor(
-    private backendService: BackendService,
-    private messageService: MessageService,
-    private authService: AuthService) {}
 
     ngOnInit(): void {
 

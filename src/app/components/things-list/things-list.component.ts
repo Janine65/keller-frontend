@@ -1,31 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ThingEditComponent } from '@components/thing-edit/thing-edit.component';
 import { ReturnStruct } from '@models/generel';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Thing } from '@models/things';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeTemplate } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Observable, map, zip } from 'rxjs';
+import { Bind } from 'primeng/bind';
+import { TableModule } from 'primeng/table';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
+import { StringDatePipe } from '../../shared/string-date.pipe';
 
 @Component({
-  selector: 'keller-frontend-things-list',
-  templateUrl: './things-list.component.html',
-  styleUrls: ['./things-list.component.css'],
-  providers: [DialogService]
+    selector: 'keller-frontend-things-list',
+    templateUrl: './things-list.component.html',
+    styleUrls: ['./things-list.component.css'],
+    providers: [DialogService],
+    imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, StringDatePipe]
 })
 export class ThingsListComponent implements OnInit {
+  private messageService = inject(MessageService);
+  private backendService = inject(BackendService);
+  private authService = inject(AuthService);
+  private dialogService = inject(DialogService);
+
 
   lThings: Thing[] = []
   isLoading = true;
 
   selThing: Thing | undefined;
-
-  constructor(private messageService: MessageService,
-    private backendService: BackendService,
-    private authService: AuthService,
-    private dialogService: DialogService) { }
 
 
   ngOnInit(): void {
@@ -62,7 +68,7 @@ export class ThingsListComponent implements OnInit {
       draggable: false,
     })
 
-    ref.onClose.subscribe({
+    ref?.onClose.subscribe({
       next: (thingRet) => {
         if (thingRet) {
           thingRet.user = this.authService.userValue.name;
@@ -116,7 +122,7 @@ export class ThingsListComponent implements OnInit {
       draggable: false,
     })
 
-    ref.onClose.subscribe({
+    ref?.onClose.subscribe({
       next: (thingRet) => {
         if (thingRet) {
           thingRet.user = this.authService.userValue.name;

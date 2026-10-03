@@ -1,0 +1,60 @@
+version: '3.9'
+
+services:
+  keller-backend:
+    container_name: keller-backend
+    restart: always
+    image: janine65/keller-backend:test
+    build:
+      context: ../keller-backend-python/
+      dockerfile: ../keller-backend-python/Dockerfile
+      tags:
+        - janine65/keller-backend:test
+    env_file:
+      - ../keller-backend-python/.env.test
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - logfile:/usr/src/keller-app/logs:rw
+    ports:
+      - 3000:3000
+    hostname: keller-backend
+    networks:
+      - back-tier
+      - keller-front-tier
+
+  keller-frontend:
+    container_name: keller-frontend
+    restart: always
+    image: janine65/keller-frontend:test
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      tags:
+        - janine65/keller-frontend:test
+    depends_on:
+      - keller-backend
+    environment:
+      - COMPOSE_PROJECT_NAME
+      - NODE_ENV=production
+      - API_URL=http://keller-backend:3000
+    ports:
+      - 4300:4300
+    links:
+      - keller-backend
+    hostname: keller-frontend
+    networks:
+      - keller-front-tier
+
+networks:
+  # The presence of these objects is sufficient to define them
+  keller-front-tier: {}
+  back-tier: {}
+
+volumes:
+  logfile:
+    driver: local
+    driver_opts:
+      type: 'nfs'
+      o: 'bind'
+      device: '/Users/janinefranken/Development/JS/keller-backend-python/logs'

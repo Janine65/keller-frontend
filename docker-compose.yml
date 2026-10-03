@@ -5,13 +5,13 @@ services:
     container_name: keller-backend
     restart: always
     image: janine65/keller-backend:latest
-    platform: linux/amd64
     build:
-      context: ../keller-backend/
-      dockerfile: ../keller-backend/Dockerfile
-    environment:
-      - COMPOSE_PROJECT_NAME
-      - NODE_ENV=production
+      context: ../keller-backend-python/
+      dockerfile: ../keller-backend-python/Dockerfile
+      tags:
+        - janine65/keller-backend:latest
+    env_file:
+      - ../keller-backend-python/.env.prod
     volumes:
       - logfile:/usr/src/keller-app/logs:rw
     ports:
@@ -25,15 +25,17 @@ services:
     container_name: keller-frontend
     restart: always
     image: janine65/keller-frontend:latest
-    platform: linux/amd64
     build:
       context: ./
       dockerfile: ./Dockerfile
+      tags:
+        - janine65/keller-frontend:latest
     depends_on:
       - keller-backend
     environment:
       - COMPOSE_PROJECT_NAME
       - NODE_ENV=production
+      - API_URL=http://keller-backend:3000
     ports:
       - 4300:4300
     links:
@@ -53,4 +55,4 @@ volumes:
     driver_opts:
       type: 'nfs'
       o: 'bind'
-      device: '/volume1/server/kellerapp/logs'
+      device: '/Users/janinefranken/Development/JS/keller-backend-python/logs'

@@ -1,27 +1,36 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { PlaceTypeComponent } from '@components/place-type/place-type.component';
 import { DropdownClass, ReturnStruct } from '@models/generel';
 import { Place, Placetype } from '@models/places';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeTemplate } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { map, zip } from 'rxjs';
+import { Bind } from 'primeng/bind';
+import { TableModule } from 'primeng/table';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
+import { FormsModule } from '@angular/forms';
+import { InputText } from 'primeng/inputtext';
+import { Select } from 'primeng/select';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { StringDatePipe } from '../../shared/string-date.pipe';
 
 @Component({
-  selector: 'keller-frontend-places-list',
-  templateUrl: './places-list.component.html',
-  styleUrls: ['./places-list.component.css'],
-  providers: [DialogService]
+    selector: 'keller-frontend-places-list',
+    templateUrl: './places-list.component.html',
+    styleUrls: ['./places-list.component.css'],
+    providers: [DialogService],
+    imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, FaIconComponent, StringDatePipe]
 })
 export class PlacesListComponent implements OnInit, OnDestroy {
-  constructor(
-    private backendService: BackendService,
-    private messageService: MessageService,
-    private authService: AuthService,
-    private dialogService: DialogService) {
-  }
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+  private dialogService = inject(DialogService);
+
   lPlaces: Place[] = [];
   lUsers: User[] = [];
   clonedPlaces: { [s: number]: Place } = {};
@@ -141,9 +150,9 @@ export class PlacesListComponent implements OnInit, OnDestroy {
       modal: true,
       closeOnEscape: true,
       draggable: true
-    });
+    }) ?? undefined;
 
-    this.ref.onClose.subscribe((lPlacetypeReturn: Placetype[]) => {
+    this.ref?.onClose.subscribe((lPlacetypeReturn: Placetype[]) => {
       if (lPlacetypeReturn) {
         this.isLoading = true;
         this.lPlaceType = []

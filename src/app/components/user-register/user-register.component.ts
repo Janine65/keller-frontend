@@ -1,26 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormsModule } from '@angular/forms';
+import { Bind } from 'primeng/bind';
+import { InputText } from 'primeng/inputtext';
+import { ButtonDirective } from 'primeng/button';
 
 @Component({
-  selector: 'keller-frontend-user-register',
-  templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.css'],
+    selector: 'keller-frontend-user-register',
+    templateUrl: './user-register.component.html',
+    styleUrls: ['./user-register.component.css'],
+    imports: [FormsModule, Bind, InputText, ButtonDirective]
 })
 export class UserRegisterComponent {
+  private messageService = inject(MessageService);
+  private backendService = inject(BackendService);
+  private authService = inject(AuthService);
+  ref = inject(DynamicDialogRef);
+  conf = inject(DynamicDialogConfig);
+
 
   selUser: User = new User()
-
-  constructor(
-    private messageService: MessageService, 
-    private backendService: BackendService,
-    private authService: AuthService,
-    public ref: DynamicDialogRef,
-    public conf: DynamicDialogConfig)
-  { }
 
   doSave() {
     if (this.selUser.name && this.selUser.email && this.selUser.login && this.selUser.password) {

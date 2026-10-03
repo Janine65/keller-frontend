@@ -1,14 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, viewChild, inject } from '@angular/core';
 import { ThingEditComponent } from '@components/thing-edit/thing-edit.component';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { Place, Placetype, Subplace } from '@models/places';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Object2Subplace, Thing } from '@models/things';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService, PrimeTemplate } from 'primeng/api';
 import { ContextMenu } from 'primeng/contextmenu';
 import { DialogService } from 'primeng/dynamicdialog';
 import { map, zip } from 'rxjs';
+import { Bind } from 'primeng/bind';
+import { Toolbar } from 'primeng/toolbar';
+import { Checkbox } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputText } from 'primeng/inputtext';
+import { SelectButton } from 'primeng/selectbutton';
+import { Ripple } from 'primeng/ripple';
+import { ToggleButton } from 'primeng/togglebutton';
+import { ScrollPanel } from 'primeng/scrollpanel';
+import { Badge } from 'primeng/badge';
+import { Image } from 'primeng/image';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ButtonDirective } from 'primeng/button';
+import { Dialog } from 'primeng/dialog';
+import { Select } from 'primeng/select';
 
 interface DropdownList {
   name: string;
@@ -31,12 +48,19 @@ class ThingStruct {
 }
 
 @Component({
-  selector: 'app-desktop',
-  templateUrl: './app-desktop.component.html',
-  styleUrls: ['./app-desktop.component.css'],
-  providers: [DialogService]
+    selector: 'app-desktop',
+    templateUrl: './app-desktop.component.html',
+    styleUrls: ['./app-desktop.component.css'],
+    providers: [DialogService],
+    imports: [Bind, Toolbar, Checkbox, FormsModule, IconField, InputIcon, InputText, SelectButton, Ripple, ToggleButton, ScrollPanel, ContextMenu, Badge, Image, FaIconComponent, ButtonDirective, Dialog, Select, PrimeTemplate]
 })
 export class AppDesktopComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private authService = inject(AuthService);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+  private dialogService = inject(DialogService);
+
 
   lPlaces: Place[] = [];
   lSubplaces: Subplace[] = [];
@@ -81,15 +105,9 @@ export class AppDesktopComponent implements OnInit {
   thingType = ''
   selTypes: string[] = [this.thingsTypes[0].label, this.thingsTypes[1].label, this.thingsTypes[2].label, this.thingsTypes[3].label]
 
-  @ViewChild('contextmenu') public cm?: ContextMenu;
+  public readonly cm = viewChild<ContextMenu>('contextmenu');
 
-  constructor(
-    private backendService: BackendService,
-    private authService: AuthService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private dialogService: DialogService
-  ) {
+  constructor() {
     this.cmObj2Sub = [
       {
         label: 'Add One', icon: 'pi pi-plus',
@@ -122,7 +140,7 @@ export class AppDesktopComponent implements OnInit {
 
   showContextMenu(data: ThingStruct, event: any) {
     this.selThing = data;
-    this.cm?.show(event)
+    this.cm()?.show(event)
   }
 
   reloadNodes() {
@@ -414,7 +432,7 @@ export class AppDesktopComponent implements OnInit {
         draggable: false,
       });
 
-      ref.onClose.subscribe((thing: Thing) => {
+      ref?.onClose.subscribe((thing: Thing) => {
         if (thing) {
           this.selThing!.name = thing.name;
           this.selThing!.photo = thing.photo;

@@ -1,24 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import pkg from '../../package.json'
-import { PrimeNGConfig } from 'primeng/api';
+import { PrimeNG } from 'primeng/config';
 import { BackendService } from '@services/backend.service';
 import { firstValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { Bind } from 'primeng/bind';
+import { Toast } from 'primeng/toast';
+import { ConfirmPopup } from 'primeng/confirmpopup';
+import { AppMenuComponent } from './components/layout/app-menu.component';
+import { RouterOutlet } from '@angular/router';
+import { AppFooterComponent } from './components/layout/app-footer.component';
 
 @Component({
-  selector: 'keller-frontend-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+    selector: 'keller-frontend-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    imports: [Bind, Toast, ConfirmPopup, AppMenuComponent, RouterOutlet, AppFooterComponent]
 })
 export class AppComponent implements OnInit {
+  private primengConfig = inject(PrimeNG);
+  private backendService = inject(BackendService);
+  private cookieService = inject(CookieService);
+
   title = 'keller-frontend';
 
-  constructor(private primengConfig: PrimeNGConfig, private backendService: BackendService, private cookieService: CookieService,
-    library: FaIconLibrary
-  ) {
+  constructor() {
+    const library = inject(FaIconLibrary);
+
     localStorage.setItem('aboutFrontend', JSON.stringify(pkg));
     library.addIconPacks(fas, far);
  
@@ -30,6 +41,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.primengConfig.ripple = true;
+    this.primengConfig.ripple.set(true);
   }
 }

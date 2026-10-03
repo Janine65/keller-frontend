@@ -3,9 +3,9 @@ import { AppPackage } from '@models/app-package';
 import { interval, take } from 'rxjs';
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './app-footer.component.html',
-  styleUrls: ['./app-footer.component.css'],
+    selector: 'app-footer',
+    templateUrl: './app-footer.component.html',
+    styleUrls: ['./app-footer.component.css']
 })
 export class AppFooterComponent implements AfterContentInit {
   versionFrontend = '';
