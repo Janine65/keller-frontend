@@ -1,36 +1,46 @@
 <h2>{{pkgFrontend.displayName}}</h2>
-<p-tabView>
-    <p-tabPanel header="Frontend">
-        <div class="grid">
-            <span class="col-4 font-bold">Name:</span><span class="col-8">{{pkgFrontend.name}}</span>
-            <span class="col-4 font-bold">Version:</span><span class="col-8">{{pkgFrontend.version}}</span>
-            <span class="col-4 font-bold">Licence:</span><span class="col-8">{{pkgFrontend.license}}</span>
-            <span class="col-4 font-bold">Description:</span><span class="col-8">{{pkgFrontend.description}}</span>
-            <span class="col-4 font-bold">author:</span><span class="col-8">{{pkgFrontend.author!.name}}</span>
-            <span class="col-12 font-bold">Dependencies:</span>
-            <div class="grid p-1 ml-2">
-                <div *ngFor="let entry of pkgFrontend.dependencies | keyvalue" class="col-3 grid p-1">
-                    <span class="col-8">{{entry.key}}:</span>
-                    <span class="col-2">{{entry.value}}</span>
-                </div>
-            </div>
-        </div>
-    </p-tabPanel>
-    <p-tabPanel header="Backend">
-        <div class="grid">
-            <span class="col-4 font-bold">Name:</span><span class="col-8">{{pkgBackend.name}}</span>
-            <span class="col-4 font-bold">Version:</span><span class="col-8">{{pkgBackend.version}}</span>
-            <span class="col-4 font-bold">Licence:</span><span class="col-8">{{pkgBackend.license}}</span>
-            <span class="col-4 font-bold">Description:</span><span class="col-8">{{pkgBackend.description}}</span>
-            <span class="col-4 font-bold">author:</span><span class="col-8">{{pkgBackend.author!.name}}</span>
-            <span class="col-12 font-bold">Dependencies:</span>
-            <div class="grid p-1 ml-2">
-                <div *ngFor="let entry of pkgBackend.dependencies | keyvalue" class="col-3 grid p-1">
-                    <span class="col-8">{{entry.key}}:</span>
-                    <span class="col-2">{{entry.value}}</span>
-                </div>
-            </div>
-        </div>
+<p-tabs value="frontend">
+  <p-tablist>
+    <p-tab value="frontend">Frontend</p-tab>
+    <p-tab value="backend">Backend</p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="frontend">
+    <div class="grid">
+      <span class="col-4 font-bold">Name:</span><span class="col-8">{{pkgFrontend.name}}</span>
+      <span class="col-4 font-bold">Version:</span><span class="col-8">{{pkgFrontend.version}}</span>
+      <span class="col-4 font-bold">Licence:</span><span class="col-8">{{pkgFrontend.license}}</span>
+      <span class="col-4 font-bold">Description:</span><span class="col-8">{{pkgFrontend.description}}</span>
+      <span class="col-4 font-bold">author:</span><span class="col-8">{{pkgFrontend.author!.name}}</span>
+      <span class="col-12 font-bold">Dependencies:</span>
+      <div class="grid p-1 ml-2">
+        @for (entry of pkgFrontend.dependencies | keyvalue; track entry) {
+          <div class="col-3 grid p-1">
+            <span class="col-8">{{entry.key}}:</span>
+            <span class="col-2">{{entry.value}}</span>
+          </div>
+        }
+      </div>
+    </div>
+    </p-tabpanel>
+    <p-tabpanel value="backend">
+    <div class="grid">
+      <span class="col-4 font-bold">Name:</span><span class="col-8">{{pkgBackend.name}}</span>
+      <span class="col-4 font-bold">Version:</span><span class="col-8">{{pkgBackend.version}}</span>
+      <span class="col-4 font-bold">Licence:</span><span class="col-8">{{pkgBackend.license}}</span>
+      <span class="col-4 font-bold">Description:</span><span class="col-8">{{pkgBackend.description}}</span>
+      <span class="col-4 font-bold">author:</span><span class="col-8">{{pkgBackend.author!.name}}</span>
+      <span class="col-12 font-bold">Dependencies:</span>
+      <div class="grid p-1 ml-2">
+        @for (entry of pkgBackend.dependencies | keyvalue; track entry) {
+          <div class="col-3 grid p-1">
+            <span class="col-8">{{entry.key}}:</span>
+            <span class="col-2">{{entry.value}}</span>
+          </div>
+        }
+      </div>
+    </div>
 
-    </p-tabPanel>
-</p-tabView>
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

@@ -63,7 +63,7 @@ export class ThingsListComponent implements OnInit {
       draggable: false,
     })
 
-    ref.onClose.subscribe({
+    ref?.onClose.subscribe({
       next: (thingRet) => {
         if (thingRet) {
           thingRet.user = this.authService.userValue.name;
@@ -117,7 +117,7 @@ export class ThingsListComponent implements OnInit {
       draggable: false,
     })
 
-    ref.onClose.subscribe({
+    ref?.onClose.subscribe({
       next: (thingRet) => {
         if (thingRet) {
           thingRet.user = this.authService.userValue.name;

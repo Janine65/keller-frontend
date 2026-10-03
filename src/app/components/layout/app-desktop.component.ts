@@ -415,7 +415,7 @@ export class AppDesktopComponent implements OnInit {
         draggable: false,
       });
 
-      ref.onClose.subscribe((thing: Thing) => {
+      ref?.onClose.subscribe((thing: Thing) => {
         if (thing) {
           this.selThing!.name = thing.name;
           this.selThing!.photo = thing.photo;

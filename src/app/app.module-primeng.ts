@@ -5,22 +5,22 @@ import { TableModule } from 'primeng/table';
 import { Dialog, DialogModule } from 'primeng/dialog';
 import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { ListboxModule } from 'primeng/listbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { PanelModule } from 'primeng/panel';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePickerModule } from 'primeng/datepicker';
 import { AccordionModule } from 'primeng/accordion';
-import { TabViewModule } from 'primeng/tabview';
+import { TabsModule } from 'primeng/tabs';
 import { FocusTrapModule } from 'primeng/focustrap';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TreeTableModule } from 'primeng/treetable';
 import { TreeModule } from 'primeng/tree';
 import { PasswordModule } from 'primeng/password';
-import { SidebarModule } from 'primeng/sidebar';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { DrawerModule } from 'primeng/drawer';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { BadgeModule } from 'primeng/badge';
 import { RippleModule } from 'primeng/ripple';
@@ -31,13 +31,12 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ToastModule } from 'primeng/toast';
-import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SplitterModule } from 'primeng/splitter';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TextareaModule } from 'primeng/textarea';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -53,14 +52,14 @@ export const APP_PRIMENG_MODULE = [
     AutoFocusModule,
     BadgeModule,
     ButtonModule,
-    CalendarModule,
+    DatePickerModule,
     CheckboxModule,
     ConfirmDialogModule,
     ConfirmPopupModule,
     ContextMenuModule,
     DataViewModule,
     DialogModule,
-    DropdownModule,
+    SelectModule,
     DynamicDialogModule,
     FieldsetModule,
     FileUploadModule,
@@ -69,13 +68,12 @@ export const APP_PRIMENG_MODULE = [
     ImageModule,
     InputIconModule,
     InputNumberModule,
-    InputSwitchModule,
-    InputTextareaModule,
+    ToggleSwitchModule,
+    TextareaModule,
     InputTextModule,
     ListboxModule,
     MenubarModule,
     MessageModule,
-    MessagesModule,
     MultiSelectModule,
     PanelModule,
     PasswordModule,
@@ -85,11 +83,11 @@ export const APP_PRIMENG_MODULE = [
     ScrollPanelModule,
     SelectButtonModule,
     SharedModule,
-    SidebarModule,
+    DrawerModule,
     SplitterModule,
     StyleClassModule,
     TableModule,
-    TabViewModule,
+    TabsModule,
     TagModule,
     ToastModule,
     ToolbarModule,

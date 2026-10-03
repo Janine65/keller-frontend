@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CookieModule } from 'ngx-cookie';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 
 import {
@@ -74,6 +76,7 @@ import { StringDatePipe } from './shared/string-date.pipe';
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         APP_PRIMENG_PROVIDERS,
         DatePipe, DecimalPipe, PercentPipe, StringDatePipe,
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
+        providePrimeNG({ theme: { preset: Aura } })
     ] })
 export class AppModule {}

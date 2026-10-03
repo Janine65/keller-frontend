@@ -69,7 +69,7 @@ export class UserListComponent implements OnInit {
       draggable: true
     })
 
-    ref.onClose.subscribe({
+    ref?.onClose.subscribe({
       next: (userRet) => {
         if (userRet) {
           this.lUsers.push(userRet as User)

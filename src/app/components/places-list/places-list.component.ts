@@ -142,9 +142,9 @@ export class PlacesListComponent implements OnInit, OnDestroy {
       modal: true,
       closeOnEscape: true,
       draggable: true
-    });
+    }) ?? undefined;
 
-    this.ref.onClose.subscribe((lPlacetypeReturn: Placetype[]) => {
+    this.ref?.onClose.subscribe((lPlacetypeReturn: Placetype[]) => {
       if (lPlacetypeReturn) {
         this.isLoading = true;
         this.lPlaceType = []

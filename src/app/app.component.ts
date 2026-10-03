@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import pkg from '../../package.json'
-import { PrimeNGConfig } from 'primeng/api';
+import { PrimeNG } from 'primeng/config';
 import { BackendService } from '@services/backend.service';
 import { firstValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
@@ -17,7 +17,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 export class AppComponent implements OnInit {
   title = 'keller-frontend';
 
-  constructor(private primengConfig: PrimeNGConfig, private backendService: BackendService, private cookieService: CookieService,
+  constructor(private primengConfig: PrimeNG, private backendService: BackendService, private cookieService: CookieService,
     library: FaIconLibrary
   ) {
     localStorage.setItem('aboutFrontend', JSON.stringify(pkg));
@@ -31,6 +31,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.primengConfig.ripple = true;
+    this.primengConfig.ripple.set(true);
   }
 }
