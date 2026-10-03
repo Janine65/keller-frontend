@@ -215,7 +215,7 @@
   <div class="mb-4 grid grid-cols-12 gap-4">
     <label for="warnlevel" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Level Warning</label>
     <div class="col-span-12 md:col-span-4 mr-2">
-      <input id="warnlevel" type="number" [(ngModel)]="thing.levels[1]" min="1" step="1" />
+      <input id="warnlevel" type="number" pInputText [(ngModel)]="thing.levels[1]" min="1" step="1" class="w-full" />
     </div>
     <div class="col-span-12 md:col-span-4">
       <p-badge [value]="thing.levels[1]" class="ml-8 klBadgeWarning"></p-badge>
@@ -224,7 +224,7 @@
   <div class="mb-4 grid grid-cols-12 gap-4">
     <label for="dangerlevel" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Level Danger</label>
     <div class="col-span-12 md:col-span-4 mr-2">
-      <input id="dangerlevel" type="number" [(ngModel)]="thing.levels[0]" min="0" step="1" />
+      <input id="dangerlevel" type="number" pInputText [(ngModel)]="thing.levels[0]" min="0" step="1" class="w-full" />
     </div>
     <div class="col-span-12 md:col-span-4">
       <p-badge [value]="thing.levels[0]" class="ml-8 klBadgeDanger"></p-badge>

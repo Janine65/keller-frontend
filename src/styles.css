@@ -6,6 +6,18 @@
 @import "../node_modules/primeicons/primeicons.css";
 @import "../node_modules/flag-icons/css/flag-icons.min.css";
 
+@layer base {
+    body {
+        @apply bg-surface-50 text-surface-900;
+    }
+}
+
+@layer components {
+    .card {
+        @apply bg-surface-0 border border-surface-200 rounded-lg shadow-sm p-6 mb-4;
+    }
+}
+
 :root {
     --highlight-bg: var(--primary);
   }
