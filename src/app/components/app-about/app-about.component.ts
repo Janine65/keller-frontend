@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AppPackage } from '@models/app-package';
+import { Bind } from 'primeng/bind';
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
+import { Ripple } from 'primeng/ripple';
+import { KeyValuePipe } from '@angular/common';
 
 @Component({
     selector: 'keller-frontend-app-about',
     templateUrl: './app-about.component.html',
     styleUrls: ['./app-about.component.css'],
-    standalone: false
+    imports: [Bind, Tabs, TabList, Ripple, Tab, TabPanels, TabPanel, KeyValuePipe]
 })
 export class AppAboutComponent implements OnInit {
   pkgFrontend: AppPackage = {};

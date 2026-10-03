@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService, PrimeTemplate } from 'primeng/api';
+import { Bind } from 'primeng/bind';
+import { Menubar } from 'primeng/menubar';
 
 @Component({
     selector: 'app-menu',
     templateUrl: './app-menu.component.html',
     styleUrls: ['./app-menu.component.css'],
-    standalone: false
+    imports: [Bind, Menubar, PrimeTemplate, RouterLink]
 })
 export class AppMenuComponent implements OnInit {
   items: MenuItem[] = [];

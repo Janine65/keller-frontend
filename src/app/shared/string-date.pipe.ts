@@ -1,10 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'stringDate',
-    standalone: false
-})
+@Pipe({ name: 'stringDate' })
 export class StringDatePipe implements PipeTransform {
   constructor(private datePipe: DatePipe) {}
   transform(value: unknown, format: string): string | null {

@@ -1,17 +1,22 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BackendService } from '@services/backend.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
+import { Bind } from 'primeng/bind';
+import { InputText } from 'primeng/inputtext';
+import { Password } from 'primeng/password';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
 
 @Component({
     selector: 'keller-frontend-user-login',
     templateUrl: './user-login.component.html',
     styleUrls: ['./user-login.component.css'],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, Bind, InputText, Password, ButtonDirective, Ripple]
 })
 export class UserLoginComponent implements OnInit {
   constructor(private backendService: BackendService, private messageService: MessageService, private authService: AuthService, private router: Router) {}

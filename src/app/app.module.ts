@@ -41,9 +41,18 @@ import { PlaceTypeComponent } from './components/place-type/place-type.component
 import { ThingEditComponent } from './components/thing-edit/thing-edit.component';
 import { StringDatePipe } from './shared/string-date.pipe';
 
-@NgModule({ declarations: [
-        AppComponent,
-        AppMenuComponent,
+@NgModule({ declarations: [AppComponent], bootstrap: [AppComponent], imports: [BrowserModule,
+        CookieModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DecimalPipe,
+        DatePipe,
+        PercentPipe,
+        FontAwesomeModule,
+        APP_PRIMENG_MODULE, AppMenuComponent,
         AppDesktopComponent,
         AppFooterComponent,
         AppAboutComponent,
@@ -56,20 +65,7 @@ import { StringDatePipe } from './shared/string-date.pipe';
         PlaceTypeComponent,
         PlaceTypeComponent,
         ThingEditComponent,
-        StringDatePipe,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        CookieModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        DecimalPipe,
-        DatePipe,
-        PercentPipe,
-        FontAwesomeModule,
-        APP_PRIMENG_MODULE], providers: [
+        StringDatePipe], providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: ErrorHandler, useClass: GlobalErrorHandler },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

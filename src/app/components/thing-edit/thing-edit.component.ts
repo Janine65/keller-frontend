@@ -3,16 +3,29 @@ import { ReturnStruct } from '@models/generel';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Thing, Grapes, WineType, ListElement } from '@models/things';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeTemplate } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FileUploadEvent } from 'primeng/fileupload';
+import { FileUploadEvent, FileUpload } from 'primeng/fileupload';
 import { Observable } from 'rxjs';
+import { Bind } from 'primeng/bind';
+import { RadioButton } from 'primeng/radiobutton';
+import { FormsModule } from '@angular/forms';
+import { InputText } from 'primeng/inputtext';
+import { Image } from 'primeng/image';
+import { ButtonDirective } from 'primeng/button';
+import { Select } from 'primeng/select';
+import { NgClass } from '@angular/common';
+import { DatePicker } from 'primeng/datepicker';
+import { MultiSelect } from 'primeng/multiselect';
+import { Checkbox } from 'primeng/checkbox';
+import { Badge } from 'primeng/badge';
+import { Toolbar } from 'primeng/toolbar';
 
 @Component({
     selector: 'keller-frontend-thing-edit',
     templateUrl: './thing-edit.component.html',
     styleUrls: ['./thing-edit.component.css'],
-    standalone: false
+    imports: [Bind, RadioButton, FormsModule, InputText, Image, ButtonDirective, Select, PrimeTemplate, NgClass, DatePicker, MultiSelect, Checkbox, Badge, Toolbar, FileUpload]
 })
 export class ThingEditComponent {
 

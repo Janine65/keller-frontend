@@ -5,10 +5,27 @@ import { Place, Placetype, Subplace } from '@models/places';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Object2Subplace, Thing } from '@models/things';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService, PrimeTemplate } from 'primeng/api';
 import { ContextMenu } from 'primeng/contextmenu';
 import { DialogService } from 'primeng/dynamicdialog';
 import { map, zip } from 'rxjs';
+import { Bind } from 'primeng/bind';
+import { Toolbar } from 'primeng/toolbar';
+import { Checkbox } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputText } from 'primeng/inputtext';
+import { SelectButton } from 'primeng/selectbutton';
+import { Ripple } from 'primeng/ripple';
+import { ToggleButton } from 'primeng/togglebutton';
+import { ScrollPanel } from 'primeng/scrollpanel';
+import { Badge } from 'primeng/badge';
+import { Image } from 'primeng/image';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ButtonDirective } from 'primeng/button';
+import { Dialog } from 'primeng/dialog';
+import { Select } from 'primeng/select';
 
 interface DropdownList {
   name: string;
@@ -35,7 +52,7 @@ class ThingStruct {
     templateUrl: './app-desktop.component.html',
     styleUrls: ['./app-desktop.component.css'],
     providers: [DialogService],
-    standalone: false
+    imports: [Bind, Toolbar, Checkbox, FormsModule, IconField, InputIcon, InputText, SelectButton, Ripple, ToggleButton, ScrollPanel, ContextMenu, Badge, Image, FaIconComponent, ButtonDirective, Dialog, Select, PrimeTemplate]
 })
 export class AppDesktopComponent implements OnInit {
 

@@ -4,12 +4,16 @@ import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormsModule } from '@angular/forms';
+import { Bind } from 'primeng/bind';
+import { InputText } from 'primeng/inputtext';
+import { ButtonDirective } from 'primeng/button';
 
 @Component({
     selector: 'keller-frontend-user-register',
     templateUrl: './user-register.component.html',
     styleUrls: ['./user-register.component.css'],
-    standalone: false
+    imports: [FormsModule, Bind, InputText, ButtonDirective]
 })
 export class UserRegisterComponent {
 
