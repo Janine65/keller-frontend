@@ -13,6 +13,16 @@
   --p-menubar-mobile-button-hover-color: var(--p-primary-contrast-color);
   --p-menubar-mobile-button-hover-background: var(--p-primary-hover-color);
 }
+/* Submenü-Panels sind hell -> Standard-Textfarben wiederherstellen */
+::ng-deep .p-menubar .p-menubar-submenu {
+  --p-menubar-item-color: var(--p-text-color);
+  --p-menubar-item-icon-color: var(--p-text-muted-color);
+  --p-menubar-submenu-icon-color: var(--p-text-muted-color);
+  --p-menubar-item-focus-background: var(--p-content-hover-background);
+  --p-menubar-item-focus-color: var(--p-text-color);
+  --p-menubar-item-active-background: var(--p-content-hover-background);
+  --p-menubar-item-active-color: var(--p-text-color);
+}
 @media (max-width: 1023px) {
   .footer {
     display: none;
