@@ -25,7 +25,14 @@ bootstrapApplication(AppComponent, {
         APP_PRIMENG_PROVIDERS,
         DatePipe, DecimalPipe, PercentPipe, StringDatePipe,
         provideHttpClient(withXhr(), withInterceptorsFromDi()),
-        providePrimeNG({ theme: { preset: Aura } }),
+        providePrimeNG({
+            // TODO: PrimeUI-Lizenzschlüssel eintragen (https://primeng.org/license)
+            license: 'eyJpZCI6IjkyYzFjYTlmLWY0NDQtNDA1Yy1iZThjLTliYWViZTM2MDJhNiIsInByb2R1Y3QiOiJwcmltZXVpIiwidGllciI6ImNvbW11bml0eSIsInR5cGUiOiJkZXYiLCJpYXQiOjE3ODQ5NzkyODksImV4cCI6MTgxNjUxNTI4OX0.hZ_pHnFRtNmqGT9u2C-335MBsqeLIiiO0MsDJAQCAqPwklSQY44M8_UHHJ-pzsis3NKdsNyxDyPOSCNwmNnDBw',
+            theme: {
+                preset: Aura,
+                options: { cssLayer: { name: 'primeng', order: 'theme, base, primeng' } }
+            }
+        }),
         provideAnimations(),
         provideRouter(appRoutes, withEnabledBlockingInitialNavigation())
     ]

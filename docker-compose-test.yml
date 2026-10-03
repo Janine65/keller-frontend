@@ -26,7 +26,7 @@ services:
     image: janine65/keller-frontend:test
     build:
       context: ./
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-test
       tags:
         - "janine65/keller-frontend:test"
     depends_on:

@@ -1,11 +1,11 @@
 @if (!isLoading) {
   <p-toolbar>
-    <div class="flex justify-content-start">
-      <div class="p-1 border-cyan-100 border-1">
+    <div class="flex justify-start">
+      <div class="p-1 border-cyan-100 border">
         <label for="filtering">Filter:</label>
         <div id="filtering" class="block mt-1">
           @for (type of thingsTypes; track type) {
-            <span class="mr-4">
+            <span class="mr-6">
               <p-checkbox name="selTypes" (onChange)="filterList()"
                 [binary]="false" [value]="type.value" [(ngModel)]="selTypes" [inputId]="'type-' + type.value">
               </p-checkbox>
@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-content-center">
+    <div class="flex justify-center">
       <div class="ui-inputgroup mr-2">
         <p-iconfield iconPosition="right">
           <p-inputicon styleClass="pi pi-times" (click)="searchText = ''; doSearch()" />
@@ -23,13 +23,13 @@
         </p-iconfield>
       </div>
     </div>
-    <div class="flex justify-content-end">
-      <div class="p-1 border-cyan-100 border-1">
+    <div class="flex justify-end">
+      <div class="p-1 border-cyan-100 border">
         <label for="sorting" class="mr-2">Sort:</label>
         <p-selectbutton id="sorting" [options]="sortOptions" [(ngModel)]="sorting"
           (onChange)="sortList();filterList();" optionLabel="label" optionValue="value" />
       </div>
-      <div class="ml-4 p-1 border-cyan-100 border-1">
+      <div class="ml-6 p-1 border-cyan-100 border">
         <label for="selection" class="mr-2">Display all:</label>
         <p-togglebutton id="selection" class="block" [(ngModel)]="fDisplayAll" (onChange)="filterList()"
           onLabel="Yes" offLabel="No" />
@@ -39,35 +39,35 @@
 }
 <p-scrollpanel [style]="{ width: '100%', height: '100%' }">
   @if (!isLoading) {
-    <div class="surface-ground px-2 py-5 md:px-4 lg:px-6">
-      <div class="grid">
+    <div class="bg-surface-50 px-2 py-5 md:px-4 lg:px-6">
+      <div class="grid grid-cols-12 gap-4">
         <p-contextmenu #contextmenu [model]="cmObj2Sub" [global]="false" appendTo="body" />
         @for (data of lThingsList; track data; let ind = $index) {
-          <div #thing (contextmenu)="showContextMenu(data, $event)" class="col-12 md:col-6 lg:col-3"
+          <div #thing (contextmenu)="showContextMenu(data, $event)" class="col-span-12 md:col-span-6 lg:col-span-3"
             >
-            <div [id]="'box_'+data.id+'_'+ind" class="surface-card shadow-2 p-3 border-round">
-              <div class="flex justify-content-between mb-3">
+            <div [id]="'box_'+data.id+'_'+ind" class="bg-surface-0 shadow-md p-4 rounded-md">
+              <div class="flex justify-between mb-4">
                 <div>
-                  <span class="flex align-content-start text-500 font-medium mb-3 text-xl"
+                  <span class="flex content-start text-surface-500 font-medium mb-4 text-xl"
                     (click)="showContextMenu(data, $event)">{{data.name}}&nbsp;&nbsp;
                     @if (data.obj2sub) {
                       <p-badge [class]="getSeverety(data)"
                       [value]="data.obj2sub ? data.obj2sub!.count ?? 0 : 0"></p-badge>
                     }
                     @if (data.photo && data.photo != '') {
-                      <p-image class=" mr-2 ml-2 justify-content-center align-content-center"
+                      <p-image class="mr-2 ml-2 justify-center align-content-center"
                         [src]="data.photo" [preview]="true"
                       width="50" height="50"></p-image>
                     }
                   </span>
                   @if (data.obj2sub) {
-                    <div class="text-900 font-medium align-content-end">
+                    <div class="text-surface-900 font-medium align-content-end">
                       <fa-icon [icon]="['fas', data.placetype!.icon!]"></fa-icon>
                       {{data.place?.name}} - {{data.subplace?.name}}
                     </div>
                   }
                   @if (data.obj2sub && data.obj2sub.valid_until) {
-                    <div class="text-500 font-medium font-italic align-content-start mt-1"
+                    <div class="text-surface-500 font-medium font-italic content-start mt-1"
                       >
                       @if (isValidPast(data)) {
                         <span class="text-red-500">
@@ -82,7 +82,7 @@
                     </div>
                   }
                 </div>
-                <div class="flex align-items-center justify-content-center border-round">
+                <div class="flex items-center justify-center rounded-md">
                   <button pButton pRipple [raised]="false" [outlined]="true" (dblclick)="onAddOne(data)"
                     (click)="onRemoveOne(data, $event)">
                     <fa-icon [icon]="['fas', data.icon!]" class="text-blue-500 text-xl"></fa-icon>
@@ -102,20 +102,20 @@
   <p>
     Select the subplace to add the thing and fill out the necessary fields
   </p>
-  <div class="field grid">
-    <label for="subplace" class="col-12 mb-2 md:col-2 md:mb-0">Subplace</label>
-    <div class="col-12 md:col-10">
+  <div class="mb-4 grid grid-cols-12 gap-4">
+    <label for="subplace" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Subplace</label>
+    <div class="col-span-12 md:col-span-10">
       <p-select inputId="subplace" [options]="lSubPlaceSelect" optionLabel="name" [(ngModel)]="selSubplace"
         placeholder="Select a Subplace" appendTo="body">
         <ng-template pTemplate="selectedItem">
           @if (selSubplace) {
-            <div class="flex align-items-center gap-2">
+            <div class="flex items-center gap-2">
               <div><fa-icon [icon]="['fas',selSubplace.icon]"></fa-icon> {{selSubplace.name }}</div>
             </div>
           }
         </ng-template>
         <ng-template let-subplace pTemplate="item">
-          <div class="flex align-items-center gap-2">
+          <div class="flex items-center gap-2">
             <div><fa-icon [icon]="['fas',subplace.icon]"></fa-icon> {{ subplace.name }}</div>
           </div>
         </ng-template>
@@ -123,29 +123,29 @@
       </p-select>
     </div>
   </div>
-  <div class="field grid">
-    <label for="count" class="col-12 mb-2 md:col-2 md:mb-0">Count</label>
-    <div class="col-12 md:col-10">
+  <div class="mb-4 grid grid-cols-12 gap-4">
+    <label for="count" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Count</label>
+    <div class="col-span-12 md:col-span-10">
       <input type="number" id="count" pInputText [(ngModel)]="selObj2Sub.count" />
     </div>
   </div>
-  <div class="field grid">
-    <label for="shopped" class="col-12 mb-2 md:col-2 md:mb-0">Shopped at</label>
-    <div class="col-12 md:col-10">
+  <div class="mb-4 grid grid-cols-12 gap-4">
+    <label for="shopped" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Shopped at</label>
+    <div class="col-span-12 md:col-span-10">
       <input type="date" id="shopped" pInputText [(ngModel)]="selObj2Sub.shopped_at" />
     </div>
   </div>
-  <div class="field grid">
-    <label for="valid" class="col-12 mb-2 md:col-2 md:mb-0">Valid until</label>
-    <div class="col-12 md:col-10">
+  <div class="mb-4 grid grid-cols-12 gap-4">
+    <label for="valid" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Valid until</label>
+    <div class="col-span-12 md:col-span-10">
       <input type="date" id="valid" pInputText [(ngModel)]="selObj2Sub.valid_until" />
     </div>
   </div>
-  <div class="grid m-2">
-    <div class="col-12 md:col-2">
+  <div class="grid grid-cols-12 gap-4 m-2">
+    <div class="col-span-12 md:col-span-2">
       <button pButton label="Save" (click)="saveSubplace()"></button>
     </div>
-    <div class="col-12 md:col-2">
+    <div class="col-span-12 md:col-span-2">
       <button pButton label="Cancel" (click)="showDialog=false"></button>
     </div>
   </div>

@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-/* $gutter: 1rem; /* for primeflex grid system */
 
 /* PrimeNG 18+: Theme kommt aus providePrimeNG (Aura-Preset), keine CSS-Imports mehr */
-@import "../node_modules/primeflex/primeflex.css";
+@import "tailwindcss";
+@plugin "tailwindcss-primeui";
 @import "../node_modules/primeicons/primeicons.css";
 @import "../node_modules/flag-icons/css/flag-icons.min.css";
 

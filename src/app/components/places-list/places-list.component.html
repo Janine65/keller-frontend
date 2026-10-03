@@ -36,13 +36,13 @@
                   [style]="{'width':'100%'}">
                   <ng-template pTemplate="selectedItem">
                     @if (place.icon) {
-                      <div class="flex align-items-center gap-2">
+                      <div class="flex items-center gap-2">
                         <fa-icon [icon]="['fas', place.icon]"></fa-icon>  {{ place.placetype }}
                       </div>
                     }
                   </ng-template>
                   <ng-template let-icons pTemplate="item">
-                    <div class="flex align-items-center gap-2">
+                    <div class="flex items-center gap-2">
                       <fa-icon [icon]="['fas', icons.icon]"></fa-icon>
                       <div>{{ icons.label }}</div>
                     </div>
@@ -61,7 +61,7 @@
             {{place.user}}
           </td>
           <td>
-            <div class="flex align-items-center justify-content-center gap-2">
+            <div class="flex items-center justify-center gap-2">
               @if (!editing) {
                 <button pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                 (click)="onRowEditInit(place)" class="p-button-rounded p-button-text"></button>

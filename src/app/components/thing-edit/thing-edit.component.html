@@ -1,23 +1,23 @@
-<div class="flex flex-wrap gap-3 mb-3">
-  <div class="flex align-items-center">
+<div class="flex flex-wrap gap-4 mb-4">
+  <div class="flex items-center">
     <p-radiobutton name="pizza" value="alcoholic" [(ngModel)]="thing.thing_type" inputId="ingredient1"
     [disabled]="thing.id !== undefined && thing.id > 0"></p-radiobutton>
     <label for="ingredient1" class="ml-2">Alcoholic</label>
   </div>
 
-  <div class="flex align-items-center">
+  <div class="flex items-center">
     <p-radiobutton name="pizza" value="food" [(ngModel)]="thing.thing_type" inputId="ingredient2"
     [disabled]="thing.id !== undefined && thing.id > 0"></p-radiobutton>
     <label for="ingredient2" class="ml-2">Food</label>
   </div>
 
-  <div class="flex align-items-center">
+  <div class="flex items-center">
     <p-radiobutton name="pizza" value="nonalcoholic" [(ngModel)]="thing.thing_type" inputId="ingredient3"
     [disabled]="thing.id !== undefined && thing.id > 0"></p-radiobutton>
     <label for="ingredient3" class="ml-2">Nonalcoholic</label>
   </div>
 
-  <div class="flex align-items-center">
+  <div class="flex items-center">
     <p-radiobutton name="pizza" value="nonfood" [(ngModel)]="thing.thing_type" inputId="ingredient4"
     [disabled]="thing.id !== undefined && thing.id > 0"></p-radiobutton>
     <label for="ingredient4" class="ml-2">Nonfood</label>
@@ -29,71 +29,71 @@
 <hr />
 @if (thing.thing_type === 'alcoholic') {
   <div>
-    <div class="field grid">
-      <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-      <div class="col-12 md:col-7">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="name" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Name</label>
+      <div class="col-span-12 md:col-span-7">
         <input type="text" id="name" pInputText [(ngModel)]="alcoholic.name" />
       </div>
     </div>
     @if (alcoholic.photo && alcoholic.photo != '') {
-      <div class="field grid col-offset-2">
+      <div class="mb-4 grid grid-cols-12 gap-4 col-start-3">
         <p-image [src]="alcoholic.photo" [preview]="true" width="150" height="150">
         </p-image>
-        <button pButton class="ml-4" (click)="alcoholic.photo = ''">Remove Photo</button>
+        <button pButton class="ml-6" (click)="alcoholic.photo = ''">Remove Photo</button>
       </div>
     }
-    <div class="field grid">
-      <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-      <div class="col-12 md:col-7">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="weight" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Unit for Weight</label>
+      <div class="col-span-12 md:col-span-7">
         <input type="text" id="weight" pInputText [(ngModel)]="alcoholic.weight" aria-describedby="weight-help" />
       </div>
     </div>
-    <div class="field grid">
-      <label for="winetype" class="col-12 mb-2 md:col-2 md:mb-0">Type of Wine</label>
-      <div class="col-12 md:col-4">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="winetype" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Type of Wine</label>
+      <div class="col-span-12 md:col-span-4">
         @for (wtype of wineType; track wtype) {
-          <div class="flex align-items-center">
+          <div class="flex items-center">
             <p-radiobutton [inputId]="wtype.type" name="winetype" [value]="wtype.type"
             [(ngModel)]="alcoholic.type"></p-radiobutton>
-            <label [for]="wtype.type" class="col-12 mb-2 md:col-2 md:mb-0">{{wtype.label}}</label>
+            <label [for]="wtype.type" class="col-span-12 mb-2 md:col-span-2 md:mb-0">{{wtype.label}}</label>
           </div>
         }
       </div>
     </div>
-    <div class="field grid">
-      <label for="country" class="col-12 mb-2 md:col-2 md:mb-0">Country / Region</label>
-      <div class="col-12 md:col-4">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="country" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Country / Region</label>
+      <div class="col-span-12 md:col-span-4">
         <p-select [options]="countries" [(ngModel)]="selectedCountry" optionLabel="name" [filter]="true"
           [showClear]="true" placeholder="Select a Country">
           <ng-template pTemplate="selectedItem">
             @if (selectedCountry) {
-              <div class="flex align-items-center gap-2">
+              <div class="flex items-center gap-2">
                 <span [ngClass]="'fi fi-'+selectedCountry.code"></span>
                 <div>{{ selectedCountry.name }}</div>
               </div>
             }
           </ng-template>
           <ng-template let-country pTemplate="item">
-            <div class="flex align-items-center gap-2">
+            <div class="flex items-center gap-2">
               <span [ngClass]="'fi fi-'+country.code"></span>
               <div>{{ country.name }}</div>
             </div>
           </ng-template>
         </p-select>
       </div>
-      <div class="col-12 md:col-5">
+      <div class="col-span-12 md:col-span-5">
         <input type="text" id="region" pInputText [(ngModel)]="alcoholic.region" />
       </div>
     </div>
-    <div class="field grid">
-      <label for="year" class="col-12 mb-2 md:col-2 md:mb-0">Year</label>
-      <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="year" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Year</label>
+      <div class="col-span-12 md:col-span-10">
         <p-datepicker [(ngModel)]="alcoholic.year_date" view="year" dateFormat="yy" inputId="yearpicker"></p-datepicker>
       </div>
     </div>
-    <div class="field grid">
-      <label for="grapes" class="col-12 mb-2 md:col-2 md:mb-0">Grapes</label>
-      <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="grapes" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Grapes</label>
+      <div class="col-span-12 md:col-span-10">
         <p-multiselect [options]="grapes" [group]="true" [showClear]="true" [(ngModel)]="alcoholic.grapes"
           placeholder="Select Grapes" appendTo="body" [contentEditable]="true" display="chip" optionLabel="label"
           optionValue="label" [filter]="true">
@@ -103,9 +103,9 @@
         </p-multiselect>
       </div>
     </div>
-    <div class="field grid">
-      <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
-      <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="shop" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Bought in</label>
+      <div class="col-span-12 md:col-span-10">
         <input type="text" id="shop" pInputText [(ngModel)]="alcoholic.shop" />
       </div>
     </div>
@@ -113,40 +113,40 @@
 }
 @if (thing.thing_type === 'food') {
   <div class="card">
-    <div class="field grid">
-      <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-      <div class="col-12 md:col-7">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="name" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Name</label>
+      <div class="col-span-12 md:col-span-7">
         <input type="text" id="name" pInputText [(ngModel)]="food.name" />
       </div>
     </div>
     @if (food.photo && food.photo != '') {
-      <div class="field grid col-offset-2">
+      <div class="mb-4 grid grid-cols-12 gap-4 col-start-3">
         <p-image [src]="food.photo" [preview]="true" width="150" height="150">
         </p-image>
-        <button pButton class="ml-4" (click)="food.photo = ''">Remove Photo</button>
+        <button pButton class="ml-6" (click)="food.photo = ''">Remove Photo</button>
       </div>
     }
-    <div class="field grid">
-      <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-      <div class="col-12 md:col-7">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="weight" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Unit for Weight</label>
+      <div class="col-span-12 md:col-span-7">
         <input type="text" id="weight" pInputText [(ngModel)]="food.weight" aria-describedby="weight-help" />
       </div>
     </div>
-    <div class="field grid">
-      <label for="vacuumed" class="col-12 mb-2 md:col-2 md:mb-0">Vacuumed</label>
-      <div class="col-12 md:col-4">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="vacuumed" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Vacuumed</label>
+      <div class="col-span-12 md:col-span-4">
         <p-checkbox [(ngModel)]="food.vacuumed" [binary]="true" id="vacuumed"></p-checkbox>
       </div>
     </div>
-    <div class="field grid">
-      <label for="sealed" class="col-12 mb-2 md:col-2 md:mb-0">Sealed</label>
-      <div class="col-12 md:col-4">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="sealed" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Sealed</label>
+      <div class="col-span-12 md:col-span-4">
         <p-checkbox [(ngModel)]="food.sealed" [binary]="true" id="sealed"></p-checkbox>
       </div>
     </div>
-    <div class="field grid">
-      <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
-      <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="shop" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Bought in</label>
+      <div class="col-span-12 md:col-span-10">
         <input type="text" id="shop" pInputText [(ngModel)]="food.shop" />
       </div>
     </div>
@@ -154,29 +154,29 @@
 }
 @if (thing.thing_type === 'nonalcoholic') {
   <div class="card">
-    <div class="field grid">
-      <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-      <div class="col-12 md:col-7">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="name" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Name</label>
+      <div class="col-span-12 md:col-span-7">
         <input type="text" id="name" pInputText [(ngModel)]="nonalcoholic.name" />
       </div>
     </div>
     @if (nonalcoholic.photo && nonalcoholic.photo != '') {
-      <div class="field grid col-offset-2">
+      <div class="mb-4 grid grid-cols-12 gap-4 col-start-3">
         <p-image [src]="nonalcoholic.photo" [preview]="true" width="150" height="150">
         </p-image>
-        <button pButton class="ml-4" (click)="nonalcoholic.photo = ''">Remove Photo</button>
+        <button pButton class="ml-6" (click)="nonalcoholic.photo = ''">Remove Photo</button>
       </div>
     }
-    <div class="field grid">
-      <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-      <div class="col-12 md:col-7">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="weight" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Unit for Weight</label>
+      <div class="col-span-12 md:col-span-7">
         <input type="text" id="weight" pInputText [(ngModel)]="nonalcoholic.weight"
           aria-describedby="weight-help" />
       </div>
     </div>
-    <div class="field grid">
-      <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
-      <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="shop" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Bought in</label>
+      <div class="col-span-12 md:col-span-10">
         <input type="text" id="shop" pInputText [(ngModel)]="nonalcoholic.shop" />
       </div>
     </div>
@@ -184,50 +184,50 @@
 }
 @if (thing.thing_type === 'nonfood') {
   <div class="card">
-    <div class="field grid">
-      <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-      <div class="col-12 md:col-7">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="name" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Name</label>
+      <div class="col-span-12 md:col-span-7">
         <input type="text" id="name" pInputText [(ngModel)]="nonfood.name" />
       </div>
     </div>
     @if (nonfood.photo && nonfood.photo != '') {
-      <div class="field grid col-offset-2">
+      <div class="mb-4 grid grid-cols-12 gap-4 col-start-3">
         <p-image [src]="nonfood.photo" [preview]="true" width="150" height="150">
         </p-image>
-        <button pButton class="ml-4" (click)="nonfood.photo = ''">Remove Photo</button>
+        <button pButton class="ml-6" (click)="nonfood.photo = ''">Remove Photo</button>
       </div>
     }
-    <div class="field grid">
-      <label for="weight" class="col-12 mb-2 md:col-2 md:mb-0">Unit for Weight</label>
-      <div class="col-12 md:col-7">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="weight" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Unit for Weight</label>
+      <div class="col-span-12 md:col-span-7">
         <input type="text" id="weight" pInputText [(ngModel)]="nonfood.weight" aria-describedby="weight-help" />
       </div>
     </div>
-    <div class="field grid">
-      <label for="shop" class="col-12 mb-2 md:col-2 md:mb-0">Bought in</label>
-      <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+      <label for="shop" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Bought in</label>
+      <div class="col-span-12 md:col-span-10">
         <input type="text" id="shop" pInputText [(ngModel)]="nonfood.shop" />
       </div>
     </div>
   </div>
 }
 <div class="card">
-  <div class="field grid">
-    <label for="warnlevel" class="col-12 mb-2 md:col-2 md:mb-0">Level Warning</label>
-    <div class="col-12 md:col-4 mr-2">
+  <div class="mb-4 grid grid-cols-12 gap-4">
+    <label for="warnlevel" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Level Warning</label>
+    <div class="col-span-12 md:col-span-4 mr-2">
       <input id="warnlevel" type="number" [(ngModel)]="thing.levels[1]" min="1" step="1" />
     </div>
-    <div class="col-12 md:col-4">
-      <p-badge [value]="thing.levels[1]" class="ml-5 klBadgeWarning"></p-badge>
+    <div class="col-span-12 md:col-span-4">
+      <p-badge [value]="thing.levels[1]" class="ml-8 klBadgeWarning"></p-badge>
     </div>
   </div>
-  <div class="field grid">
-    <label for="dangerlevel" class="col-12 mb-2 md:col-2 md:mb-0">Level Danger</label>
-    <div class="col-12 md:col-4 mr-2">
+  <div class="mb-4 grid grid-cols-12 gap-4">
+    <label for="dangerlevel" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Level Danger</label>
+    <div class="col-span-12 md:col-span-4 mr-2">
       <input id="dangerlevel" type="number" [(ngModel)]="thing.levels[0]" min="0" step="1" />
     </div>
-    <div class="col-12 md:col-4">
-      <p-badge [value]="thing.levels[0]" class="ml-5 klBadgeDanger"></p-badge>
+    <div class="col-span-12 md:col-span-4">
+      <p-badge [value]="thing.levels[0]" class="ml-8 klBadgeDanger"></p-badge>
     </div>
   </div>
 </div>

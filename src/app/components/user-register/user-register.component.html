@@ -1,33 +1,33 @@
 <div class="card">
-    <div class="field grid">
-        <label for="name" class="col-12 mb-2 md:col-2 md:mb-0">Name</label>
-        <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+        <label for="name" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Name</label>
+        <div class="col-span-12 md:col-span-10">
             <input type="text" id="name" pInputText [(ngModel)]="selUser.name" />
         </div>
     </div>
-    <div class="field grid">
-        <label for="email" class="col-12 mb-2 md:col-2 md:mb-0">Email</label>
-        <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+        <label for="email" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Email</label>
+        <div class="col-span-12 md:col-span-10">
             <input type="email" id="email" pInputText [(ngModel)]="selUser.email" />
         </div>
     </div>
-    <div class="field grid">
-        <label for="login" class="col-12 mb-2 md:col-2 md:mb-0">Login</label>
-        <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+        <label for="login" class="col-span-12 mb-2 md:col-span-2 md:mb-0">Login</label>
+        <div class="col-span-12 md:col-span-10">
             <input type="text" id="login" pInputText [(ngModel)]="selUser.login" />
         </div>
     </div>
-    <div class="field grid">
-        <label class="col-12 mb-2 md:col-2 md:mb-0">Password</label>
-        <div class="col-12 md:col-10">
+    <div class="mb-4 grid grid-cols-12 gap-4">
+        <label class="col-span-12 mb-2 md:col-span-2 md:mb-0">Password</label>
+        <div class="col-span-12 md:col-span-10">
             <input type="password" id="login" pInputText [(ngModel)]="selUser.password" />
         </div>
     </div>
-    <div class="grid">
-        <div class="col-12 md-col-2">
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 md:col-span-2">
             <button pButton label="Register" (click)="doSave()" class="button-save"></button>
         </div>
-        <div class="col-12 md-col-2">
+        <div class="col-span-12 md:col-span-2">
             <button pButton label="Close" (click)="doClose()" class="button-cancel"></button>
         </div>
     </div>
