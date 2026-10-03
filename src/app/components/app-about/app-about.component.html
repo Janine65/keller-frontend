@@ -13,11 +13,11 @@
       <span class="col-span-4 font-bold">Description:</span><span class="col-span-8">{{pkgFrontend.description}}</span>
       <span class="col-span-4 font-bold">author:</span><span class="col-span-8">{{pkgFrontend.author?.name}}</span>
       <span class="col-span-12 font-bold">Dependencies:</span>
-      <div class="grid grid-cols-12 gap-4 p-1 ml-2">
+      <div class="col-span-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-1 ml-2 text-sm">
         @for (entry of pkgFrontend.dependencies | keyvalue; track entry) {
-          <div class="col-span-3 grid grid-cols-12 gap-4 p-1">
-            <span class="col-span-8">{{entry.key}}:</span>
-            <span class="col-span-2">{{entry.value}}</span>
+          <div class="flex justify-between gap-2 border-b border-surface-100">
+            <span class="truncate">{{entry.key}}</span>
+            <span class="whitespace-nowrap text-surface-500">{{entry.value}}</span>
           </div>
         }
       </div>
@@ -31,11 +31,11 @@
       <span class="col-span-4 font-bold">Description:</span><span class="col-span-8">{{pkgBackend.description}}</span>
       <span class="col-span-4 font-bold">author:</span><span class="col-span-8">{{pkgBackend.author?.name}}</span>
       <span class="col-span-12 font-bold">Dependencies:</span>
-      <div class="grid grid-cols-12 gap-4 p-1 ml-2">
+      <div class="col-span-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-1 ml-2 text-sm">
         @for (entry of pkgBackend.dependencies | keyvalue; track entry) {
-          <div class="col-span-3 grid grid-cols-12 gap-4 p-1">
-            <span class="col-span-8">{{entry.key}}:</span>
-            <span class="col-span-2">{{entry.value}}</span>
+          <div class="flex justify-between gap-2 border-b border-surface-100">
+            <span class="truncate">{{entry.key}}</span>
+            <span class="whitespace-nowrap text-surface-500">{{entry.value}}</span>
           </div>
         }
       </div>
