@@ -19,25 +19,7 @@
 }
 
 :root {
-    --highlight-bg: var(--primary);
-  }
-  @layer primeng {
-    .p-menubar .p-menuitem.p-highlight > .p-menuitem-content {
-        color: #495057;
-        background: var(--highlight-bg) !important;
-    }
-}
-@layer primeng {
-    .p-menubar .p-menuitem.p-focus > .p-menuitem-content {
-        color: #495057;
-        background: var(--highlight-bg) !important;
-    }
-}
-@layer primeng {
-    .p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-content {
-        color: #495057;
-        background: var(--highlight-bg) !important;
-    }
+    --highlight-bg: var(--p-primary-color);
 }
 
 .klBadgeWarning .p-badge { 

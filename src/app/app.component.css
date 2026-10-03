@@ -1,24 +1,17 @@
+/* PrimeNG 22: Farben über Design-Tokens der Komponente */
 ::ng-deep .p-menubar {
-  background: var(--primary-color);
-}
-::ng-deep
-  .p-menubar
-  .p-menubar-root-list
-  > .p-menuitem
-  > .p-menuitem-content
-  .p-menuitem-link
-  .p-menuitem-text {
-  color: var(--primary-color-text);
-}
-
-::ng-deep
-  .p-menubar
-  .p-menubar-root-list
-  > .p-menuitem
-  > .p-menuitem-content
-  .p-menuitem-link
-  .p-menuitem-icon {
-  color: var(--primary-color-text);
+  --p-menubar-background: var(--p-primary-color);
+  --p-menubar-border-color: var(--p-primary-color);
+  --p-menubar-item-color: var(--p-primary-contrast-color);
+  --p-menubar-item-icon-color: var(--p-primary-contrast-color);
+  --p-menubar-submenu-icon-color: var(--p-primary-contrast-color);
+  --p-menubar-item-focus-background: var(--p-primary-hover-color);
+  --p-menubar-item-focus-color: var(--p-primary-contrast-color);
+  --p-menubar-item-active-background: var(--p-primary-hover-color);
+  --p-menubar-item-active-color: var(--p-primary-contrast-color);
+  --p-menubar-mobile-button-color: var(--p-primary-contrast-color);
+  --p-menubar-mobile-button-hover-color: var(--p-primary-contrast-color);
+  --p-menubar-mobile-button-hover-background: var(--p-primary-hover-color);
 }
 @media (max-width: 1023px) {
   .footer {
@@ -27,13 +20,9 @@
 }
 @media (min-width: 1024px) {
   .footer {
-    position: absolute;
-    bottom: 0rem;
-    right: 0%;
     width: 100%;
     padding-right: 10px;
-    background-origin: padding-box;
-    background-color: var(--primary-color);
-    color: var(--primary-color-text);
+    background-color: var(--p-primary-color);
+    color: var(--p-primary-contrast-color);
   }
 }
