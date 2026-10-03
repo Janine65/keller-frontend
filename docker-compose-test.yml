@@ -4,14 +4,16 @@ services:
   keller-backend:
     container_name: keller-backend
     restart: always
-    image: janine65/keller-backend:latest
+    image: janine65/keller-backend:test
     build:
       context: ../keller-backend-python/
       dockerfile: ../keller-backend-python/Dockerfile
       tags:
-        - janine65/keller-backend:latest
+        - janine65/keller-backend:test
     env_file:
-      - ../keller-backend-python/.env.prod
+      - ../keller-backend-python/.env.test
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - logfile:/usr/src/keller-app/logs:rw
     ports:
@@ -24,12 +26,12 @@ services:
   keller-frontend:
     container_name: keller-frontend
     restart: always
-    image: janine65/keller-frontend:latest
+    image: janine65/keller-frontend:test
     build:
       context: ./
       dockerfile: ./Dockerfile
       tags:
-        - janine65/keller-frontend:latest
+        - janine65/keller-frontend:test
     depends_on:
       - keller-backend
     environment:
