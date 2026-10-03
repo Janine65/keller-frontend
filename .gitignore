@@ -41,5 +41,6 @@ Thumbs.db
 .angular
 
 .nx/cache
+.nx/workspace-data
 docker-compose-prod.yml
 docker-compose-dev.yml

@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CookieModule } from 'ngx-cookie';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -39,47 +39,41 @@ import { PlaceTypeComponent } from './components/place-type/place-type.component
 import { ThingEditComponent } from './components/thing-edit/thing-edit.component';
 import { StringDatePipe } from './shared/string-date.pipe';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    AppMenuComponent,
-    AppDesktopComponent,
-    AppFooterComponent,
-    AppAboutComponent,
-    UserLoginComponent,
-    UserRegisterComponent,
-    UserListComponent,
-    PlacesListComponent,
-    SubplaceListComponent,
-    ThingsListComponent,
-    PlaceTypeComponent,
-    PlaceTypeComponent,
-    ThingEditComponent,
-    StringDatePipe,    
-  ],
-  imports: [
-    BrowserModule,
-    CookieModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    DecimalPipe,
-    DatePipe,
-    PercentPipe,
-    FontAwesomeModule,
-    APP_PRIMENG_MODULE,
-  ],
-  providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    APP_PRIMENG_PROVIDERS,
-    DatePipe, DecimalPipe, PercentPipe, StringDatePipe
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        AppMenuComponent,
+        AppDesktopComponent,
+        AppFooterComponent,
+        AppAboutComponent,
+        UserLoginComponent,
+        UserRegisterComponent,
+        UserListComponent,
+        PlacesListComponent,
+        SubplaceListComponent,
+        ThingsListComponent,
+        PlaceTypeComponent,
+        PlaceTypeComponent,
+        ThingEditComponent,
+        StringDatePipe,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        CookieModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DecimalPipe,
+        DatePipe,
+        PercentPipe,
+        FontAwesomeModule,
+        APP_PRIMENG_MODULE], providers: [
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: ErrorHandler, useClass: GlobalErrorHandler },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        APP_PRIMENG_PROVIDERS,
+        DatePipe, DecimalPipe, PercentPipe, StringDatePipe,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {}
