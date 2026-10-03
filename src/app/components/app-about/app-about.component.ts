@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AppPackage } from '@models/app-package';
 
 @Component({
-  selector: 'keller-frontend-app-about',
-  templateUrl: './app-about.component.html',
-  styleUrls: ['./app-about.component.css'],
+    selector: 'keller-frontend-app-about',
+    templateUrl: './app-about.component.html',
+    styleUrls: ['./app-about.component.css'],
+    standalone: false
 })
 export class AppAboutComponent implements OnInit {
   pkgFrontend: AppPackage = {};

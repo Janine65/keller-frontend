@@ -6,10 +6,11 @@ import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
-  selector: 'keller-frontend-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css'],
-  providers: [DialogService]
+    selector: 'keller-frontend-user-list',
+    templateUrl: './user-list.component.html',
+    styleUrls: ['./user-list.component.css'],
+    providers: [DialogService],
+    standalone: false
 })
 export class UserListComponent implements OnInit {
 

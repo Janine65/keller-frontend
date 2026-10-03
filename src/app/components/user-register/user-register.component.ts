@@ -6,9 +6,10 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
-  selector: 'keller-frontend-user-register',
-  templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.css'],
+    selector: 'keller-frontend-user-register',
+    templateUrl: './user-register.component.html',
+    styleUrls: ['./user-register.component.css'],
+    standalone: false
 })
 export class UserRegisterComponent {
 

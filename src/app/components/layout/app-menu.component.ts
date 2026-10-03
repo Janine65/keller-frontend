@@ -6,9 +6,10 @@ import { BackendService } from '@services/backend.service';
 import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './app-menu.component.html',
-  styleUrls: ['./app-menu.component.css'],
+    selector: 'app-menu',
+    templateUrl: './app-menu.component.html',
+    styleUrls: ['./app-menu.component.css'],
+    standalone: false
 })
 export class AppMenuComponent implements OnInit {
   items: MenuItem[] = [];

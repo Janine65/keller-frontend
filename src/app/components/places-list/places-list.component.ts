@@ -10,10 +10,11 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { map, zip } from 'rxjs';
 
 @Component({
-  selector: 'keller-frontend-places-list',
-  templateUrl: './places-list.component.html',
-  styleUrls: ['./places-list.component.css'],
-  providers: [DialogService]
+    selector: 'keller-frontend-places-list',
+    templateUrl: './places-list.component.html',
+    styleUrls: ['./places-list.component.css'],
+    providers: [DialogService],
+    standalone: false
 })
 export class PlacesListComponent implements OnInit, OnDestroy {
   constructor(

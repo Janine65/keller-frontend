@@ -1,9 +1,12 @@
 {
-
-  "ignorePatterns": ["!{workspaceRoot}/**/*"],
+  "ignorePatterns": [
+    "!{workspaceRoot}/**/*"
+  ],
   "overrides": [
     {
-      "files": ["{workspaceRoot}/*.ts"],
+      "files": [
+        "{workspaceRoot}/*.ts"
+      ],
       "extends": [
         "plugin:@nx/angular",
         "plugin:@angular-eslint/template/process-inline-templates"
@@ -28,9 +31,21 @@
       }
     },
     {
-      "files": ["{workspaceRoot}/*.html"],
-      "extends": ["plugin:@nx/angular-template"],
+      "files": [
+        "{workspaceRoot}/*.html"
+      ],
+      "extends": [
+        "plugin:@nx/angular-template"
+      ],
       "rules": {}
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "rules": {
+        "@angular-eslint/prefer-standalone": "off"
+      }
     }
   ]
 }

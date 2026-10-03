@@ -8,9 +8,10 @@ import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 
 @Component({
-  selector: 'keller-frontend-user-login',
-  templateUrl: './user-login.component.html',
-  styleUrls: ['./user-login.component.css'],
+    selector: 'keller-frontend-user-login',
+    templateUrl: './user-login.component.html',
+    styleUrls: ['./user-login.component.css'],
+    standalone: false
 })
 export class UserLoginComponent implements OnInit {
   constructor(private backendService: BackendService, private messageService: MessageService, private authService: AuthService, private router: Router) {}

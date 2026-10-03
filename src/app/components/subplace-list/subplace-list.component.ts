@@ -8,9 +8,10 @@ import { MessageService } from 'primeng/api';
 import { map, zip } from 'rxjs';
 
 @Component({
-  selector: 'keller-frontend-subplace-list',
-  templateUrl: './subplace-list.component.html',
-  styleUrls: ['./subplace-list.component.css'],
+    selector: 'keller-frontend-subplace-list',
+    templateUrl: './subplace-list.component.html',
+    styleUrls: ['./subplace-list.component.css'],
+    standalone: false
 })
 export class SubplaceListComponent implements OnInit {
   lSubplaces: Subplace[] = [];

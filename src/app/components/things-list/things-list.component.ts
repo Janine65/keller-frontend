@@ -10,10 +10,11 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Observable, map, zip } from 'rxjs';
 
 @Component({
-  selector: 'keller-frontend-things-list',
-  templateUrl: './things-list.component.html',
-  styleUrls: ['./things-list.component.css'],
-  providers: [DialogService]
+    selector: 'keller-frontend-things-list',
+    templateUrl: './things-list.component.html',
+    styleUrls: ['./things-list.component.css'],
+    providers: [DialogService],
+    standalone: false
 })
 export class ThingsListComponent implements OnInit {
 

@@ -9,9 +9,10 @@ import { FileUploadEvent } from 'primeng/fileupload';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'keller-frontend-thing-edit',
-  templateUrl: './thing-edit.component.html',
-  styleUrls: ['./thing-edit.component.css'],
+    selector: 'keller-frontend-thing-edit',
+    templateUrl: './thing-edit.component.html',
+    styleUrls: ['./thing-edit.component.css'],
+    standalone: false
 })
 export class ThingEditComponent {
 

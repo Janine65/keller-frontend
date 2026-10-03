@@ -31,10 +31,11 @@ class ThingStruct {
 }
 
 @Component({
-  selector: 'app-desktop',
-  templateUrl: './app-desktop.component.html',
-  styleUrls: ['./app-desktop.component.css'],
-  providers: [DialogService]
+    selector: 'app-desktop',
+    templateUrl: './app-desktop.component.html',
+    styleUrls: ['./app-desktop.component.css'],
+    providers: [DialogService],
+    standalone: false
 })
 export class AppDesktopComponent implements OnInit {
 

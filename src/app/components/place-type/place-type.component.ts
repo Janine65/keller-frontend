@@ -9,9 +9,10 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { map, zip } from 'rxjs';
 
 @Component({
-  selector: 'keller-frontend-place-type',
-  templateUrl: './place-type.component.html',
-  styleUrls: ['./place-type.component.css'],
+    selector: 'keller-frontend-place-type',
+    templateUrl: './place-type.component.html',
+    styleUrls: ['./place-type.component.css'],
+    standalone: false
 })
 export class PlaceTypeComponent implements OnInit {
   lPlacetypes: Placetype[] = [];
