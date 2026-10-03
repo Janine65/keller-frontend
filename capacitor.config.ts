@@ -9,8 +9,8 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SplashScreen: {
-      launchShowDuration: 1500,
-      launchAutoHide: true,
+      // App ruft SplashScreen.hide() selbst auf, sobald sie geladen ist
+      launchAutoHide: false,
     },
     // Nativer HTTP-Layer: umgeht WKWebView-CORS (capacitor:// -> http://localhost)
     CapacitorHttp: {

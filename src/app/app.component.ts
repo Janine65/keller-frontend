@@ -1,5 +1,7 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import pkg from '../../package.json'
+import { Capacitor } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { PrimeNG } from 'primeng/config';
 import { BackendService } from '@services/backend.service';
 import { firstValueFrom } from 'rxjs';
@@ -43,5 +45,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple.set(true);
+    if (Capacitor.isNativePlatform()) {
+      SplashScreen.hide();
+    }
   }
 }
