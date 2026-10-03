@@ -1,5 +1,5 @@
 import { LocationStrategy, HashLocationStrategy, DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
-import { ErrorHandler, importProvidersFrom } from '@angular/core';
+import { ErrorHandler, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { GlobalErrorHandler } from '@interceptors/global-error-handler';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { JwtInterceptor } from '@interceptors/jwt.interceptor';
@@ -17,7 +17,7 @@ import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(CookieModule),
+        provideZoneChangeDetection(),importProvidersFrom(CookieModule),
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: ErrorHandler, useClass: GlobalErrorHandler },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
