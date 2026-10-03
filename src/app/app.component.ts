@@ -7,12 +7,18 @@ import { CookieService } from 'ngx-cookie-service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { Bind } from 'primeng/bind';
+import { Toast } from 'primeng/toast';
+import { ConfirmPopup } from 'primeng/confirmpopup';
+import { AppMenuComponent } from './components/layout/app-menu.component';
+import { RouterOutlet } from '@angular/router';
+import { AppFooterComponent } from './components/layout/app-footer.component';
 
 @Component({
     selector: 'keller-frontend-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    standalone: false
+    imports: [Bind, Toast, ConfirmPopup, AppMenuComponent, RouterOutlet, AppFooterComponent]
 })
 export class AppComponent implements OnInit {
   title = 'keller-frontend';
