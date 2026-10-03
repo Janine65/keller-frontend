@@ -34,7 +34,7 @@ services:
     environment:
       - COMPOSE_PROJECT_NAME
       - NODE_ENV=development
-      - API_URL=http://keller-backend:3000
+      - API_URL=http://localhost:3000
     ports:
       - "4300:4300" # AMC-Frontend nutzt 4200, Homepage 4321
     links:
