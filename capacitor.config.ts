@@ -12,6 +12,10 @@ const config: CapacitorConfig = {
       launchShowDuration: 1500,
       launchAutoHide: true,
     },
+    // Nativer HTTP-Layer: umgeht WKWebView-CORS (capacitor:// -> http://localhost)
+    CapacitorHttp: {
+      enabled: true,
+    },
   },
 };
 
