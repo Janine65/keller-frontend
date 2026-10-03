@@ -1,4 +1,4 @@
-import { Component, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnInit, viewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ThingEditComponent } from '@components/thing-edit/thing-edit.component';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { Place, Placetype, Subplace } from '@models/places';
@@ -52,6 +52,7 @@ class ThingStruct {
     templateUrl: './app-desktop.component.html',
     styleUrls: ['./app-desktop.component.css'],
     providers: [DialogService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [Bind, Toolbar, Checkbox, FormsModule, IconField, InputIcon, InputText, SelectButton, Ripple, ToggleButton, ScrollPanel, ContextMenu, Badge, Image, FaIconComponent, ButtonDirective, Dialog, Select, PrimeTemplate]
 })
 export class AppDesktopComponent implements OnInit {

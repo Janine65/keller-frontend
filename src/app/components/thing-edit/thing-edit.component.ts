@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReturnStruct } from '@models/generel';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Thing, Grapes, WineType, ListElement } from '@models/things';
 import { AuthService } from '@services/auth.service';
@@ -25,6 +25,7 @@ import { Toolbar } from 'primeng/toolbar';
     selector: 'keller-frontend-thing-edit',
     templateUrl: './thing-edit.component.html',
     styleUrls: ['./thing-edit.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [Bind, RadioButton, FormsModule, InputText, Image, ButtonDirective, Select, PrimeTemplate, NgClass, DatePicker, MultiSelect, Checkbox, Badge, Toolbar, FileUpload]
 })
 export class ThingEditComponent {

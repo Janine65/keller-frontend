@@ -101,5 +101,6 @@
     "@schematics/angular:resolver": {
       "typeSeparator": "."
     }
-  }
+  },
+  "neverConnectToCloud": true
 }

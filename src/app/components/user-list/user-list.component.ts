@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { UserRegisterComponent } from '@components/user-register/user-register.component';
 import { User } from '@models/user';
 import { BackendService } from '@services/backend.service';
@@ -15,6 +15,7 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.css'],
     providers: [DialogService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, StringDatePipe]
 })
 export class UserListComponent implements OnInit {

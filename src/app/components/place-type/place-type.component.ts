@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DropdownClass, ReturnStruct } from '@models/generel';
 import { Placetype, Icons } from '@models/places';
 import { User } from '@models/user';
@@ -20,6 +20,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     selector: 'keller-frontend-place-type',
     templateUrl: './place-type.component.html',
     styleUrls: ['./place-type.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, FaIconComponent]
 })
 export class PlaceTypeComponent implements OnInit {

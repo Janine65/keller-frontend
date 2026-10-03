@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import pkg from '../../package.json'
 import { PrimeNG } from 'primeng/config';
 import { BackendService } from '@services/backend.service';
@@ -18,6 +18,7 @@ import { AppFooterComponent } from './components/layout/app-footer.component';
     selector: 'keller-frontend-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [Bind, Toast, ConfirmPopup, AppMenuComponent, RouterOutlet, AppFooterComponent]
 })
 export class AppComponent implements OnInit {

@@ -1,10 +1,11 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AppPackage } from '@models/app-package';
 import { interval, take } from 'rxjs';
 
 @Component({
     selector: 'app-footer',
     templateUrl: './app-footer.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./app-footer.component.css']
 })
 export class AppFooterComponent implements AfterContentInit {

@@ -18,17 +18,17 @@
       <ng-template pTemplate="body" let-placetype let-editing="editing" let-ri="rowIndex">
         <tr [pEditableRow]="placetype">
           <td>
-            <p-cellEditor>
+            <p-celleditor>
               <ng-template pTemplate="input">
                 <input pInputText type="text" [(ngModel)]="placetype.name">
               </ng-template>
               <ng-template pTemplate="output">
                 {{placetype.name}}
               </ng-template>
-            </p-cellEditor>
+            </p-celleditor>
           </td>
           <td>
-            <p-cellEditor>
+            <p-celleditor>
               <ng-template pTemplate="input">
                 <p-select [options]="lIcons" [showClear]="true" [(ngModel)]="placetype.icon"
                   [style]="{'width':'100%'}" appendTo="body">
@@ -50,7 +50,7 @@
               <ng-template pTemplate="output">
                 <fa-icon [icon]="['fas', placetype.icon]"></fa-icon> {{placetype.icon}}
               </ng-template>
-            </p-cellEditor>
+            </p-celleditor>
           </td>
           <td>
             <div class="flex align-items-center justify-content-center gap-2">

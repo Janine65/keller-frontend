@@ -1,25 +1,25 @@
 <div class="flex flex-wrap gap-3 mb-3">
   <div class="flex align-items-center">
-    <p-radioButton name="pizza" value="alcoholic" [(ngModel)]="thing.thing_type" inputId="ingredient1"
-    [disabled]="thing.id !== undefined && thing.id > 0"></p-radioButton>
+    <p-radiobutton name="pizza" value="alcoholic" [(ngModel)]="thing.thing_type" inputId="ingredient1"
+    [disabled]="thing.id !== undefined && thing.id > 0"></p-radiobutton>
     <label for="ingredient1" class="ml-2">Alcoholic</label>
   </div>
 
   <div class="flex align-items-center">
-    <p-radioButton name="pizza" value="food" [(ngModel)]="thing.thing_type" inputId="ingredient2"
-    [disabled]="thing.id !== undefined && thing.id > 0"></p-radioButton>
+    <p-radiobutton name="pizza" value="food" [(ngModel)]="thing.thing_type" inputId="ingredient2"
+    [disabled]="thing.id !== undefined && thing.id > 0"></p-radiobutton>
     <label for="ingredient2" class="ml-2">Food</label>
   </div>
 
   <div class="flex align-items-center">
-    <p-radioButton name="pizza" value="nonalcoholic" [(ngModel)]="thing.thing_type" inputId="ingredient3"
-    [disabled]="thing.id !== undefined && thing.id > 0"></p-radioButton>
+    <p-radiobutton name="pizza" value="nonalcoholic" [(ngModel)]="thing.thing_type" inputId="ingredient3"
+    [disabled]="thing.id !== undefined && thing.id > 0"></p-radiobutton>
     <label for="ingredient3" class="ml-2">Nonalcoholic</label>
   </div>
 
   <div class="flex align-items-center">
-    <p-radioButton name="pizza" value="nonfood" [(ngModel)]="thing.thing_type" inputId="ingredient4"
-    [disabled]="thing.id !== undefined && thing.id > 0"></p-radioButton>
+    <p-radiobutton name="pizza" value="nonfood" [(ngModel)]="thing.thing_type" inputId="ingredient4"
+    [disabled]="thing.id !== undefined && thing.id > 0"></p-radiobutton>
     <label for="ingredient4" class="ml-2">Nonfood</label>
   </div>
 </div>
@@ -53,8 +53,8 @@
       <div class="col-12 md:col-4">
         @for (wtype of wineType; track wtype) {
           <div class="flex align-items-center">
-            <p-radioButton [inputId]="wtype.type" name="winetype" [value]="wtype.type"
-            [(ngModel)]="alcoholic.type"></p-radioButton>
+            <p-radiobutton [inputId]="wtype.type" name="winetype" [value]="wtype.type"
+            [(ngModel)]="alcoholic.type"></p-radiobutton>
             <label [for]="wtype.type" class="col-12 mb-2 md:col-2 md:mb-0">{{wtype.label}}</label>
           </div>
         }
@@ -94,13 +94,13 @@
     <div class="field grid">
       <label for="grapes" class="col-12 mb-2 md:col-2 md:mb-0">Grapes</label>
       <div class="col-12 md:col-10">
-        <p-multiSelect [options]="grapes" [group]="true" [showClear]="true" [(ngModel)]="alcoholic.grapes"
+        <p-multiselect [options]="grapes" [group]="true" [showClear]="true" [(ngModel)]="alcoholic.grapes"
           placeholder="Select Grapes" appendTo="body" [contentEditable]="true" display="chip" optionLabel="label"
           optionValue="label" [filter]="true">
           <ng-template let-group pTemplate="group">
             <span>{{ group.label }}</span>
           </ng-template>
-        </p-multiSelect>
+        </p-multiselect>
       </div>
     </div>
     <div class="field grid">
@@ -233,7 +233,7 @@
 </div>
 <p-toolbar>
   <button pButton (click)="onSave()">Save</button>
-  <p-fileUpload mode="basic" name="pict[]" chooseIcon="pi pi-upload"
+  <p-fileupload mode="basic" name="pict[]" chooseIcon="pi pi-upload"
     url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" maxFileSize="1000000000"
     (onUpload)="loadPhoto($event)" [auto]="true" chooseLabel="Load Photo" />
   <button pButton (click)="onCancel()">Cancel</button>

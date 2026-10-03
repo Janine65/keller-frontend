@@ -10,27 +10,27 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="name" style="width:30%">Name <p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="placetype" style="width:20%">Type <p-sortIcon field="placetype"></p-sortIcon></th>
+          <th pSortableColumn="name" style="width:30%">Name <p-sorticon field="name"></p-sorticon></th>
+          <th pSortableColumn="placetype" style="width:20%">Type <p-sorticon field="placetype"></p-sorticon></th>
           <th  style="width:20%">Last upated </th>
-          <th pSortableColumn="user" style="width:20%">Last User <p-sortIcon field="user"></p-sortIcon></th>
+          <th pSortableColumn="user" style="width:20%">Last User <p-sorticon field="user"></p-sorticon></th>
           <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-place let-editing="editing" let-ri="rowIndex">
         <tr [pEditableRow]="place">
           <td>
-            <p-cellEditor>
+            <p-celleditor>
               <ng-template pTemplate="input">
                 <input pInputText type="text" [(ngModel)]="place.name">
               </ng-template>
               <ng-template pTemplate="output">
                 {{place.name}}
               </ng-template>
-            </p-cellEditor>
+            </p-celleditor>
           </td>
           <td>
-            <p-cellEditor>
+            <p-celleditor>
               <ng-template pTemplate="input">
                 <p-select [options]="lPlaceType" appendTo="body" [(ngModel)]="place.placetypeid"
                   [style]="{'width':'100%'}">
@@ -52,7 +52,7 @@
               <ng-template pTemplate="output">
                 <fa-icon [icon]="['fas', place.icon]"></fa-icon> {{ place.placetype }}
               </ng-template>
-            </p-cellEditor>
+            </p-celleditor>
           </td>
           <td>
             {{place.updatedAt | stringDate: 'd. MMMM yyyy HH:mm' }}

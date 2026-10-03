@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
@@ -11,6 +11,7 @@ import { Menubar } from 'primeng/menubar';
     selector: 'app-menu',
     templateUrl: './app-menu.component.html',
     styleUrls: ['./app-menu.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [Bind, Menubar, PrimeTemplate, RouterLink]
 })
 export class AppMenuComponent implements OnInit {

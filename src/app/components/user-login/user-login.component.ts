@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BackendService } from '@services/backend.service';
 import { MessageService } from 'primeng/api';
@@ -16,6 +16,7 @@ import { Ripple } from 'primeng/ripple';
     selector: 'keller-frontend-user-login',
     templateUrl: './user-login.component.html',
     styleUrls: ['./user-login.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, ReactiveFormsModule, Bind, InputText, Password, ButtonDirective, Ripple]
 })
 export class UserLoginComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { PlaceTypeComponent } from '@components/place-type/place-type.component';
 import { DropdownClass, ReturnStruct } from '@models/generel';
 import { Place, Placetype } from '@models/places';
@@ -23,6 +23,7 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     templateUrl: './places-list.component.html',
     styleUrls: ['./places-list.component.css'],
     providers: [DialogService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, FaIconComponent, StringDatePipe]
 })
 export class PlacesListComponent implements OnInit, OnDestroy {

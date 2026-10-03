@@ -19,28 +19,27 @@
     ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
     "paths": {
       "@assets/*": [
-        "src/assets/*"
+        "./src/assets/*"
       ],
       "@components/*": [
-        "src/app/components/*"
+        "./src/app/components/*"
       ],
       "@environments/*": [
-        "src/environments/*"
+        "./src/environments/*"
       ],
       "@interceptors/*": [
-        "src/app/interceptors/*"
+        "./src/app/interceptors/*"
       ],
       "@models/*": [
-        "src/app/models/*"
+        "./src/app/models/*"
       ],
       "@services/*": [
-        "src/app/services/*"
+        "./src/app/services/*"
       ],
       "@shared/*": [
-        "src/app/shared/*"
+        "./src/app/shared/*"
       ]
     }
   },

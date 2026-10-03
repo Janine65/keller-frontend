@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
@@ -13,6 +13,7 @@ import { ButtonDirective } from 'primeng/button';
     selector: 'keller-frontend-user-register',
     templateUrl: './user-register.component.html',
     styleUrls: ['./user-register.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, Bind, InputText, ButtonDirective]
 })
 export class UserRegisterComponent {

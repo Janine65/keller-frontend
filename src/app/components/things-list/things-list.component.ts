@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ThingEditComponent } from '@components/thing-edit/thing-edit.component';
 import { ReturnStruct } from '@models/generel';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Thing } from '@models/things';
@@ -19,6 +19,7 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     templateUrl: './things-list.component.html',
     styleUrls: ['./things-list.component.css'],
     providers: [DialogService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, StringDatePipe]
 })
 export class ThingsListComponent implements OnInit {

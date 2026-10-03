@@ -1,7 +1,7 @@
 import { LocationStrategy, HashLocationStrategy, DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { ErrorHandler, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { GlobalErrorHandler } from '@interceptors/global-error-handler';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { JwtInterceptor } from '@interceptors/jwt.interceptor';
 import { ErrorInterceptor } from '@interceptors/error.interceptor';
 import { APP_PRIMENG_PROVIDERS } from './app/app.module-primeng';
@@ -24,7 +24,7 @@ bootstrapApplication(AppComponent, {
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         APP_PRIMENG_PROVIDERS,
         DatePipe, DecimalPipe, PercentPipe, StringDatePipe,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         providePrimeNG({ theme: { preset: Aura } }),
         provideAnimations(),
         provideRouter(appRoutes, withEnabledBlockingInitialNavigation())
