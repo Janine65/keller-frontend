@@ -1,0 +1,4 @@
+{
+  // tsgo (TS 7 Native Preview) lädt keine TS-Server-Plugins – für Nx Console hier deaktiviert
+  "typescript.experimental.useTsgo": false
+}
