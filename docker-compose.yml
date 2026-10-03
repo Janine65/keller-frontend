@@ -1,35 +1,37 @@
-version: '3.9'
-
 services:
   keller-backend:
     container_name: keller-backend
     restart: always
-    image: janine65/keller-backend:latest
+    image: janine65/keller-backend
+    platform: linux/amd64
     build:
       context: ../keller-backend-python/
       dockerfile: ../keller-backend-python/Dockerfile
       tags:
-        - janine65/keller-backend:latest
+        - "janine65/keller-backend:${BACKEND_VERSION:-latest}"
     env_file:
       - ../keller-backend-python/.env.prod
+    stdin_open: true
+    tty: true # Keeps the container running for debugging
     volumes:
-      - logfile:/usr/src/keller-app/logs:rw
+      - logs:/usr/src/keller-app/logs:rw
     ports:
-      - 3000:3000
+      - "3000:3000" # AMC-Backend nutzt 3001
     hostname: keller-backend
     networks:
-      - back-tier
+      - keller-back-tier
       - keller-front-tier
 
   keller-frontend:
     container_name: keller-frontend
     restart: always
-    image: janine65/keller-frontend:latest
+    image: janine65/keller-frontend
+    platform: linux/amd64
     build:
       context: ./
       dockerfile: ./Dockerfile
       tags:
-        - janine65/keller-frontend:latest
+        - "janine65/keller-frontend:${APP_VERSION:-latest}"
     depends_on:
       - keller-backend
     environment:
@@ -37,7 +39,7 @@ services:
       - NODE_ENV=production
       - API_URL=http://keller-backend:3000
     ports:
-      - 4300:4300
+      - "4300:4300" # AMC-Frontend nutzt 4200, Homepage 4321
     links:
       - keller-backend
     hostname: keller-frontend
@@ -47,12 +49,12 @@ services:
 networks:
   # The presence of these objects is sufficient to define them
   keller-front-tier: {}
-  back-tier: {}
+  keller-back-tier: {}
 
 volumes:
-  logfile:
+  logs:
     driver: local
     driver_opts:
       type: 'nfs'
       o: 'bind'
-      device: '/Users/janinefranken/Development/JS/keller-backend-python/logs'
+      device: '/volume1/server/keller/logs'

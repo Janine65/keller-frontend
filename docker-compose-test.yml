@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   keller-backend:
     container_name: keller-backend
@@ -9,18 +7,17 @@ services:
       context: ../keller-backend-python/
       dockerfile: ../keller-backend-python/Dockerfile
       tags:
-        - janine65/keller-backend:test
+        - "janine65/keller-backend:test"
     env_file:
       - ../keller-backend-python/.env.test
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - logfile:/usr/src/keller-app/logs:rw
+      - logs:/usr/src/keller-app/logs:rw
     ports:
-      - 3000:3000
+      - "3000:3000" # AMC-Backend nutzt 3001
     hostname: keller-backend
     networks:
-      - back-tier
       - keller-front-tier
 
   keller-frontend:
@@ -31,15 +28,15 @@ services:
       context: ./
       dockerfile: ./Dockerfile
       tags:
-        - janine65/keller-frontend:test
+        - "janine65/keller-frontend:test"
     depends_on:
       - keller-backend
     environment:
       - COMPOSE_PROJECT_NAME
-      - NODE_ENV=production
+      - NODE_ENV=development
       - API_URL=http://keller-backend:3000
     ports:
-      - 4300:4300
+      - "4300:4300" # AMC-Frontend nutzt 4200, Homepage 4321
     links:
       - keller-backend
     hostname: keller-frontend
@@ -49,10 +46,9 @@ services:
 networks:
   # The presence of these objects is sufficient to define them
   keller-front-tier: {}
-  back-tier: {}
 
 volumes:
-  logfile:
+  logs:
     driver: local
     driver_opts:
       type: 'nfs'
