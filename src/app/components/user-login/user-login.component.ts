@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BackendService } from '@services/backend.service';
 import { MessageService } from 'primeng/api';
@@ -19,7 +19,11 @@ import { Ripple } from 'primeng/ripple';
     imports: [FormsModule, ReactiveFormsModule, Bind, InputText, Password, ButtonDirective, Ripple]
 })
 export class UserLoginComponent implements OnInit {
-  constructor(private backendService: BackendService, private messageService: MessageService, private authService: AuthService, private router: Router) {}
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
 
   login = '';
   password = ''

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReturnStruct } from '@models/generel';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Thing, Grapes, WineType, ListElement } from '@models/things';
 import { AuthService } from '@services/auth.service';
@@ -28,6 +28,12 @@ import { Toolbar } from 'primeng/toolbar';
     imports: [Bind, RadioButton, FormsModule, InputText, Image, ButtonDirective, Select, PrimeTemplate, NgClass, DatePicker, MultiSelect, Checkbox, Badge, Toolbar, FileUpload]
 })
 export class ThingEditComponent {
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+  ref = inject(DynamicDialogRef);
+  conf = inject(DynamicDialogConfig);
+
 
   thing: Thing = new Thing();
   alcoholic: Alcoholic = new Alcoholic();
@@ -43,11 +49,7 @@ export class ThingEditComponent {
   selectedCountry: ListElement | undefined;
 
 
-  constructor(private backendService: BackendService,
-    private messageService: MessageService,
-    private authService: AuthService,
-    public ref: DynamicDialogRef,
-    public conf: DynamicDialogConfig) {
+  constructor() {
       this.countries = [
         { name: 'Australia', code: 'au' },
         { name: 'Brazil', code: 'br' },

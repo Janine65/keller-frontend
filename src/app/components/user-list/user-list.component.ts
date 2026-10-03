@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UserRegisterComponent } from '@components/user-register/user-register.component';
 import { User } from '@models/user';
 import { BackendService } from '@services/backend.service';
@@ -18,6 +18,9 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, StringDatePipe]
 })
 export class UserListComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private dialogService = inject(DialogService);
+
 
   lUsers : User[] = [];
   selUser: User | undefined;
@@ -25,11 +28,6 @@ export class UserListComponent implements OnInit {
   isLoading = true;
 
   inEditMode = false;
-
-  constructor(
-    private backendService: BackendService,
-    private dialogService: DialogService)
-  {}
 
   ngOnInit(): void {
       this.backendService.getUsers().subscribe({

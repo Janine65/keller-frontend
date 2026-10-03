@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DropdownClass, ReturnStruct } from '@models/generel';
 import { Placetype, Icons } from '@models/places';
 import { User } from '@models/user';
@@ -23,6 +23,11 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, FaIconComponent]
 })
 export class PlaceTypeComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+  ref = inject(DynamicDialogRef);
+
   lPlacetypes: Placetype[] = [];
   clonedPlacetypes: Placetype[] = [];
 
@@ -31,13 +36,6 @@ export class PlaceTypeComponent implements OnInit {
   hasChanged = false;
   lIcons: DropdownClass[] = [];
   selIcon: DropdownClass | undefined;
-
-  constructor(
-    private backendService: BackendService,
-    private messageService: MessageService,
-    private authService: AuthService,
-    public ref: DynamicDialogRef) {
-  }
   onClose(): void {
     if (this.hasChanged)
       this.ref.close(this.lPlacetypes);

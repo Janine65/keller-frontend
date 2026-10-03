@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import pkg from '../../package.json'
 import { PrimeNG } from 'primeng/config';
 import { BackendService } from '@services/backend.service';
@@ -21,11 +21,15 @@ import { AppFooterComponent } from './components/layout/app-footer.component';
     imports: [Bind, Toast, ConfirmPopup, AppMenuComponent, RouterOutlet, AppFooterComponent]
 })
 export class AppComponent implements OnInit {
+  private primengConfig = inject(PrimeNG);
+  private backendService = inject(BackendService);
+  private cookieService = inject(CookieService);
+
   title = 'keller-frontend';
 
-  constructor(private primengConfig: PrimeNG, private backendService: BackendService, private cookieService: CookieService,
-    library: FaIconLibrary
-  ) {
+  constructor() {
+    const library = inject(FaIconLibrary);
+
     localStorage.setItem('aboutFrontend', JSON.stringify(pkg));
     library.addIconPacks(fas, far);
  

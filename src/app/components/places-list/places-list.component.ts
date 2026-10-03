@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { PlaceTypeComponent } from '@components/place-type/place-type.component';
 import { DropdownClass, ReturnStruct } from '@models/generel';
 import { Place, Placetype } from '@models/places';
@@ -26,12 +26,11 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, FaIconComponent, StringDatePipe]
 })
 export class PlacesListComponent implements OnInit, OnDestroy {
-  constructor(
-    private backendService: BackendService,
-    private messageService: MessageService,
-    private authService: AuthService,
-    private dialogService: DialogService) {
-  }
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+  private dialogService = inject(DialogService);
+
   lPlaces: Place[] = [];
   lUsers: User[] = [];
   clonedPlaces: { [s: number]: Place } = {};

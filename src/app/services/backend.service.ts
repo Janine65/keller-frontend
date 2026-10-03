@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
@@ -12,11 +12,13 @@ import { User } from '@models/user';
   providedIn: 'root'
 })
 export class BackendService {
+  private http = inject(HttpClient);
+
 
   private header!: HttpHeaders;
   private httpConfig: { headers: HttpHeaders, withCredentials: boolean } = { headers: this.header, withCredentials: true }
 
-  constructor(private http: HttpClient) {
+  constructor() {
 
     this.header = new HttpHeaders({
       'Access-Control-Allow-Origin': environment.apiUrlSelf,

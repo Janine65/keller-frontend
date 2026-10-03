@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
@@ -14,10 +14,13 @@ import { Menubar } from 'primeng/menubar';
     imports: [Bind, Menubar, PrimeTemplate, RouterLink]
 })
 export class AppMenuComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
   items: MenuItem[] = [];
   user: User = new User();
-
-  constructor(private backendService: BackendService, private messageService: MessageService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.isLoggedIn().subscribe({

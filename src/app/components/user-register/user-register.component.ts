@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { User } from '@models/user';
 import { AuthService } from '@services/auth.service';
 import { BackendService } from '@services/backend.service';
@@ -16,16 +16,14 @@ import { ButtonDirective } from 'primeng/button';
     imports: [FormsModule, Bind, InputText, ButtonDirective]
 })
 export class UserRegisterComponent {
+  private messageService = inject(MessageService);
+  private backendService = inject(BackendService);
+  private authService = inject(AuthService);
+  ref = inject(DynamicDialogRef);
+  conf = inject(DynamicDialogConfig);
+
 
   selUser: User = new User()
-
-  constructor(
-    private messageService: MessageService, 
-    private backendService: BackendService,
-    private authService: AuthService,
-    public ref: DynamicDialogRef,
-    public conf: DynamicDialogConfig)
-  { }
 
   doSave() {
     if (this.selUser.name && this.selUser.email && this.selUser.login && this.selUser.password) {

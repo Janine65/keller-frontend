@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ThingEditComponent } from '@components/thing-edit/thing-edit.component';
 import { ReturnStruct } from '@models/generel';
 import { Alcoholic, Food, Nonalcoholic, Nonfood, Thing } from '@models/things';
@@ -22,16 +22,16 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, StringDatePipe]
 })
 export class ThingsListComponent implements OnInit {
+  private messageService = inject(MessageService);
+  private backendService = inject(BackendService);
+  private authService = inject(AuthService);
+  private dialogService = inject(DialogService);
+
 
   lThings: Thing[] = []
   isLoading = true;
 
   selThing: Thing | undefined;
-
-  constructor(private messageService: MessageService,
-    private backendService: BackendService,
-    private authService: AuthService,
-    private dialogService: DialogService) { }
 
 
   ngOnInit(): void {

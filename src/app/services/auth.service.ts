@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { User } from '@models/user';
@@ -11,13 +11,16 @@ import { BackendService } from './backend.service';
   providedIn: 'root'
 })
 export class AuthService {
+  private router = inject(Router);
+  private http = inject(HttpClient);
+  private cookieService = inject(CookieService);
+  private backendService = inject(BackendService);
+
   private userSubject = new BehaviorSubject<User>(new User());
   private isLoggedBehavor = new BehaviorSubject(false);
   private apiUrl: string;
 
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService,
-    private backendService: BackendService
-  ) {
+  constructor() {
     const userString = localStorage.getItem('login')
     if (userString) {
       const user: User = JSON.parse(userString)

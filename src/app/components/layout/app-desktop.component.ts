@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, viewChild, inject } from '@angular/core';
 import { ThingEditComponent } from '@components/thing-edit/thing-edit.component';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { Place, Placetype, Subplace } from '@models/places';
@@ -55,6 +55,12 @@ class ThingStruct {
     imports: [Bind, Toolbar, Checkbox, FormsModule, IconField, InputIcon, InputText, SelectButton, Ripple, ToggleButton, ScrollPanel, ContextMenu, Badge, Image, FaIconComponent, ButtonDirective, Dialog, Select, PrimeTemplate]
 })
 export class AppDesktopComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private authService = inject(AuthService);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+  private dialogService = inject(DialogService);
+
 
   lPlaces: Place[] = [];
   lSubplaces: Subplace[] = [];
@@ -99,15 +105,9 @@ export class AppDesktopComponent implements OnInit {
   thingType = ''
   selTypes: string[] = [this.thingsTypes[0].label, this.thingsTypes[1].label, this.thingsTypes[2].label, this.thingsTypes[3].label]
 
-  @ViewChild('contextmenu') public cm?: ContextMenu;
+  public readonly cm = viewChild<ContextMenu>('contextmenu');
 
-  constructor(
-    private backendService: BackendService,
-    private authService: AuthService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private dialogService: DialogService
-  ) {
+  constructor() {
     this.cmObj2Sub = [
       {
         label: 'Add One', icon: 'pi pi-plus',
@@ -140,7 +140,7 @@ export class AppDesktopComponent implements OnInit {
 
   showContextMenu(data: ThingStruct, event: any) {
     this.selThing = data;
-    this.cm?.show(event)
+    this.cm()?.show(event)
   }
 
   reloadNodes() {

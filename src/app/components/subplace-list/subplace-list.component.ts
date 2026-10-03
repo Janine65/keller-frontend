@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ReturnStruct } from '@models/generel';
 import { Place, Subplace } from '@models/places';
 import { User } from '@models/user';
@@ -22,17 +22,16 @@ import { StringDatePipe } from '../../shared/string-date.pipe';
     imports: [Bind, TableModule, PrimeTemplate, ButtonDirective, Ripple, FormsModule, InputText, Select, StringDatePipe]
 })
 export class SubplaceListComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private messageService = inject(MessageService);
+  private authService = inject(AuthService);
+
   lSubplaces: Subplace[] = [];
   clonedSubplaces: Subplace[] = [];
 
   isLoading = true;
   lPlaces: Place[] = [];
   lUsers: User[] = [];
-
-  constructor(
-    private backendService: BackendService,
-    private messageService: MessageService,
-    private authService: AuthService) {}
 
     ngOnInit(): void {
 

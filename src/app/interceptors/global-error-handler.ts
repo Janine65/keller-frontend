@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable, Injector } from '@angular/core';
+import { ErrorHandler, Injectable, Injector, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoggingService } from './logging.service';
 import { ErrorService } from './error.service';
@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
+  private injector = inject(Injector);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(private injector: Injector, private authService: AuthService, private router: Router) { }
   
   async handleError(error: Error | HttpErrorResponse) {
     const errorService = this.injector.get(ErrorService);

@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { AlertService } from '@interceptors/alert.service';
 
@@ -6,11 +6,10 @@ import { AlertService } from '@interceptors/alert.service';
     providedIn: 'root'
 })
 export class NotificationService {
+  private messageService = inject(MessageService);
+  private zone = inject(NgZone);
+  private alertService = inject(AlertService);
 
-  constructor(
-    private messageService: MessageService,
-    private zone: NgZone,
-    private alertService: AlertService) { }
 
   showSuccess(message: string): void {
     // Had an issue with the snackbar being ran outside of angular's zone.
