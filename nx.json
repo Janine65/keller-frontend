@@ -27,9 +27,6 @@
       ]
     }
   },
-  "affected": {
-    "defaultBase": "master"
-  },
   "namedInputs": {
     "default": [
       "{workspaceRoot}/**/*",
@@ -45,5 +42,8 @@
       "{workspaceRoot}/.eslintrc.json"
     ],
     "sharedGlobals": []
-  }
+  },
+  "analytics": false,
+  "useInferencePlugins": false,
+  "defaultBase": "master"
 }
