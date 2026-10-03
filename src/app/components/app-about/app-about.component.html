@@ -11,7 +11,7 @@
       <span class="col-span-4 font-bold">Version:</span><span class="col-span-8">{{pkgFrontend.version}}</span>
       <span class="col-span-4 font-bold">Licence:</span><span class="col-span-8">{{pkgFrontend.license}}</span>
       <span class="col-span-4 font-bold">Description:</span><span class="col-span-8">{{pkgFrontend.description}}</span>
-      <span class="col-span-4 font-bold">author:</span><span class="col-span-8">{{pkgFrontend.author!.name}}</span>
+      <span class="col-span-4 font-bold">author:</span><span class="col-span-8">{{pkgFrontend.author?.name}}</span>
       <span class="col-span-12 font-bold">Dependencies:</span>
       <div class="grid grid-cols-12 gap-4 p-1 ml-2">
         @for (entry of pkgFrontend.dependencies | keyvalue; track entry) {
@@ -29,7 +29,7 @@
       <span class="col-span-4 font-bold">Version:</span><span class="col-span-8">{{pkgBackend.version}}</span>
       <span class="col-span-4 font-bold">Licence:</span><span class="col-span-8">{{pkgBackend.license}}</span>
       <span class="col-span-4 font-bold">Description:</span><span class="col-span-8">{{pkgBackend.description}}</span>
-      <span class="col-span-4 font-bold">author:</span><span class="col-span-8">{{pkgBackend.author!.name}}</span>
+      <span class="col-span-4 font-bold">author:</span><span class="col-span-8">{{pkgBackend.author?.name}}</span>
       <span class="col-span-12 font-bold">Dependencies:</span>
       <div class="grid grid-cols-12 gap-4 p-1 ml-2">
         @for (entry of pkgBackend.dependencies | keyvalue; track entry) {
