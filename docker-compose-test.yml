@@ -4,12 +4,12 @@ services:
     restart: always
     image: janine65/keller-backend:test
     build:
-      context: ../keller-backend-python/
-      dockerfile: ../keller-backend-python/Dockerfile
+      context: ../keller-backend/
+      dockerfile: ../keller-backend/Dockerfile
       tags:
         - "janine65/keller-backend:test"
     env_file:
-      - ../keller-backend-python/.env.test
+      - ../keller-backend/.env.test
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -53,4 +53,4 @@ volumes:
     driver_opts:
       type: 'nfs'
       o: 'bind'
-      device: '/Users/janinefranken/Development/JS/keller-backend-python/logs'
+      device: '/Users/janinefranken/Development/JS/keller-backend/logs'

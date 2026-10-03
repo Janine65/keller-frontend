@@ -5,12 +5,12 @@ services:
     image: janine65/keller-backend
     platform: linux/amd64
     build:
-      context: ../keller-backend-python/
-      dockerfile: ../keller-backend-python/Dockerfile
+      context: ../keller-backend/
+      dockerfile: ../keller-backend/Dockerfile
       tags:
         - "janine65/keller-backend:${BACKEND_VERSION:-latest}"
     env_file:
-      - ../keller-backend-python/.env.prod
+      - ../keller-backend/.env.prod
     stdin_open: true
     tty: true # Keeps the container running for debugging
     volumes:

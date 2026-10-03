@@ -4,12 +4,13 @@
     // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Chrome mit \"Localhost\" starten",
-            "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}"
-        },
+    {
+      "name": "ng serve",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "npm: start",
+      "url": "http://localhost:4301",
+      "webRoot": "${workspaceFolder}"
+    }
     ]
 }
