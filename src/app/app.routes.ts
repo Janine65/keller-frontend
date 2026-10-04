@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { AppAboutComponent } from '@components/app-about/app-about.component';
+import { AuthGuard } from './guards/auth.guard';
 import { AppDesktopComponent } from '@components/layout/app-desktop.component';
 import { PlacesListComponent } from '@components/places-list/places-list.component';
 import { SubplaceListComponent } from '@components/subplace-list/subplace-list.component';
@@ -10,10 +11,12 @@ import { UserRegisterComponent } from '@components/user-register/user-register.c
 
 export const appRoutes: Route[] = [
     { path: '',
-        component: AppDesktopComponent
+        component: AppDesktopComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'basedata',
+        canActivateChild: [AuthGuard],
         children: [
             {
                 path: 'places',
@@ -38,7 +41,8 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'list',
-                component: UserListComponent
+                component: UserListComponent,
+                canActivate: [AuthGuard]
             }
         ]
     },

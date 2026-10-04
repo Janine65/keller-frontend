@@ -23,4 +23,8 @@ export class AuthGuard  {
         this.router.navigate(['/user/login'], { queryParams: { returnUrl: state.url }});
         return false;
     }
+
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        return this.canActivate(route, state);
+    }
 }
