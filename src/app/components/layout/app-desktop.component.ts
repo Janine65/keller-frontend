@@ -79,9 +79,6 @@ export class AppDesktopComponent implements OnInit {
   cmObj2Sub: MenuItem[] = [];
 
   isLoading = true;
-  preventSingleClick = false;
-  timer: any;
-  delay: number = 200;
 
   sortOptions: any[] = [{ label: 'A-Z', value: 1 }, { label: 'Severity', value: 2 }];
   sorting = 1;
@@ -520,52 +517,44 @@ export class AppDesktopComponent implements OnInit {
   }
 
   onRemoveOne(data: ThingStruct, event: Event) {
-    this.preventSingleClick = false;
-    const delay = 200;
-    this.timer = setTimeout(() => {
-      if (!this.preventSingleClick) {
-        if (data.obj2sub) {
-          data.obj2sub.count = Math.max(data.obj2sub.count ? data.obj2sub.count - 1 : 0, 0);
-          if (data.obj2sub.count == 0) {
-            this.confirmationService.confirm({
-              target: event.target as EventTarget,
-              message: 'Do you want to delete this record?',
-              icon: 'pi pi-question',
-              acceptButtonStyleClass: 'p-button-danger p-button-sm',
-              accept: () => {
-                this.backendService.deleteObject2Subplace(data.obj2sub!).subscribe({
-                  next: () => {
-                    let ind = this.lAllThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
-                    this.lAllThingsList.splice(ind, 1)
-                    ind = this.lThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
-                    this.lThingsList.splice(ind, 1)
-                  }
-                });
-              },
-              reject: () => {
-                this.backendService.updateObject2Subplace(data.obj2sub!).subscribe({
-                  next: (_) => {
-                  }
-                })
+    if (data.obj2sub) {
+      data.obj2sub.count = Math.max(data.obj2sub.count ? data.obj2sub.count - 1 : 0, 0);
+      if (data.obj2sub.count == 0) {
+        this.confirmationService.confirm({
+          target: event.target as EventTarget,
+          message: 'Do you want to delete this record?',
+          icon: 'pi pi-question',
+          acceptButtonStyleClass: 'p-button-danger p-button-sm',
+          accept: () => {
+            this.backendService.deleteObject2Subplace(data.obj2sub!).subscribe({
+              next: () => {
+                let ind = this.lAllThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
+                this.lAllThingsList.splice(ind, 1)
+                ind = this.lThingsList.findIndex((thing) => thing.id == data.id && thing.obj2sub == data.obj2sub);
+                this.lThingsList.splice(ind, 1)
               }
             });
-          } else {
-            this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
+          },
+          reject: () => {
+            this.backendService.updateObject2Subplace(data.obj2sub!).subscribe({
               next: (_) => {
               }
             })
           }
-        } else {
-          this.selThing = data;
-          this.onAddOnSubject();
-        }
+        });
+      } else {
+        this.backendService.updateObject2Subplace(data.obj2sub).subscribe({
+          next: (_) => {
+          }
+        })
       }
-    }, delay);
+    } else {
+      this.selThing = data;
+      this.onAddOnSubject();
+    }
   }
 
   onAddOne(data: ThingStruct) {
-    this.preventSingleClick = true;
-    clearTimeout(this.timer);
     if (data.obj2sub) {
       data.obj2sub.count = data.obj2sub.count ? data.obj2sub.count + 1 : 1;
       this.backendService.updateObject2Subplace(data.obj2sub).subscribe({

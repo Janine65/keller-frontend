@@ -83,12 +83,33 @@
                   }
                 </div>
                 <div class="flex items-center justify-center rounded-md">
-                  <button pButton pRipple [raised]="false" [outlined]="true" (dblclick)="onAddOne(data)"
-                    (click)="onRemoveOne(data, $event)">
+                  <button pButton pRipple [raised]="false" [outlined]="true" (click)="showContextMenu(data, $event)">
                     <fa-icon [icon]="['fas', data.icon!]" class="text-blue-500 text-xl"></fa-icon>
                   </button>
                 </div>
               </div>
+              @if (data.obj2sub) {
+                <div class="flex items-center gap-3 mt-2">
+                  <button pButton pRipple severity="danger" [outlined]="true"
+                    class="flex-1 h-14! justify-center" (click)="onRemoveOne(data, $event)">
+                    <i class="pi pi-minus text-2xl!"></i>
+                  </button>
+                  <span class="text-3xl font-bold min-w-16 text-center text-surface-900">
+                    {{data.obj2sub.count ?? 0}}
+                  </span>
+                  <button pButton pRipple severity="success" [outlined]="true"
+                    class="flex-1 h-14! justify-center" (click)="onAddOne(data)">
+                    <i class="pi pi-plus text-2xl!"></i>
+                  </button>
+                </div>
+              } @else {
+                <div class="mt-2">
+                  <button pButton pRipple [outlined]="true" class="w-full h-14! justify-center"
+                    (click)="onAddOne(data)">
+                    <i class="pi pi-plus mr-2"></i><span pButtonLabel>Add to Subplace</span>
+                  </button>
+                </div>
+              }
             </div>
           </div>
         }
