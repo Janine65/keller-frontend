@@ -14,7 +14,7 @@
     "build": "nx build",
     "postbuild": "cp -f ./package.json dist",
     "postversion": "git push && git push --tags && pnpm docker:dev && pnpm docker:dev:run",
-    "docker": "nx build && docker-compose build --no-cache && docker-compose push",
+    "docker": "nx build && docker-compose build --no-cache && docker-compose push && pnpm app:build",
     "docker:readme": "sh -c 'docker pushrm janine65/keller-backend --file ../keller-backend/README.docker.md && docker pushrm janine65/keller-frontend --file README.docker.md'",
     "docker:dev": "nx build && sh -c 'docker compose -f docker-compose-test.yml build --no-cache'",
     "docker:dev:run": "sh -c 'docker compose -f docker-compose-test.yml down && docker compose -f docker-compose-test.yml up -d'",
