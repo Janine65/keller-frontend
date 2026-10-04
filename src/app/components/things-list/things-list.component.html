@@ -3,7 +3,7 @@
   @if (!isLoading) {
     <p-table dataKey="id" [value]="lThings" [scrollable]="true" scrollHeight="flex">
       <ng-template #caption>
-        <button pButton pRipple class="p-button-success mr-2"
+        <button pButton pRipple class="mr-2"
         (click)="onRowNew()"><i class="pi pi-plus" pButtonIcon></i><span pButtonLabel>New</span></button>
       </ng-template>
       <ng-template #header>

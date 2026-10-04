@@ -18,6 +18,11 @@
     }
 }
 
+/* multiline tooltip (appended to body, so must be global) */
+.kl-tooltip .p-tooltip-text {
+    white-space: pre-line;
+}
+
 :root {
     --highlight-bg: var(--p-primary-color);
 }

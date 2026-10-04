@@ -1,20 +1,30 @@
 /* PrimeNG 22: Farben über Design-Tokens der Komponente */
 ::ng-deep .p-menubar {
-  --p-menubar-background: var(--p-primary-color);
-  --p-menubar-border-color: var(--p-primary-color);
-  --p-menubar-item-color: var(--p-primary-contrast-color);
-  --p-menubar-item-icon-color: var(--p-primary-contrast-color);
-  --p-menubar-submenu-icon-color: var(--p-primary-contrast-color);
-  --p-menubar-item-focus-background: var(--p-primary-hover-color);
-  --p-menubar-item-focus-color: var(--p-primary-contrast-color);
-  --p-menubar-item-active-background: var(--p-primary-hover-color);
-  --p-menubar-item-active-color: var(--p-primary-contrast-color);
-  --p-menubar-mobile-button-color: var(--p-primary-contrast-color);
-  --p-menubar-mobile-button-hover-color: var(--p-primary-contrast-color);
+  --p-menubar-background: var(--p-orange-300);
+  --p-menubar-border-color: var(--p-orange-300);
+  --p-menubar-item-color: var(--p-surface-900);
+  --p-menubar-item-icon-color: var(--p-surface-900);
+  --p-menubar-submenu-icon-color: var(--p-surface-900);
+  --p-menubar-item-focus-background: var(--p-orange-400);
+  --p-menubar-item-focus-color: var(--p-surface-900);
+  --p-menubar-item-active-background: var(--p-orange-400);
+  --p-menubar-item-active-color: var(--p-surface-900);
+  --p-menubar-mobile-button-color: var(--p-surface-900);
+  --p-menubar-mobile-button-hover-color: var(--p-surface-900);
   --p-menubar-mobile-button-hover-background: var(--p-primary-hover-color);
 }
 /* Submenü-Panels sind hell -> Standard-Textfarben wiederherstellen */
 ::ng-deep .p-menubar .p-menubar-submenu {
+  --p-menubar-item-color: var(--p-text-color);
+  --p-menubar-item-icon-color: var(--p-text-muted-color);
+  --p-menubar-submenu-icon-color: var(--p-text-muted-color);
+  --p-menubar-item-focus-background: var(--p-content-hover-background);
+  --p-menubar-item-focus-color: var(--p-text-color);
+  --p-menubar-item-active-background: var(--p-content-hover-background);
+  --p-menubar-item-active-color: var(--p-text-color);
+}
+/* Mobile: aufgeklapptes Hamburger-Panel ist ebenfalls hell */
+::ng-deep .p-menubar.p-menubar-mobile .p-menubar-root-list {
   --p-menubar-item-color: var(--p-text-color);
   --p-menubar-item-icon-color: var(--p-text-muted-color);
   --p-menubar-submenu-icon-color: var(--p-text-muted-color);
@@ -32,7 +42,7 @@
   .footer {
     width: 100%;
     padding-right: 10px;
-    background-color: var(--p-primary-color);
-    color: var(--p-primary-contrast-color);
+    background-color: var(--p-orange-300);
+    color: var(--p-surface-900);
   }
 }

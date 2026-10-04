@@ -1,114 +1,99 @@
 @if (!isLoading) {
   <p-toolbar>
-    <div class="flex justify-start">
-      <div class="p-1 border-cyan-100 border">
-        <label for="filtering">Filter:</label>
-        <div id="filtering" class="block mt-1">
-          @for (type of thingsTypes; track type) {
-            <span class="mr-6">
-              <p-checkbox name="selTypes" (onChange)="filterList()"
-                [binary]="false" [value]="type.value" [(ngModel)]="selTypes" [inputId]="'type-' + type.value">
-              </p-checkbox>
-              <label [for]="'type-' + type.value" class="ml-1">{{type.label}}</label>
-            </span>
-          }
+    <div class="flex items-center gap-2 w-full">
+      <p-iconfield iconPosition="right" class="flex-1">
+        <p-inputicon styleClass="pi pi-times" (click)="searchText = ''; doSearch()" />
+        <input type="text" pInputText class="w-full" placeholder="Search" [(ngModel)]="searchText" (keyup)="doSearch()" />
+      </p-iconfield>
+      <button pButton [outlined]="true" class="shrink-0" (click)="showFilters = !showFilters">
+        <i class="pi pi-sliders-h mr-2"></i>
+        <i [class]="'pi ' + (showFilters ? 'pi-chevron-up' : 'pi-chevron-down')"></i>
+      </button>
+    </div>
+    @if (showFilters) {
+      <div class="flex flex-wrap items-start gap-4 w-full mt-2">
+        <div class="p-1 border-cyan-100 border">
+          <label for="filtering">Filter:</label>
+          <div id="filtering" class="block mt-1">
+            @for (type of thingsTypes; track type) {
+              <span class="mr-6">
+                <p-checkbox name="selTypes" (onChange)="filterList()"
+                  [binary]="false" [value]="type.value" [(ngModel)]="selTypes" [inputId]="'type-' + type.value">
+                </p-checkbox>
+                <label [for]="'type-' + type.value" class="ml-1">{{type.label}}</label>
+              </span>
+            }
+          </div>
+        </div>
+        <div class="p-1 border-cyan-100 border">
+          <label for="sorting">Sort:</label>
+          <p-selectbutton id="sorting" class="block mt-1" [options]="sortOptions" [(ngModel)]="sorting"
+            (onChange)="sortList();filterList();" optionLabel="label" optionValue="value" />
+        </div>
+        <div class="p-1 border-cyan-100 border">
+          <label for="selection" class="mr-2">Display all:</label>
+          <p-togglebutton id="selection" class="block" [(ngModel)]="fDisplayAll" (onChange)="filterList()"
+            onLabel="Yes" offLabel="No" />
         </div>
       </div>
-    </div>
-    <div class="flex justify-center">
-      <div class="ui-inputgroup mr-2">
-        <p-iconfield iconPosition="right">
-          <p-inputicon styleClass="pi pi-times" (click)="searchText = ''; doSearch()" />
-          <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText" (keyup)="doSearch()" />
-        </p-iconfield>
-      </div>
-    </div>
-    <div class="flex justify-end">
-      <div class="p-1 border-cyan-100 border">
-        <label for="sorting" class="mr-2">Sort:</label>
-        <p-selectbutton id="sorting" [options]="sortOptions" [(ngModel)]="sorting"
-          (onChange)="sortList();filterList();" optionLabel="label" optionValue="value" />
-      </div>
-      <div class="ml-6 p-1 border-cyan-100 border">
-        <label for="selection" class="mr-2">Display all:</label>
-        <p-togglebutton id="selection" class="block" [(ngModel)]="fDisplayAll" (onChange)="filterList()"
-          onLabel="Yes" offLabel="No" />
-      </div>
-    </div>
+    }
   </p-toolbar>
 }
 <p-scrollpanel [style]="{ width: '100%', height: '100%' }">
   @if (!isLoading) {
-    <div class="bg-surface-50 px-2 py-5 md:px-4 lg:px-6">
-      <div class="grid grid-cols-12 gap-4">
+    <div class="bg-surface-50 px-2 py-2 md:px-4 lg:px-6">
+      <div class="grid grid-cols-12 gap-2">
         <p-contextmenu #contextmenu [model]="cmObj2Sub" [global]="false" appendTo="body" />
         @for (data of lThingsList; track data; let ind = $index) {
           <div #thing (contextmenu)="showContextMenu(data, $event)" class="col-span-12 md:col-span-6 lg:col-span-3"
             >
-            <div [id]="'box_'+data.id+'_'+ind" class="bg-surface-0 shadow-md p-4 rounded-md">
-              <div class="flex justify-between mb-4">
-                <div>
-                  <span class="flex content-start text-surface-500 font-medium mb-4 text-xl"
-                    (click)="showContextMenu(data, $event)">{{data.name}}&nbsp;&nbsp;
-                    @if (data.obj2sub) {
-                      <p-badge [class]="getSeverety(data)"
-                      [value]="data.obj2sub ? data.obj2sub!.count ?? 0 : 0"></p-badge>
-                    }
-                    @if (data.photo && data.photo != '') {
-                      <p-image class="mr-2 ml-2 justify-center align-content-center"
-                        [src]="data.photo" [preview]="true"
-                      width="50" height="50"></p-image>
-                    }
-                  </span>
+            <div [id]="'box_'+data.id+'_'+ind"
+              class="bg-surface-0 shadow-md px-3 py-2 rounded-md flex items-center justify-between gap-2">
+              <div class="min-w-0 flex-1" (click)="showContextMenu(data, $event)">
+                <div class="flex items-center gap-2">
+                  <fa-icon [icon]="['fas', data.icon!]" class="text-blue-500"></fa-icon>
+                  <span class="font-medium text-surface-900 truncate"
+                    [pTooltip]="getTooltip(data)" tooltipPosition="top" [tooltipStyleClass]="'kl-tooltip'"
+                    [tooltipDisabled]="isTouchDevice">{{data.name}}</span>
                   @if (data.obj2sub) {
-                    <div class="text-surface-900 font-medium align-content-end">
-                      <fa-icon [icon]="['fas', data.placetype!.icon!]"></fa-icon>
-                      {{data.place?.name}} - {{data.subplace?.name}}
-                    </div>
+                    <p-badge [class]="getSeverety(data)"
+                    [value]="data.obj2sub ? data.obj2sub!.count ?? 0 : 0"></p-badge>
                   }
-                  @if (data.obj2sub && data.obj2sub.valid_until) {
-                    <div class="text-surface-500 font-medium font-italic content-start mt-1"
-                      >
-                      @if (isValidPast(data)) {
-                        <span class="text-red-500">
-                          valid: {{data.obj2sub.valid_until}}
-                        </span>
-                      }
-                      @if (!isValidPast(data)) {
-                        <span class="text-green-500">
-                          valid: {{data.obj2sub.valid_until}}
-                        </span>
-                      }
-                    </div>
+                  @if (data.photo && data.photo != '') {
+                    <p-image [src]="data.photo" [preview]="true" width="28" height="28"></p-image>
                   }
                 </div>
-                <div class="flex items-center justify-center rounded-md">
-                  <button pButton pRipple [raised]="false" [outlined]="true" (click)="showContextMenu(data, $event)">
-                    <fa-icon [icon]="['fas', data.icon!]" class="text-blue-500 text-xl"></fa-icon>
-                  </button>
-                </div>
+                @if (data.obj2sub) {
+                  <div class="text-sm text-surface-500 truncate mt-0.5">
+                    <fa-icon [icon]="['fas', data.placetype!.icon!]"></fa-icon>
+                    {{data.place?.name}} - {{data.subplace?.name}}
+                    @if (data.obj2sub.valid_until) {
+                      <span [class]="isValidPast(data) ? 'text-red-500' : 'text-green-500'">
+                        &middot; {{data.obj2sub.valid_until}}
+                      </span>
+                    }
+                  </div>
+                }
               </div>
               @if (data.obj2sub) {
-                <div class="flex items-center gap-3 mt-2">
+                <div class="flex items-center gap-1 shrink-0">
                   <button pButton pRipple severity="danger" [outlined]="true"
-                    class="flex-1 h-14! justify-center" (click)="onRemoveOne(data, $event)">
-                    <i class="pi pi-minus text-2xl!"></i>
+                    class="h-11! w-11! justify-center p-0!" (click)="onRemoveOne(data, $event)">
+                    <i class="pi pi-minus text-xl!"></i>
                   </button>
-                  <span class="text-3xl font-bold min-w-16 text-center text-surface-900">
+                  <span class="text-xl font-bold min-w-10 text-center text-surface-900">
                     {{data.obj2sub.count ?? 0}}
                   </span>
                   <button pButton pRipple severity="success" [outlined]="true"
-                    class="flex-1 h-14! justify-center" (click)="onAddOne(data)">
-                    <i class="pi pi-plus text-2xl!"></i>
+                    class="h-11! w-11! justify-center p-0!" (click)="onAddOne(data)">
+                    <i class="pi pi-plus text-xl!"></i>
                   </button>
                 </div>
               } @else {
-                <div class="mt-2">
-                  <button pButton pRipple [outlined]="true" class="w-full h-14! justify-center"
-                    (click)="onAddOne(data)">
-                    <i class="pi pi-plus mr-2"></i><span pButtonLabel>Add to Subplace</span>
-                  </button>
-                </div>
+                <button pButton pRipple [outlined]="true" class="h-11! w-11! justify-center p-0! shrink-0"
+                  (click)="onAddOne(data)">
+                  <i class="pi pi-plus text-xl!"></i>
+                </button>
               }
             </div>
           </div>

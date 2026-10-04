@@ -26,6 +26,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ButtonDirective, ButtonIcon, ButtonLabel } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { Select } from 'primeng/select';
+import { Tooltip } from 'primeng/tooltip';
 
 interface DropdownList {
   name: string;
@@ -53,7 +54,7 @@ class ThingStruct {
     styleUrls: ['./app-desktop.component.css'],
     providers: [DialogService],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [Bind, Toolbar, Checkbox, FormsModule, IconField, InputIcon, InputText, SelectButton, Ripple, ToggleButton, ScrollPanel, ContextMenu, Badge, Image, FaIconComponent, ButtonDirective, ButtonLabel, Dialog, Select]
+    imports: [Bind, Toolbar, Checkbox, FormsModule, IconField, InputIcon, InputText, SelectButton, Ripple, ToggleButton, ScrollPanel, ContextMenu, Badge, Image, FaIconComponent, ButtonDirective, ButtonLabel, Dialog, Select, Tooltip]
 })
 export class AppDesktopComponent implements OnInit {
   private backendService = inject(BackendService);
@@ -79,6 +80,11 @@ export class AppDesktopComponent implements OnInit {
   cmObj2Sub: MenuItem[] = [];
 
   isLoading = true;
+
+  // collapsed on mobile, expanded on desktop
+  showFilters = window.innerWidth >= 768;
+  // no hover on touch devices -> tooltip would clash with long-press context menu
+  isTouchDevice = window.matchMedia('(hover: none)').matches;
 
   sortOptions: any[] = [{ label: 'A-Z', value: 1 }, { label: 'Severity', value: 2 }];
   sorting = 1;
@@ -579,6 +585,23 @@ export class AppDesktopComponent implements OnInit {
     }
 
     return false
+  }
+
+  getTooltip(data: ThingStruct): string {
+    const lines = [data.name + ' (' + data.type + ')'];
+    if (data.obj2sub) {
+      lines.push('Count: ' + (data.obj2sub.count ?? 0));
+      lines.push('Place: ' + data.place?.name + ' - ' + data.subplace?.name);
+      if (data.obj2sub.shopped_at)
+        lines.push('Shopped: ' + data.obj2sub.shopped_at);
+      if (data.obj2sub.valid_until)
+        lines.push('Valid until: ' + data.obj2sub.valid_until + (this.isValidPast(data) ? ' (expired!)' : ''));
+    }
+    if (data.thing?.shop)
+      lines.push('Shop: ' + data.thing.shop);
+    if (data.thing?.weight)
+      lines.push('Weight: ' + data.thing.weight);
+    return lines.join('\n');
   }
 
 }

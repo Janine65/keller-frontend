@@ -8,12 +8,31 @@ import { APP_PRIMENG_PROVIDERS } from './app/app.module-primeng';
 import { StringDatePipe } from './app/shared/string-date.pipe';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { definePreset } from '@primeuix/themes';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { CookieModule } from 'ngx-cookie';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { withEnabledBlockingInitialNavigation, provideRouter } from '@angular/router';
 import { appRoutes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+
+const KellerPreset = definePreset(Aura, {
+    semantic: {
+        primary: {
+            50: '{orange.50}',
+            100: '{orange.100}',
+            200: '{orange.200}',
+            300: '{orange.300}',
+            400: '{orange.400}',
+            500: '{orange.500}',
+            600: '{orange.600}',
+            700: '{orange.700}',
+            800: '{orange.800}',
+            900: '{orange.900}',
+            950: '{orange.950}'
+        }
+    }
+});
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -28,8 +47,11 @@ bootstrapApplication(AppComponent, {
         providePrimeNG({
             license: 'eyJpZCI6IjkyYzFjYTlmLWY0NDQtNDA1Yy1iZThjLTliYWViZTM2MDJhNiIsInByb2R1Y3QiOiJwcmltZXVpIiwidGllciI6ImNvbW11bml0eSIsInR5cGUiOiJkZXYiLCJpYXQiOjE3ODQ5NzkyODksImV4cCI6MTgxNjUxNTI4OX0.hZ_pHnFRtNmqGT9u2C-335MBsqeLIiiO0MsDJAQCAqPwklSQY44M8_UHHJ-pzsis3NKdsNyxDyPOSCNwmNnDBw',
             theme: {
-                preset: Aura,
-                options: { cssLayer: { name: 'primeng', order: 'theme, base, primeng' } }
+                preset: KellerPreset,
+                options: {
+                    darkModeSelector: false,
+                    cssLayer: { name: 'primeng', order: 'theme, base, primeng' }
+                }
             }
         }),
         provideAnimations(),
