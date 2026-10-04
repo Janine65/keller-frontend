@@ -33,16 +33,11 @@
   --p-menubar-item-active-background: var(--p-content-hover-background);
   --p-menubar-item-active-color: var(--p-text-color);
 }
-@media (max-width: 1023px) {
-  .footer {
-    display: none;
-  }
-}
-@media (min-width: 1024px) {
-  .footer {
-    width: 100%;
-    padding-right: 10px;
-    background-color: var(--p-orange-300);
-    color: var(--p-surface-900);
-  }
+.footer {
+  width: 100%;
+  padding-right: 10px;
+  background-color: var(--p-orange-300);
+  color: var(--p-surface-900);
+  /* iPhone: nicht hinter dem Home-Indikator verschwinden */
+  padding-bottom: env(safe-area-inset-bottom);
 }
